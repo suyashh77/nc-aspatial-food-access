@@ -21,7 +21,7 @@ Every open decision has a test here. Each test gives the question, why it matter
 - **The Raleigh reproduction holds:** Teresa's model on our scrape ranks her stores like she did (ρ 0.90–0.95, D8). Her Table 5.3 partly reproduces from her own store scores (D9).
 - **Pipeline B runs end to end:** sentence topics, codebook definitions, text sentiment, better pooling, 16-minute drive-time markets. Each switch is tested against A (section 3).
   - Statewide, B finds the same direction as A with larger gaps: the stores typically within reach of Blacker tracts score lower on every dimension, Affordability most of all.
-- **The hand-labeling page is built** (section 6): 5 raters per review, the topic check for both pipelines, every label recorded under its rater. Caroline republishes it from her own account and runs labeling on Wednesday (only a page's owner can export its labels). No labels exist yet.
+- **The hand-labeling page is built** (section 6): 5 raters per review, the topic check for both pipelines, every label recorded under its rater. Suyash runs labeling on Wednesday on his page (https://claude.ai/artifact/7cCD2HedpJ97FgEmnLo2uH) and pulls the results (only a page's owner can export its labels). No labels exist yet.
 - **After labeling, one command reruns everything**: `run_after_labeling.sh --csv <folder>` (or `--json`). Tested end to end on 2026-11-15 with five fake raters in a sandbox copy: all 22 steps pass in about 1.5 hours.
 - Scope: NC, with Raleigh as the case study. Haywood was dropped on 2026-11-11.
 
@@ -31,7 +31,7 @@ Every open decision has a test here. Each test gives the question, why it matter
 - An answer to "how many dimensions do reviews contain": two for how stores perform (quality, price). What people talk about has more, with checkout and the trip itself as sixth-dimension candidates.
 
 **What we're doing to get there.**
-1. **People:** label on Caroline's copy of the page (`handoff/FOR_CAROLINE.md`). Add raters by email as Editors; a public link only lets outsiders view.
+1. **People:** label on the page (https://claude.ai/artifact/7cCD2HedpJ97FgEmnLo2uH; raters' instructions are in `handoff/FOR_CAROLINE.md`, section 3). Add raters by email as Editors; a public link only lets outsiders view.
 2. Then `./run_after_labeling.sh --csv <folder of Results-tab downloads>`. It imports the labels and reruns stages 6–7 (both arms), D1–D10, B4, `b_pipeline.py`, B6, `b_raleigh.py`, the review export and the Drive folder.
 3. **Outside answers:** Teresa's tract list and store set. Optional: a renewed Dewey key for per-store shopper origins (section 9).
 
@@ -526,7 +526,7 @@ Shared setup:
 
 ## 5. The human check (stage 5): how to run it
 
-**Easiest: the shareable web page** (built 2026-11-12), tab "Check topics". Labeling runs on Caroline's copy, not the original link (https://claude.ai/artifact/7cCD2HedpJ97FgEmnLo2uH). It covers both hand-labeling tasks (this one and the gold set in section 6), so raters need nothing installed. Details are in section 6. The Streamlit app below still works.
+**Easiest: the shareable web page** (built 2026-11-12), tab "Check topics". Labeling runs on Suyash's page (https://claude.ai/artifact/7cCD2HedpJ97FgEmnLo2uH). It covers both hand-labeling tasks (this one and the gold set in section 6), so raters need nothing installed. Details are in section 6. The Streamlit app below still works.
 
 ```bash
 cd "/home/scsapre/aspatial_food_access_research/NC Pipeline"
@@ -549,7 +549,7 @@ Budget about 30 min for merging and 2 min per group. A second person can score a
 
 ### The shareable web labeler (recommended)
 
-- **Link:** Caroline's copy (see `handoff/FOR_CLAUDE.md`). The original, https://claude.ai/artifact/7cCD2HedpJ97FgEmnLo2uH, is Suyash's and isn't used for labeling.
+- **Link:** https://claude.ai/artifact/7cCD2HedpJ97FgEmnLo2uH. Suyash owns it and pulls the results.
 - **Who can save labels:** people who open a public link from outside the organization can only view. On a personal plan, add each rater by email from the Share menu as **Editor**. Editor-level access only works while the public link is off. Raters see only their own work in the page. Only the owner sees the Results tab.
 - **5 raters per review:** the page gives each rater the next review, in a shared order, that has fewer than 5 raters. Reviews fill up in order. Raters see how many people have labeled a review (`claims/` in the page's database), never their answers. The owner gets Fleiss' kappa across the 5 raters and a majority-vote consensus export (`gold_labels_consensus.csv`: a dimension counts if more than half of raters mark it).
 - **Who labeled what:** every label is stored under the account that saved it. The exports carry `rater` (initials), `rater_name` and `rater_id` columns, and the Results tab warns when two people use the same initials.
@@ -649,7 +649,7 @@ underlying traits there are. Here a store plays the person and a topic group pla
 ## 9. Open items
 
 **Needs people:**
-- [ ] **Topic check** (stage 5), **gold labels** (5 raters per review) and the optional **sentence-topic check**, on Caroline's copy of the page, Wednesday. Topic 0 is the most important call (D10).
+- [ ] **Topic check** (stage 5), **gold labels** (5 raters per review) and the optional **sentence-topic check**, on the labeling page, Wednesday. Topic 0 is the most important call (D10).
 - [ ] Then `./run_after_labeling.sh --csv <folder>`, which does every rerun. Afterwards replace the provisional numbers in this guide.
 
 **Needs outside answers:**
@@ -705,3 +705,5 @@ underlying traits there are. Here a store plays the person and a topic group pla
   - Handoff docs (`handoff/`): guides for Dr. Rachunok, Caroline and Claude, data dictionary, file manifest, final presentation. Caroline republishes the labeling page and runs labeling. The Nov 13 draft README moved to `_superseded/`.
 - **2026-11-16 (storage split, no method change)**:
   - GitHub now holds the code only. Result files, working files, documents and the slides moved to the Google Drive folder (`1_Docs_and_Reports`, `2_Presentation`, `3_Datasets`), built by `build_drive_package.py`. `place_data.sh` puts the Drive data into a fresh clone; it replaces `fetch_data.sh`. No pipeline code or number changed.
+- **2026-11-16 (labeling plan, no method change)**:
+  - Suyash runs the labeling on his own page (https://claude.ai/artifact/7cCD2HedpJ97FgEmnLo2uH) instead of Caroline republishing it, then runs `run_after_labeling.sh` and hands the final Drive folder to Caroline. `handoff/FOR_CLAUDE.md` has the steps for when labeling is done.

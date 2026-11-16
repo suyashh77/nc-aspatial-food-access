@@ -273,7 +273,7 @@ body = ('<div class="g" style="grid-template-columns:1fr 600px;gap:44px;align-it
         + "</div></div>")
 slide(3, "Hand labeling", "What only people can do", body,
       "Until people label, every score is provisional. After, one command produces the final numbers.",
-      "Scheduled for Wednesday. Only the page's owner can download results, so Caroline republishes the page from her own account first. Her guide covers it.")
+      "Scheduled for Wednesday. Suyash runs the session on the labeling page and pulls the results. Caroline's guide has the raters' rules.")
 
 # ---------------------------------------------------------------- 4 results
 body = ('<div class="g" style="grid-template-columns:1fr 560px;gap:44px;align-items:center"><div class="cd" style="padding:24px 28px">'
@@ -389,7 +389,7 @@ slide(5, "Lessons", "What got in the way, and what did I learn?", body,
       "If asked what I'd do differently: build the four-source store list first, and test the scraper on known stores before scaling up.")
 
 body = ('<div class="g" style="grid-template-columns:1fr 1fr;gap:40px"><div><p class="lb">This week</p>'
-        + steps([("Hand labeling (Wednesday)", "Caroline republishes the labeling page from her account first"),
+        + steps([("Hand labeling (Wednesday)", "Suyash runs the session and pulls the results"),
                  ("Run one script", "About 1.5 hours. Scores lose the &#8220;provisional&#8221; label"),
                  ("Update the numbers", "Pipeline guide and slides marked provisional")])
         + '</div><div><p class="lb">After</p>'

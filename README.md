@@ -7,7 +7,7 @@ The project lives in two places:
 | Where | What |
 |---|---|
 | This repository | The code: both pipelines, the tests, the labeling page, the scripts that build the Drive folder and the slides |
-| The Google Drive folder `NC_Aspatial_Food_Access` _(add the link here)_ | `1_Docs_and_Reports` (the guides, the method, the data's weak spots), `2_Presentation` (the slides), `3_Datasets` (store list, scores, reviews, databases) |
+| The Google Drive folder [`NC_Aspatial_Food_Access`](https://drive.google.com/drive/folders/1VH4wPZjRUApfQtznYghnRkXsL14XJbm9) | `1_Docs_and_Reports` (the guides, the method, the data's weak spots), `2_Presentation` (the slides), `3_Datasets` (store list, scores, reviews, databases) |
 
 If you only want to read about the project or use the data, you don't need this repository. Open the Drive folder and start with its `README`.
 
@@ -22,7 +22,7 @@ After step 3 the `handoff/` folder also holds the guides for people (`FOR_DR_RAC
 
 ## Status
 
-All scores are **provisional** until the hand labeling is done (planned for the week of November 16, 2026). After it, `./run_after_labeling.sh --csv <folder>` produces the final numbers and rebuilds the Drive folder. The steps are in `FOR_CAROLINE` (Drive, `1_Docs_and_Reports`).
+All scores are **provisional** until the hand labeling is done (planned for the week of November 16, 2026). Suyash runs the labeling session. After it, `./run_after_labeling.sh` produces the final numbers and rebuilds the Drive folder. The steps are in `FOR_CAROLINE` (Drive, `1_Docs_and_Reports`).
 
 ## What's here
 

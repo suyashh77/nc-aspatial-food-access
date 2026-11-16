@@ -4,7 +4,7 @@ For a Claude session (or a person) picking up the code. Written 2026-11-15 at ha
 
 People-facing docs: `FOR_DR_RACHUNOK.md` (project, methods, data limits) and `FOR_CAROLINE.md` (hand labeling, using the data). The full method, every decision test and every number: `../PIPELINE_GUIDE.md`.
 
-**Where things live.** The code is in the private GitHub repo `suyashh77/nc-aspatial-food-access` (the owner may change if it's transferred to the lab). Everything else is in the Google Drive folder `NC_Aspatial_Food_Access`: `1_Docs_and_Reports`, `2_Presentation` and `3_Datasets`. To get a working copy, clone the repo, download `3_Datasets`, and run `./place_data.sh <path to 3_Datasets>`. After that the layout below matches. On the lab VM everything is already in place, so don't run `place_data.sh` there. Package versions: `requirements_lab_vm.txt`.
+**Where things live.** The code is in the private GitHub repo `suyashh77/nc-aspatial-food-access` (the owner may change if it's transferred to the lab). Everything else is in the Google Drive folder `NC_Aspatial_Food_Access` (https://drive.google.com/drive/folders/1VH4wPZjRUApfQtznYghnRkXsL14XJbm9): `1_Docs_and_Reports`, `2_Presentation` and `3_Datasets`. To get a working copy, clone the repo, download `3_Datasets`, and run `./place_data.sh <path to 3_Datasets>`. After that the layout below matches. On the lab VM everything is already in place, so don't run `place_data.sh` there. Package versions: `requirements_lab_vm.txt`.
 
 **What git tracks.** Scripts, tests, the labeling page, `README.md`, `CLAUDE.md`, `PIPELINE_GUIDE.md`, this file and `NC Pipeline/data/parents_draft.csv`. The `.gitignore` is an allowlist, so outputs in `data/`, `out/` and `decisions/out/` and the other handoff documents are never committed. They reach other people through the Drive folder. After changing any of them, rebuild the Drive folder (below) and upload it again.
 
@@ -86,7 +86,7 @@ B1 (removing the mood direction) and B3 (data-driven dimensions) are tested swit
 
 ## Hand labeling
 
-**Labeling runs on Caroline's copy of the page**, published from her claude.ai account so she owns the results. Her link: _(Caroline adds it here)_. Suyash's original, https://claude.ai/artifact/7cCD2HedpJ97FgEmnLo2uH, was never used for labeling; ignore it. Source: `NC Pipeline/apps/web_labeler/` (`labeler.html` + `data.js` + `data_b2.js`; `build_data*.py` regenerate the data files). It uses the artifact database, user identity and downloads.
+**Labeling runs on Suyash's page: https://claude.ai/artifact/7cCD2HedpJ97FgEmnLo2uH** (changed 2026-11-16; the earlier plan had Caroline republish it). He owns it, adds the raters as Editors and pulls the results. The live page was checked against the source on 2026-11-16: identical, all collections empty. Source: `NC Pipeline/apps/web_labeler/` (`labeler.html` + `data.js` + `data_b2.js`; `build_data*.py` regenerate the data files). It uses the artifact database, user identity and downloads.
 
 Database layout (one document per rater, keyed by the rater's account id):
 
@@ -97,18 +97,26 @@ Database layout (one document per rater, keyed by the rater's account id):
 | `topics_b2/<uid>` | same as `topics`, for Pipeline B's sentence topics |
 | `claims/<uid>` | `{gids}`: which reviews each rater took, so the page can hand out reviews 5 raters at a time |
 
-At handoff all collections were empty. Only the page's owner sees the Results tab, and only someone with access to the page can pull its database, so run the pull from Caroline's account or use her Results-tab CSVs.
+Only the page's owner sees the Results tab, and only someone with access to the page can pull its database. A Claude Code session on the VM signed in as Suyash can pull it directly. If the labeling is ever redone by someone else, they publish their own copy from the source files and use that link below.
 
 ## After labeling
+
+**When the owner says "labeling is done"**, do all of this in one go, without asking for each step:
+
+1. Pull the three collections from the labeling page (commands below) and check how many raters and reviews came in. If fewer than 200 reviews have 3 raters, say so before going on: the analysis would keep using the stand-in answer key.
+2. Run `./run_after_labeling.sh --json "NC Pipeline/data/web_labels"` (about 1.5 hours; run it in the background).
+3. Do the four follow-up steps at the end of this section: status check, kappa, new numbers in the guide and the docs, rebuilt deck.
+4. Commit and push the code and guide changes, then run `build_drive_package.py --zips`.
+5. Tell the owner what changed in the headline numbers, and that `drive_zips/` is ready to upload to the Drive folder in place of the old files. The VM has no Google login, so the upload is done by hand. After it, the project goes to Caroline.
 
 Pull the labels one of two ways.
 
 **From the database** (a Claude session signed in as the page's owner):
 
 ```
-ArtifactData list  url=<Caroline's page>  collection=gold       out_dir="/home/scsapre/aspatial_food_access_research/NC Pipeline/data/web_labels"
-ArtifactData list  url=<Caroline's page>  collection=topics     out_dir=(same)
-ArtifactData list  url=<Caroline's page>  collection=topics_b2  out_dir=(same)
+ArtifactData list  url=<the labeling page>  collection=gold       out_dir="/home/scsapre/aspatial_food_access_research/NC Pipeline/data/web_labels"
+ArtifactData list  url=<the labeling page>  collection=topics     out_dir=(same)
+ArtifactData list  url=<the labeling page>  collection=topics_b2  out_dir=(same)
 ```
 
 Page with `query.cursor` if a list returns `next_cursor`. Files land as `data/web_labels/<collection>/<uid>.json`, which is what the import expects. Then:
