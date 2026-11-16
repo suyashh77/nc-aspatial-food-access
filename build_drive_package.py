@@ -1,6 +1,12 @@
 """Build google_drive_upload/, the folder that goes to Google Drive, from the current pipeline outputs.
 
+The split: GitHub holds the code. Drive holds the documents and reports (1_), the presentation (2_) and the
+datasets (3_). 3_Datasets/pipeline_working_files.zip holds the result and working files the code reads, at their
+paths in the repo, so a fresh clone plus place_data.sh gives a working project.
+
     "NC Pipeline/.venv/bin/python" build_drive_package.py            # about 1 minute (+ copying the 0.8 GB database once)
+
+    "NC Pipeline/.venv/bin/python" build_drive_package.py --zips     # also drive_zips/*.zip, for uploading by hand
 
 Re-run it whenever outputs change; run_after_labeling.sh runs it last. It builds a fresh folder, keeps the previous
 one as google_drive_upload.prev/, and reuses the archived database when its checksum hasn't changed.
@@ -27,6 +33,34 @@ AD, BO = A / "data", B / "out"
 HANDOFF = ROOT / "handoff"
 DEST = ROOT / "google_drive_upload"
 TMP, PREV = ROOT / "google_drive_upload.tmp", ROOT / "google_drive_upload.prev"
+ZIPS = ROOT / "drive_zips"
+DOCS, DECK, DATA = "1_Docs_and_Reports", "2_Presentation", "3_Datasets"
+
+# The result and working files that are not in git: folders (or single files) to take, and what to leave out of them
+# (large files a script rebuilds, raw rater downloads, dropped Haywood outputs). Keep in step with .gitignore.
+WORK_INCLUDE = [
+    "NC Pipeline/data", "NC Pipeline/data_external", "NC Pipeline/dash_data",
+    "NC Pipeline/decisions/out", "NC Pipeline/decisions/labels",
+    "NC Pipeline Improved/out",
+    "Teresa Project/Code Pipeline/*.ipynb", "Teresa Project/Code Pipeline/bertopic_model",
+    "Teresa Project/Code Pipeline/topic_centroids_frozen.npz",
+    "Teresa Project/Code Pipeline/data/definition_text.json",
+    "Teresa Project/Code Pipeline/data/manual_validation/manual_validation_scores.csv",
+    "Teresa Project/Raleigh_Data/store_scores.csv", "Teresa Project/Raleigh_Data/raleigh_ring_reviews_with_dims.csv",
+    "Teresa Project/Raleigh_Data/final_embedding_model", "Teresa Project/Raleigh_Data/definition_embeddings",
+    "Teresa Project/Teresa Files/Aspatial_Access_NC_Plan.md", "Teresa Project/Teresa Files/Teresa_Groton_Masters_Thesis.pdf",
+    "Reviews Data/*.md",
+    "grocery-foot-traffic/NC_Grocery_POIs.xlsx", "grocery-foot-traffic/map/data/nc.geojson",
+    "handoff/*.md", "handoff/presentation/Final_Presentation.*",
+]
+WORK_EXCLUDE = [
+    "NC Pipeline/data/step1_embeddings.npy", "NC Pipeline/data/step1_reviews.parquet", "NC Pipeline/data/step3_grid/*",
+    "NC Pipeline/data/exp_no_empty/*", "NC Pipeline/data/web_labels/*", "NC Pipeline/data/*haywood*",
+    "NC Pipeline/data/exports/haywood/*", "NC Pipeline/data/exports/NC_reviews_with_dimensions.parquet",
+    "NC Pipeline/data_external/census/gaz_tracts_2022.zip",
+    "NC Pipeline Improved/out/b2_sentence_embeddings.npy",
+    "*/__pycache__/*", "*/.pytest_cache/*",
+]
 DIMS = ["Availability", "Accessibility", "Accommodation", "Affordability", "Acceptability"]
 
 
@@ -63,22 +97,25 @@ def main() -> None:
         shutil.rmtree(TMP)
     TMP.mkdir()
 
-    # 0. Start here: the three handoff documents (Word for people, Markdown for Claude), the deck, the manifest
+    # 1. Documents and reports: the three handoff guides (Word for people, Markdown for Claude), the data dictionary,
+    #    the manifest. The methods and reference files are added further down.
     put(HANDOFF / "README.md", "README.md")
     docx(HANDOFF / "README.md", "README.docx")
     for stem in ("FOR_DR_RACHUNOK", "FOR_CAROLINE", "FOR_CLAUDE", "DATA_DICTIONARY", "FILE_MANIFEST"):
-        put(HANDOFF / f"{stem}.md", f"1_Read_Me_First/{stem}.md")
-        docx(HANDOFF / f"{stem}.md", f"1_Read_Me_First/{stem}.docx")
+        put(HANDOFF / f"{stem}.md", f"{DOCS}/{stem}.md")
+        docx(HANDOFF / f"{stem}.md", f"{DOCS}/{stem}.docx")
+
+    # 2. The presentation
     for f in (HANDOFF / "presentation").glob("Final_Presentation.*"):
-        put(f, f"1_Read_Me_First/{f.name}")
+        put(f, f"{DECK}/{f.name}")
 
-    # 2. The store list
+    # 3. Datasets. The store list
     for f in ("NC_Grocery_POIs_v2.xlsx", "NC_Grocery_POIs_v2.csv", "NC_Grocery_POIs_v1_rows_not_in_v2.csv"):
-        put(AD / "exports" / f, f"2_Store_List/{f}")
+        put(AD / "exports" / f, f"{DATA}/store_list/{f}")
 
-    # 3. Scores: stores and census tracts, both pipelines
+    # Scores: stores and census tracts, both pipelines
     stores = pd.read_csv(AD / "step6_store_scores.csv")[["store_id", "place_id", "store_name", "city", "county", "category", "lat", "lon"]]
-    S = "3_Scores"
+    S = f"{DATA}/scores"
     put(AD / "step6_store_scores.csv", f"{S}/store_scores_A_teresa_method{sfx}.csv")
     put(AD / "step6_store_scores_frozen.csv", f"{S}/store_scores_A_frozen_raleigh_model{sfx}.csv")
     stores.merge(pd.read_csv(BO / "b_store_scores.csv"), on="store_id", how="right").to_csv(
@@ -96,12 +133,12 @@ def main() -> None:
               "b_pipeline.json"):
         put(BO / f, f"{S}/regressions/{f}")
 
-    # 4. Review level
+    # Review level
     for f in ("NC_reviews_with_dimensions.parquet", "NC_reviews_with_dimensions_preview.csv", "NC_reviews_with_dimensions_meta.json"):
-        put(AD / "exports" / f, f"4_Review_Level/{f.replace('.parquet', sfx + '.parquet')}")
+        put(AD / "exports" / f, f"{DATA}/review_level/{f.replace('.parquet', sfx + '.parquet')}")
 
-    # 5. Human labeling: the page (to republish), its inputs, and whatever labels have been imported
-    L = "5_Human_Labeling"
+    # Human labeling: the page (to republish), its inputs, and whatever labels have been imported
+    L = f"{DATA}/human_labeling"
     for f in ("labeler.html", "data.js", "data_b2.js", "build_data.py", "build_data_b2.py"):
         put(A / "apps/web_labeler" / f, f"{L}/web_labeler_page/{f}")
     put(A / "decisions/out/gold_sample.csv", f"{L}/inputs/gold_sample_260_reviews.csv")
@@ -115,16 +152,15 @@ def main() -> None:
         put(AD / "step5_import_meta.json", f"{L}/imported_labels/step5_import_meta.json")
     if not imported:
         (TMP / L / "imported_labels").mkdir(parents=True, exist_ok=True)
-        (TMP / L / "imported_labels/NOT_YET.txt").write_text("No human labels have been imported yet. See 1_Read_Me_First/FOR_CAROLINE.\n")
+        (TMP / L / "imported_labels/NOT_YET.txt").write_text("No human labels have been imported yet. See 1_Docs_and_Reports/FOR_CAROLINE.\n")
 
-    # 6. Raleigh case study: a workbook rebuilt from b_raleigh.json every time
-    R = "6_Raleigh_Case_Study"
+    # Raleigh case study: the result files here, and a workbook (rebuilt from b_raleigh.json every time) with the reports
     for f in ("b_raleigh.json", "b_raleigh_equal.json", "b_raleigh_stores.csv", "b_raleigh_stores_equal.csv"):
-        put(BO / f, f"{R}/{f}")
-    raleigh_workbook(TMP / R / f"Raleigh_case_study{sfx}.xlsx")
+        put(BO / f, f"{DATA}/raleigh_case_study/{f}")
+    raleigh_workbook(TMP / DOCS / f"Raleigh_case_study{sfx}.xlsx")
 
-    # 7. Methods and reference
-    M = "7_Methods_and_Reference"
+    # Back to 1: methods and reference
+    M = DOCS
     put(ROOT / "PIPELINE_GUIDE.md", f"{M}/PIPELINE_GUIDE.md")
     docx(ROOT / "PIPELINE_GUIDE.md", f"{M}/PIPELINE_GUIDE.docx")
     put(ROOT / "Reviews Data/STATUS.md", f"{M}/scraping/STATUS.md")
@@ -137,16 +173,18 @@ def main() -> None:
     for f in sorted(BO.glob("b[1-7]*.json")):
         put(f, f"{M}/pipeline_B_tests/{f.name}")
 
-    # 8. The whole GitHub repo as one zip (code, docs, results, Teresa's files), so Drive alone is a full copy.
-    #    Falls back to a code-only zip when this folder isn't a git repo.
-    (TMP / "8_Code").mkdir(parents=True, exist_ok=True)
+    # The result and working files the code reads (not in git), at their repo paths
+    working_files_zip(TMP / DATA / "pipeline_working_files.zip")
+
+    # A small safety copy of the code. The code's home is the GitHub repo.
+    (TMP / "Code_snapshot").mkdir(parents=True, exist_ok=True)
     if (ROOT / ".git").exists():
         subprocess.run(["git", "-C", str(ROOT), "archive", "--format=zip", "--prefix=nc-aspatial-food-access/",
-                        "-o", str(TMP / "8_Code/nc-aspatial-food-access_repo.zip"), "HEAD"], check=True)
+                        "-o", str(TMP / "Code_snapshot/nc-aspatial-food-access_code.zip"), "HEAD"], check=True)
     else:
-        code_zip(TMP / "8_Code/aspatial_code.zip")
+        code_zip(TMP / "Code_snapshot/nc-aspatial-food-access_code.zip")
 
-    # 9. The database: the master reviews DB (content = freeze v2) and the side databases
+    # The database: the master reviews DB (content = freeze v2) and the side databases
     archive_databases()
 
     rows = []
@@ -166,6 +204,49 @@ def main() -> None:
     TMP.rename(DEST)
     total = sum(r["bytes"] for r in rows)
     print(f"google_drive_upload/: {len(rows)} files, {total / 1e9:.2f} GB, labels {status}")
+    if "--zips" in sys.argv:
+        upload_zips()
+
+
+def working_files() -> list[Path]:
+    """Every file under WORK_INCLUDE that WORK_EXCLUDE doesn't rule out."""
+    from fnmatch import fnmatch
+    out = set()
+    for pat in WORK_INCLUDE:
+        for p in ROOT.glob(pat):
+            for f in ([p] if p.is_file() else p.rglob("*")):
+                rel = f.relative_to(ROOT).as_posix()
+                if f.is_file() and not any(fnmatch(rel, x) for x in WORK_EXCLUDE):
+                    out.add(f)
+    return sorted(out)
+
+
+def working_files_zip(path: Path) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with zipfile.ZipFile(path, "w", zipfile.ZIP_DEFLATED, compresslevel=3) as z:
+        for f in working_files():
+            z.write(f, f.relative_to(ROOT))
+
+
+def upload_zips() -> None:
+    """One zip per Drive folder, for uploading by hand. Each unzips into NC_Aspatial_Food_Access/, so unzipping
+    all of them in one place gives the single folder to drag into Drive."""
+    if ZIPS.exists():
+        shutil.rmtree(ZIPS)
+    ZIPS.mkdir()
+    top = "NC_Aspatial_Food_Access"
+    groups = {DOCS: [DOCS, "Code_snapshot"], DECK: [DECK], DATA: [DATA]}
+    for name, folders in groups.items():
+        with zipfile.ZipFile(ZIPS / f"{name}.zip", "w", zipfile.ZIP_DEFLATED, compresslevel=1) as z:
+            if name == DOCS:                                   # the loose files at the top travel with the documents
+                for f in sorted(DEST.iterdir()):
+                    if f.is_file():
+                        z.write(f, f"{top}/{f.name}")
+            for folder in folders:
+                for f in sorted((DEST / folder).rglob("*")):
+                    if f.is_file():
+                        z.write(f, f"{top}/{f.relative_to(DEST)}")
+        print(f"  drive_zips/{name}.zip  {(ZIPS / f'{name}.zip').stat().st_size / 1e6:.0f} MB")
 
 
 def raleigh_workbook(path: Path) -> None:
@@ -212,15 +293,14 @@ def code_zip(path: Path) -> None:
                 rel = p.relative_to(ROOT)
                 if p.is_file() and p.suffix in keep_ext and not (set(rel.parts) & skip_dirs):
                     z.write(p, rel)
-        for f in ("run_after_labeling.sh", "build_drive_package.py", "PIPELINE_GUIDE.md", "CLAUDE.md"):
+        for f in ("run_after_labeling.sh", "build_drive_package.py", "place_data.sh", "PIPELINE_GUIDE.md", "CLAUDE.md", "README.md"):
             z.write(ROOT / f, f)
-        for f in HANDOFF.glob("*.md"):
-            z.write(f, f.relative_to(ROOT))
+        z.write(HANDOFF / "FOR_CLAUDE.md", "handoff/FOR_CLAUDE.md")
         z.write(ROOT / "requirements_lab_vm.txt", "requirements_lab_vm.txt")
 
 
 def archive_databases() -> None:
-    D = "9_Database"
+    D = f"{DATA}/database"
     (TMP / D).mkdir(parents=True)
     rd = ROOT / "Reviews Data"
     files = ["Step_5_master_reviews.db", "Step_5_out_of_scope.db", "Step_5_closed_stores.db", "Step_5_excluded_stores.db",

@@ -76,9 +76,10 @@ step 21_b_raleigh_equal        "$B" "$PY" b_raleigh.py --weights equal
 
 # 5. The review-level export and the Google Drive folder
 step 22_export_reviews         "$A" "$PY" export_review_table.py
-step 23_drive_package          "$ROOT" "$PY" build_drive_package.py
+step 23_drive_package          "$ROOT" "$PY" build_drive_package.py --zips
 
 echo
 echo "Done. Logs: $LOG"
-echo "The Drive folder (google_drive_upload/) now holds the final, human-labeled files."
+echo "google_drive_upload/ now holds the final, human-labeled files. Upload it to Google Drive in place of the old folder"
+echo "(drive_zips/ has the same content as one zip per folder, easier to download from the VM)."
 echo "Update PIPELINE_GUIDE.md with the new numbers (the json files in NC Pipeline/decisions/out and NC Pipeline Improved/out)."

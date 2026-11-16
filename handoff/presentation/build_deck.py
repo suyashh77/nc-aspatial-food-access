@@ -361,7 +361,7 @@ body = ('<div class="g" style="grid-template-columns:repeat(4,1fr);gap:18px">'
         + "".join(f'<div class="cd" style="padding:22px 24px;min-height:190px"><h3 style="font-size:28px;color:#111">{h}</h3><p class="sm" style="margin-top:10px;font-size:22px">{p}</p></div>' for h, p in delivered)
         + "</div>")
 slide(4, "Results · Handoff", "What&#8217;s in the handoff?", body,
-      "Everything a person needs to use, check or rerun the work is in one Google Drive folder.",
+      "The documents, slides and data are in one Google Drive folder. The code is on GitHub.",
       "Licensed foot-traffic data stays on the lab server. Large regenerable files (embeddings) stay there too.")
 
 # ---------------------------------------------------------------- 5 reflection
