@@ -24,9 +24,8 @@ Every grocery store in North Carolina (4,442), their Google reviews (1.94M), and
 | `docs/` | The Word docs above, the scraping record (`scraping/`), Teresa's thesis. Plain-text copies of the docs for Claude or GitHub are in `markdown/` |
 | `presentation/` | Final slides. Open the HTML in a browser, arrow keys to move, N for notes. PDF is the same deck |
 | `labeling/` | The labeling web page (`web_labeler_page/`), what raters label (`inputs/`), and where imported labels go (`imported_labels/`) |
-| `data/` | Store list, scores, review-level file, Raleigh results, databases, `pipeline_working_files.zip`. Inner layout is what `place_data.sh` expects, so don't rearrange it |
+| `data/` | Store list, scores, review-level file, Raleigh results, databases, `pipeline_working_files.zip`, `PACKAGE_CONTENTS.csv` (every file with its checksum). Inner layout is what `place_data.sh` expects, so don't rearrange it |
 | `results/` | Decision-test and Pipeline B test outputs (JSON), Raleigh workbook |
 | `code/` | Backup zip of the code repo. The live code is on GitHub: `suyashh77/nc-aspatial-food-access` (private) |
-| `_archive/` | The earlier long-form guides, Word copies, old file list, duplicate files. Nothing here is needed |
 
 Licensed foot-traffic data (Advan, SafeGraph) is not here. It stays on the lab VM.
