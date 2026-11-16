@@ -162,6 +162,7 @@ The script writes `PACKAGE_CONTENTS.csv` with checksums. Score files are named `
 - `parents_draft.csv` is a hand-made draft. It decides provisional validity, nothing else.
 - B6 drive times are free-flow (no turn or signal delays) and only count NC stores, so border tracts look worse than they are.
 - `b6_local_market.py --weights visits` reads `grocery-foot-traffic/stores.csv` (licensed). `--weights equal` doesn't, and Teresa's method uses no foot traffic.
+- In a clone built with `place_data.sh` there is no licensed data, so `--weights visits` and the default `b_raleigh.py` run only on the VM. The clone's `grocery-foot-traffic/map/data/bg.geojson` is a stripped copy (block-group outlines and county names only), which is all stage 6 needs to place stores in counties. The VM's copy also has foot-traffic summaries.
 - The `step6_*_haywood*` and `data/exports/haywood/` files are from Haywood County, which was dropped from scope on 2026-11-11. Ignore them.
 - `NC Pipeline/config.py`'s docstring still says steps 4–5 are "not built yet". They are; this file and the guide are current.
 - The old `GOOGLE_DRIVE_HANDOFF_README.md` (Nov 13) was superseded and moved to `_superseded/`. Some of its numbers were wrong and it held personal details. Don't use it.

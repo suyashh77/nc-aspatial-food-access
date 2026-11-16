@@ -53,6 +53,7 @@ WORK_INCLUDE = [
     "grocery-foot-traffic/NC_Grocery_POIs.xlsx", "grocery-foot-traffic/map/data/nc.geojson",
     "handoff/*.md", "handoff/presentation/Final_Presentation.*",
 ]
+BG_OUTLINES = "grocery-foot-traffic/map/data/bg.geojson"
 WORK_EXCLUDE = [
     "NC Pipeline/data/step1_embeddings.npy", "NC Pipeline/data/step1_reviews.parquet", "NC Pipeline/data/step3_grid/*",
     "NC Pipeline/data/exp_no_empty/*", "NC Pipeline/data/web_labels/*", "NC Pipeline/data/*haywood*",
@@ -226,6 +227,12 @@ def working_files_zip(path: Path) -> None:
     with zipfile.ZipFile(path, "w", zipfile.ZIP_DEFLATED, compresslevel=3) as z:
         for f in working_files():
             z.write(f, f.relative_to(ROOT))
+        # Block-group outlines, which stage 6 uses to find each store's county. The server's file also carries
+        # foot-traffic summaries (licensed source), so only the public part goes in: outline, block-group id, county.
+        bg = json.loads((ROOT / BG_OUTLINES).read_text())
+        for feat in bg["features"]:
+            feat["properties"] = {k: feat["properties"][k] for k in ("id", "county")}
+        z.writestr(BG_OUTLINES, json.dumps(bg, separators=(",", ":")))
 
 
 def upload_zips() -> None:
