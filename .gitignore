@@ -1,0 +1,74 @@
+# Allowlist: nothing at the top level is tracked unless listed below.
+# Large files (review database, cleaned reviews, review export) are release assets: run ./fetch_data.sh.
+# Licensed data (grocery-foot-traffic/, Dewey/SafeGraph) is never committed.
+/*
+!/.gitignore
+!/README.md
+!/CLAUDE.md
+!/PIPELINE_GUIDE.md
+!/run_after_labeling.sh
+!/build_drive_package.py
+!/fetch_data.sh
+!/requirements_lab_vm.txt
+!/handoff/
+!/NC Pipeline/
+!/NC Pipeline Improved/
+!/Teresa Project/
+!/Reviews Data/
+!/grocery-foot-traffic/
+
+**/__pycache__/
+**/.pytest_cache/
+
+# Pipeline A: environment, logs, and large or regenerable files
+/NC Pipeline/.venv/
+/NC Pipeline/logs/
+/NC Pipeline/data/step1_embeddings.npy
+/NC Pipeline/data/step1_reviews.parquet
+/NC Pipeline/data/step3_grid/
+/NC Pipeline/data/exp_no_empty/
+/NC Pipeline/data/web_labels/
+/NC Pipeline/data/*haywood*
+/NC Pipeline/data/exports/haywood/
+/NC Pipeline/data/exports/NC_reviews_with_dimensions.parquet
+
+# Pipeline B: sentence embeddings (3 GB, rebuilt by b2_sentences.py) and the OSM download
+/NC Pipeline Improved/out/b2_sentence_embeddings.npy
+/NC Pipeline Improved/data_external/
+
+# Teresa's materials: only what the code reads, her notebooks and her thesis
+/Teresa Project/*
+!/Teresa Project/Code Pipeline/
+/Teresa Project/Code Pipeline/*
+!/Teresa Project/Code Pipeline/*.ipynb
+!/Teresa Project/Code Pipeline/bertopic_model/
+!/Teresa Project/Code Pipeline/topic_centroids_frozen.npz
+!/Teresa Project/Code Pipeline/data/
+/Teresa Project/Code Pipeline/data/*
+!/Teresa Project/Code Pipeline/data/definition_text.json
+!/Teresa Project/Code Pipeline/data/manual_validation/
+/Teresa Project/Code Pipeline/data/manual_validation/*
+!/Teresa Project/Code Pipeline/data/manual_validation/manual_validation_scores.csv
+!/Teresa Project/Raleigh_Data/
+/Teresa Project/Raleigh_Data/*
+!/Teresa Project/Raleigh_Data/store_scores.csv
+!/Teresa Project/Raleigh_Data/raleigh_ring_reviews_with_dims.csv
+!/Teresa Project/Raleigh_Data/final_embedding_model/
+!/Teresa Project/Raleigh_Data/definition_embeddings/
+!/Teresa Project/Teresa Files/
+/Teresa Project/Teresa Files/*
+!/Teresa Project/Teresa Files/Aspatial_Access_NC_Plan.md
+!/Teresa Project/Teresa Files/Teresa_Groton_Masters_Thesis.pdf
+
+# Reviews Data: the scraping project's docs only (databases are release assets)
+/Reviews Data/*
+!/Reviews Data/*.md
+
+# grocery-foot-traffic is licensed. Only the NC outline (public Census geometry) used by the deck's maps.
+/grocery-foot-traffic/*
+!/grocery-foot-traffic/map/
+/grocery-foot-traffic/map/*
+!/grocery-foot-traffic/map/data/
+/grocery-foot-traffic/map/data/*
+!/grocery-foot-traffic/map/data/nc.geojson
+/NC Pipeline/data_external/census/gaz_tracts_2022.zip

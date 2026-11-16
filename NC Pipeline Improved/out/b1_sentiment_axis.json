@@ -1,0 +1,62 @@
+{
+  "projection_vs_stars_spearman_before": 0.549,
+  "linear_1v5_balanced_accuracy_before": 0.95,
+  "linear_1v5_balanced_accuracy_after": 0.507,
+  "linear_1v5_on_direction_only": 0.912,
+  "fit": {
+    "topics": 88,
+    "outlier_share": 0.581
+  },
+  "outlier_share_after_transform": 0.0278,
+  "stars_eta2": {
+    "A": 0.321,
+    "B1": 0.1227
+  },
+  "cashier_check": {
+    "A": {
+      "rude_cashier_reviews": 3369,
+      "friendly_cashier_reviews": 10470,
+      "top_topic_rude": 9,
+      "top_topic_friendly": 22,
+      "distribution_overlap": 0.345
+    },
+    "B1": {
+      "rude_cashier_reviews": 3369,
+      "friendly_cashier_reviews": 10470,
+      "top_topic_rude": 86,
+      "top_topic_friendly": 86,
+      "distribution_overlap": 0.852
+    }
+  },
+  "generic_topics_auto": [
+    1,
+    7,
+    8,
+    9,
+    10,
+    37,
+    47,
+    58,
+    61
+  ],
+  "topics_by_pred_dim": {
+    "Acceptability": 63,
+    "Affordability": 12,
+    "Accommodation": 6,
+    "Accessibility": 4,
+    "Availability": 3
+  },
+  "mean_stars_spread_across_topics_sd": {
+    "A": 0.686,
+    "B1": 0.503
+  },
+  "gold_B1": {
+    "precision": 0.69,
+    "recall": 0.516,
+    "f1": 0.591,
+    "reviews": 234,
+    "labels_per_review_pred": 1.39,
+    "labels_per_review_gold": 1.86
+  },
+  "seconds": 92
+}

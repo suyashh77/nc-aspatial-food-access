@@ -1,0 +1,19 @@
+{
+  "engine": "cuml",
+  "min_cluster_size": 2000,
+  "hdbscan": {
+    "min_samples": 15,
+    "metric": "euclidean",
+    "cluster_selection_method": "leaf",
+    "prediction_data": false
+  },
+  "n_topics": 83,
+  "outlier_share": 0.5697,
+  "median_topic_size": 3875,
+  "largest_topic_share": 0.0224,
+  "coherence_cv": 0.5291,
+  "topic_diversity": 0.7639,
+  "coherence_words_dropped": 1,
+  "vocabulary": 143584,
+  "seconds": 52
+}

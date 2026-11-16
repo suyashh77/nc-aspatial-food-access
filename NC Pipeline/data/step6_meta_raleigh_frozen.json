@@ -1,0 +1,61 @@
+{
+  "stores_filter": "raleigh",
+  "validity": "Teresa's own validity (her 18 invalid Raleigh topics)",
+  "valid_topics": 182,
+  "reviews_in_valid_topics": 14403,
+  "stores": 42,
+  "review_dims_file": "step4_review_dims_frozen.parquet",
+  "seconds": 13,
+  "pooling": [
+    {
+      "dim": "Availability",
+      "n_stores": 42,
+      "mu_mean": 0.5385398940768974,
+      "tau_mean": 0.08762918240195326,
+      "rhat_max_mu_tau": 1.0044257653108513,
+      "rhat_max_theta": 1.0026942131912093,
+      "ess_min_theta": 744.7464675368988,
+      "divergences": 0
+    },
+    {
+      "dim": "Accessibility",
+      "n_stores": 42,
+      "mu_mean": 0.12937835460544764,
+      "tau_mean": 0.16028855237651546,
+      "rhat_max_mu_tau": 1.0007012687005288,
+      "rhat_max_theta": 1.0019099679986758,
+      "ess_min_theta": 7994.325270390045,
+      "divergences": 0
+    },
+    {
+      "dim": "Accommodation",
+      "n_stores": 42,
+      "mu_mean": -0.07904387001374397,
+      "tau_mean": 0.17120114609726433,
+      "rhat_max_mu_tau": 1.0008382128130255,
+      "rhat_max_theta": 1.001784099534173,
+      "ess_min_theta": 3980.5242944701195,
+      "divergences": 0
+    },
+    {
+      "dim": "Affordability",
+      "n_stores": 42,
+      "mu_mean": 0.5209712050262619,
+      "tau_mean": 0.07699108001026982,
+      "rhat_max_mu_tau": 1.001180016154819,
+      "rhat_max_theta": 1.002443836685091,
+      "ess_min_theta": 8567.494769851663,
+      "divergences": 0
+    },
+    {
+      "dim": "Acceptability",
+      "n_stores": 42,
+      "mu_mean": 0.46475092184742495,
+      "tau_mean": 0.08513436312842657,
+      "rhat_max_mu_tau": 1.0013122463189692,
+      "rhat_max_theta": 1.0024718244980375,
+      "ess_min_theta": 13141.86911687808,
+      "divergences": 0
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "fit_outlier_share": 0.57,
+  "share_moved_to_a_different_topic_than_fit": 0.065,
+  "dims_fit": {
+    "reviews_with_dim": 304364,
+    "stores_with_20plus_by_dim": {
+      "Availability": 529,
+      "Accessibility": 277,
+      "Accommodation": 312,
+      "Affordability": 1216,
+      "Acceptability": 2411
+    }
+  },
+  "dims_all": {
+    "reviews_with_dim": 674031,
+    "stores_with_20plus_by_dim": {
+      "Availability": 1554,
+      "Accessibility": 541,
+      "Accommodation": 547,
+      "Affordability": 2124,
+      "Acceptability": 3161
+    }
+  },
+  "store_score_agreement_fit_vs_all": {
+    "Availability": {
+      "spearman": 0.933,
+      "stores": 529
+    },
+    "Accessibility": {
+      "spearman": 0.959,
+      "stores": 277
+    },
+    "Accommodation": {
+      "spearman": 0.964,
+      "stores": 312
+    },
+    "Affordability": {
+      "spearman": 0.879,
+      "stores": 1216
+    },
+    "Acceptability": {
+      "spearman": 0.914,
+      "stores": 2411
+    }
+  },
+  "topic_sim_median": {
+    "members": 0.7251095175743103,
+    "reassigned_outliers": 0.650572657585144
+  },
+  "gold_members": {
+    "precision": 0.754,
+    "recall": 0.458,
+    "f1": 0.57,
+    "reviews": 109,
+    "labels_per_review_pred": 1.12,
+    "labels_per_review_gold": 1.84
+  },
+  "gold_reassigned_outliers": {
+    "precision": 0.654,
+    "recall": 0.434,
+    "f1": 0.522,
+    "reviews": 125,
+    "labels_per_review_pred": 1.25,
+    "labels_per_review_gold": 1.88
+  }
+}

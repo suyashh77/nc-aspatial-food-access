@@ -1,0 +1,119 @@
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 9521.31it/s]
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+d3_topics {
+ "1000": {
+  "topics": 168,
+  "outlier_share_after_transform": 0.0162,
+  "topics_by_pred_dim": {
+   "Acceptability": 111,
+   "Affordability": 29,
+   "Availability": 12,
+   "Accommodation": 9,
+   "Accessibility": 7
+  },
+  "gold_top1": {
+   "hit_rate": 0.768,
+   "macro_f1": 0.444
+  },
+  "gold_multilabel": {
+   "precision": 0.682,
+   "recall": 0.537,
+   "f1": 0.601,
+   "reviews": 234,
+   "labels_per_review_pred": 1.47,
+   "labels_per_review_gold": 1.86
+  }
+ },
+ "2000": {
+  "topics": 83,
+  "outlier_share_after_transform": 0.0175,
+  "topics_by_pred_dim": {
+   "Acceptability": 59,
+   "Affordability": 13,
+   "Accommodation": 4,
+   "Accessibility": 4,
+   "Availability": 3
+  },
+  "gold_top1": {
+   "hit_rate": 0.78,
+   "macro_f1": 0.417
+  },
+  "gold_multilabel": {
+   "precision": 0.687,
+   "recall": 0.534,
+   "f1": 0.601,
+   "reviews": 234,
+   "labels_per_review_pred": 1.45,
+   "labels_per_review_gold": 1.86
+  }
+ },
+ "4000": {
+  "topics": 44,
+  "outlier_share_after_transform": 0.0292,
+  "topics_by_pred_dim": {
+   "Acceptability": 31,
+   "Affordability": 6,
+   "Accommodation": 4,
+   "Availability": 2,
+   "Accessibility": 1
+  },
+  "gold_top1": {
+   "hit_rate": 0.762,
+   "macro_f1": 0.39
+  },
+  "gold_multilabel": {
+   "precision": 0.697,
+   "recall": 0.511,
+   "f1": 0.59,
+   "reviews": 234,
+   "labels_per_review_pred": 1.37,
+   "labels_per_review_gold": 1.86
+  }
+ },
+ "store_scores_vs_2000": {
+  "1000": {
+   "Availability": {
+    "spearman": 0.898,
+    "stores": 1705
+   },
+   "Accessibility": {
+    "spearman": 0.93,
+    "stores": 933
+   },
+   "Accommodation": {
+    "spearman": 0.926,
+    "stores": 1017
+   },
+   "Affordability": {
+    "spearman": 0.924,
+    "stores": 2459
+   },
+   "Acceptability": {
+    "spearman": 0.994,
+    "stores": 3382
+   }
+  },
+  "4000": {
+   "Availability": {
+    "spearman": 0.936,
+    "stores": 1709
+   },
+   "Accessibility": {
+    "spearman": 0.869,
+    "stores": 839
+   },
+   "Accommodation": {
+    "spearman": 0.963,
+    "stores": 977
+   },
+   "Affordability": {
+    "spearman": 0.931,
+    "stores": 2477
+   },
+   "Acceptability": {
+    "spearman": 0.996,
+    "stores": 3387
+   }
+  }
+ }
+}

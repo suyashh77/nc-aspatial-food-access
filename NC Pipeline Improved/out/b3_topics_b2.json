@@ -1,0 +1,994 @@
+{
+  "base": "b2",
+  "stores": 1803,
+  "items_salience": 79,
+  "items_performance": 17,
+  "salience": {
+    "stores": 1803,
+    "items": 79,
+    "n_factors_parallel_analysis": 15,
+    "eigenvalues": [
+      6.92,
+      5.33,
+      4.86,
+      3.32,
+      2.57,
+      2.49,
+      2.2,
+      1.92,
+      1.81,
+      1.57,
+      1.53,
+      1.43
+    ],
+    "shuffled_95pct": [
+      1.47,
+      1.42,
+      1.4,
+      1.38,
+      1.36,
+      1.35,
+      1.33,
+      1.31,
+      1.3,
+      1.29,
+      1.27,
+      1.26
+    ],
+    "factors": [
+      {
+        "stability": 0.99,
+        "top_topics": {
+          "1": {
+            "loading": 0.79,
+            "words": "great prices, prices, good prices, great, great deals, good, deals, price",
+            "n": 15965
+          },
+          "68": {
+            "loading": 0.72,
+            "words": "prices, price, expensive, high, pricey, reasonable, priced, good prices",
+            "n": 53250
+          },
+          "65": {
+            "loading": 0.67,
+            "words": "prices, stores, price, higher, store, shop, expensive, high",
+            "n": 16007
+          },
+          "34": {
+            "loading": 0.63,
+            "words": "grocery, grocery stores, groceries, stores, prices, grocery store, higher, expensive",
+            "n": 12107
+          },
+          "32": {
+            "loading": 0.61,
+            "words": "food, prices, price, food prices, expensive, good, quality, foods",
+            "n": 17341
+          },
+          "64": {
+            "loading": 0.6,
+            "words": "deals, sales, good deals, sale, great deals, good, good sales, specials",
+            "n": 21139
+          }
+        },
+        "negative_topics": {
+          "9": "pharmacy, pharmacist, prescription, prescriptions, medicine,",
+          "26": "deli, great deli, love deli, deli department, deli counter, "
+        },
+        "cosine_to_definitions": {
+          "Availability": 0.5590000152587891,
+          "Accessibility": 0.4490000009536743,
+          "Accommodation": 0.5180000066757202,
+          "Affordability": 0.7390000224113464,
+          "Acceptability": 0.6660000085830688
+        },
+        "best_match": "Affordability",
+        "best_cosine": 0.7390000224113464,
+        "nearest_reviews": [
+          "Great prices, keeping everything as clean as possible, friendly and helpful staff. The only place I shop for groceries generally.",
+          "Great food store many items to choose from. Nice and clean very friendly  staff\nI just thought it was a little pricey",
+          "Great prices, good food & friendly ppl",
+          "Great sale and coupon days.  Ordinary prices are high but food quality and variety are good."
+        ]
+      },
+      {
+        "stability": 0.96,
+        "top_topics": {
+          "79": {
+            "loading": 0.71,
+            "words": "self, checkout, self checkout, check, self check, checkouts, lines, line",
+            "n": 27489
+          },
+          "77": {
+            "loading": 0.6,
+            "words": "registers, register, registers open, open, register open, self, line, open registers",
+            "n": 12306
+          },
+          "78": {
+            "loading": 0.51,
+            "words": "lines, long, line, long lines, lines long, wait, long line, waiting",
+            "n": 12246
+          },
+          "72": {
+            "loading": 0.48,
+            "words": "employees, employee, rude, workers, work, job, working, people",
+            "n": 32119
+          },
+          "76": {
+            "loading": 0.46,
+            "words": "cashier, cashiers, rude, cash, cashier friendly, line, friendly, cashiers friendly",
+            "n": 33989
+          },
+          "49": {
+            "loading": 0.41,
+            "words": "carts, cart, shopping carts, handicap, handicapped, electric, shopping, wheelchair",
+            "n": 11412
+          }
+        },
+        "negative_topics": {
+          "24": "chicken, fried, fried chicken, wings, rotisserie, rotisserie",
+          "7": "target, love target, targets, shopping target, target store,"
+        },
+        "cosine_to_definitions": {
+          "Availability": 0.5460000038146973,
+          "Accessibility": 0.5120000243186951,
+          "Accommodation": 0.5270000100135803,
+          "Affordability": 0.5299999713897705,
+          "Acceptability": 0.6779999732971191
+        },
+        "best_match": "Acceptability",
+        "best_cosine": 0.6779999732971191,
+        "nearest_reviews": [
+          "They seriously need to train their staff.  I\nAfter shopping I went up to the cash register and the cashier said zero worked to me.  Didn't get a \"hello or your ",
+          "The checkout service is terrible... they only have a few registers open and don't care that there are lines of people waiting... if you need to do your grocery ",
+          "This place is a barn burner! I've never seen a grocery store so packed, yet run good and smooth. To our surprise nothing we wanted was out of stock. One guy tol",
+          "The store is never stocked adequately, the staff are extremely rude, there is always a wait due to long lines and only one cashier, there are always stock carts"
+        ]
+      },
+      {
+        "stability": 0.99,
+        "top_topics": {
+          "61": {
+            "loading": 0.79,
+            "words": "clean, clean store, store clean, store, stocked, nice clean, clean stocked, organized",
+            "n": 41403
+          },
+          "12": {
+            "loading": 0.64,
+            "words": "clean, clean friendly, staff, friendly staff, friendly, clean staff, helpful, employees",
+            "n": 13643
+          },
+          "59": {
+            "loading": 0.62,
+            "words": "clean, organized, clean organized, nice clean, neat, clean friendly, nice, dirty",
+            "n": 33537
+          },
+          "62": {
+            "loading": 0.59,
+            "words": "store, staff, friendly, store friendly, clean store, clean, employees, store clean",
+            "n": 31117
+          },
+          "58": {
+            "loading": 0.52,
+            "words": "clean, clean stocked, stocked, clean great, clean good, clean easy, prices, prices clean",
+            "n": 13598
+          },
+          "73": {
+            "loading": 0.5,
+            "words": "employees, helpful, employees friendly, friendly, workers, friendly employees, employees h",
+            "n": 27493
+          }
+        },
+        "negative_topics": {
+          "54": "visit, going, definitely, coming, time, come, wont, trip",
+          "10": "market, fresh market, super, super market, neighborhood mark"
+        },
+        "cosine_to_definitions": {
+          "Availability": 0.5090000033378601,
+          "Accessibility": 0.41999998688697815,
+          "Accommodation": 0.4099999964237213,
+          "Affordability": 0.5289999842643738,
+          "Acceptability": 0.7689999938011169
+        },
+        "best_match": "Acceptability",
+        "best_cosine": 0.7689999938011169,
+        "nearest_reviews": [
+          "Very clean store and friendly staff \ud83d\udc4c \u2026",
+          "Very clean store and friendly staff",
+          "Very clean store and friendly staff",
+          "Great deal clean store and friendly staff"
+        ]
+      },
+      {
+        "stability": 0.98,
+        "top_topics": {
+          "33": {
+            "loading": 0.88,
+            "words": "food, foods, love food, eat, delicious, love, foodlion, good food",
+            "n": 71409
+          },
+          "31": {
+            "loading": 0.75,
+            "words": "food, great food, service, food great, staff, good food, great, friendly",
+            "n": 21888
+          },
+          "32": {
+            "loading": 0.26,
+            "words": "food, prices, price, food prices, expensive, good, quality, foods",
+            "n": 17341
+          },
+          "15": {
+            "loading": 0.22,
+            "words": "mexican, tacos, hispanic, latin, mexican food, authentic, tortillas, spanish",
+            "n": 12634
+          },
+          "24": {
+            "loading": 0.21,
+            "words": "chicken, fried, fried chicken, wings, rotisserie, rotisserie chicken, turkey, chicken wing",
+            "n": 14357
+          },
+          "25": {
+            "loading": 0.19,
+            "words": "sandwich, sandwiches, cheese, lunch, bread, salad, pizza, sub",
+            "n": 20755
+          }
+        },
+        "negative_topics": {
+          "52": "selection, great selection, variety, good selection, selecti",
+          "9": "pharmacy, pharmacist, prescription, prescriptions, medicine,"
+        },
+        "cosine_to_definitions": {
+          "Availability": 0.6240000128746033,
+          "Accessibility": 0.46399998664855957,
+          "Accommodation": 0.44699999690055847,
+          "Affordability": 0.515999972820282,
+          "Acceptability": 0.7250000238418579
+        },
+        "best_match": "Acceptability",
+        "best_cosine": 0.7250000238418579,
+        "nearest_reviews": [
+          "My family and I love shopping at this Food lion anytime we are in town. They have everything you want or need and at great prices. Staff is always friendly food",
+          "I like going to this Food lion it's always fully stocked good prices and the employees are friendly and eager to help",
+          "This is the best food Lion I ever been into it\u2019s nice and punishable about the items. The employees are very helpful and nice the store is very clean environmen",
+          "I had a good experience shopping at this food lion. They were friendly and helpful employees s."
+        ]
+      },
+      {
+        "stability": 0.9,
+        "top_topics": {
+          "23": {
+            "loading": 0.71,
+            "words": "meat, meats, beef, meat department, butcher, steaks, fresh, pork",
+            "n": 50896
+          },
+          "24": {
+            "loading": 0.16,
+            "words": "chicken, fried, fried chicken, wings, rotisserie, rotisserie chicken, turkey, chicken wing",
+            "n": 14357
+          },
+          "69": {
+            "loading": 0.15,
+            "words": "people, friendly, helpful, friendly people, nice, nice people, friendly helpful, people fr",
+            "n": 34810
+          },
+          "55": {
+            "loading": 0.15,
+            "words": "service, great service, great customer, good service, customer service, customer, friendly",
+            "n": 41743
+          },
+          "1": {
+            "loading": 0.14,
+            "words": "great prices, prices, good prices, great, great deals, good, deals, price",
+            "n": 15965
+          },
+          "4": {
+            "loading": 0.09,
+            "words": "friendly staff, staff, friendly, staff friendly, helpful staff, friendly helpful, helpful,",
+            "n": 12980
+          }
+        },
+        "negative_topics": {
+          "52": "selection, great selection, variety, good selection, selecti",
+          "21": "organic, vegan, options, selection organic, organic produce,"
+        },
+        "cosine_to_definitions": {
+          "Availability": 0.515999972820282,
+          "Accessibility": 0.3050000071525574,
+          "Accommodation": 0.3490000069141388,
+          "Affordability": 0.43799999356269836,
+          "Acceptability": 0.621999979019165
+        },
+        "best_match": "Acceptability",
+        "best_cosine": 0.621999979019165,
+        "nearest_reviews": [
+          "Great customer service and prices on meats.",
+          "It's the best the meats, great prices, the bundles all fresh meat, I'll always shop there,  this was my first time shopping there, friendly staff, from now on t",
+          "Wonderful customer service and vast selection of meats, even in fresh packages.",
+          "Great meat selections. Good customer service."
+        ]
+      },
+      {
+        "stability": 0.94,
+        "top_topics": {
+          "29": {
+            "loading": 0.81,
+            "words": "vegetables, fruit, fruits, fresh, veggies, fruits vegetables, fresh vegetables, fresh frui",
+            "n": 24085
+          },
+          "30": {
+            "loading": 0.77,
+            "words": "produce, fresh produce, fresh, produce fresh, great produce, produce section, good produce",
+            "n": 23114
+          },
+          "16": {
+            "loading": 0.14,
+            "words": "indian, indian grocery, indian groceries, indian store, groceries, place indian, indian fo",
+            "n": 5889
+          },
+          "10": {
+            "loading": 0.14,
+            "words": "market, fresh market, super, super market, neighborhood market, neighborhood, supercenter,",
+            "n": 11110
+          },
+          "21": {
+            "loading": 0.13,
+            "words": "organic, vegan, options, selection organic, organic produce, natural, gluten, free",
+            "n": 9637
+          },
+          "52": {
+            "loading": 0.11,
+            "words": "selection, great selection, variety, good selection, selections, choices, choose, options",
+            "n": 21225
+          }
+        },
+        "negative_topics": {
+          "23": "meat, meats, beef, meat department, butcher, steaks, fresh, ",
+          "48": "ok, better, good, say, just, like, disappointed, im"
+        },
+        "cosine_to_definitions": {
+          "Availability": 0.609000027179718,
+          "Accessibility": 0.41499999165534973,
+          "Accommodation": 0.44699999690055847,
+          "Affordability": 0.5170000195503235,
+          "Acceptability": 0.7459999918937683
+        },
+        "best_match": "Acceptability",
+        "best_cosine": 0.7459999918937683,
+        "nearest_reviews": [
+          "I always enjoy shopping at this Food Lion! The produce section is fresh and well-stocked, and the staff is super friendly and helpful. Plus, their weekly specia",
+          "This is such a great store! They have fresh produce,  everything is stocked, friendly fast checkout.  Shop at Harris Teeter, and you will agree!",
+          "Fairly good selection. Produce is good and fresh. Prices beat the regular grocery stores. We've shopped here ever since it opened.",
+          "Great store!  Fresh produce and reasonable prices.  They have everything! All of your traditional food is abundant and fresh. Very happy this store expanded."
+        ]
+      },
+      {
+        "stability": 0.72,
+        "top_topics": {
+          "35": {
+            "loading": 0.51,
+            "words": "grocery, grocery store, groceries, store, favorite grocery, supermarket, grocery stores, b",
+            "n": 56225
+          },
+          "34": {
+            "loading": 0.24,
+            "words": "grocery, grocery stores, groceries, stores, prices, grocery store, higher, expensive",
+            "n": 12107
+          },
+          "16": {
+            "loading": 0.22,
+            "words": "indian, indian grocery, indian groceries, indian store, groceries, place indian, indian fo",
+            "n": 5889
+          },
+          "19": {
+            "loading": 0.21,
+            "words": "beer, wine, beer selection, selection, wine selection, beer wine, beers, beer den",
+            "n": 14678
+          },
+          "6": {
+            "loading": 0.17,
+            "words": "mask, masks, wearing, wear, wearing masks, wearing mask, wear mask, face",
+            "n": 8165
+          },
+          "43": {
+            "loading": 0.17,
+            "words": "store, stores, small, big, need, items, little, small store",
+            "n": 34259
+          }
+        },
+        "negative_topics": {
+          "54": "visit, going, definitely, coming, time, come, wont, trip",
+          "82": "lady, thank, shes, helped, sweet, kind, helpful, amazing"
+        },
+        "cosine_to_definitions": {
+          "Availability": 0.7260000109672546,
+          "Accessibility": 0.6039999723434448,
+          "Accommodation": 0.5590000152587891,
+          "Affordability": 0.6000000238418579,
+          "Acceptability": 0.7379999756813049
+        },
+        "best_match": "Acceptability",
+        "best_cosine": 0.7379999756813049,
+        "nearest_reviews": [
+          "Great grocery store good for visitors to the area.",
+          "Great place to shop for groceries. Very clean and organized. Customers service is always amazing.",
+          "My favorite place to shop for basic groceries. It is well stocked, clean, and well maintained. Ample parking and always has good deals. The staff is friendly an",
+          "Great place to grocery shop.\nExcellent customer service!!!"
+        ]
+      },
+      {
+        "stability": 0.95,
+        "top_topics": {
+          "40": {
+            "loading": 0.7,
+            "words": "christmas, clothes, clothing, gifts, candy, shoes, seasonal, items",
+            "n": 18082
+          },
+          "43": {
+            "loading": 0.67,
+            "words": "store, stores, small, big, need, items, little, small store",
+            "n": 34259
+          },
+          "45": {
+            "loading": 0.5,
+            "words": "need, needed, looking, want, things, got, im looking, easy",
+            "n": 44005
+          },
+          "51": {
+            "loading": 0.43,
+            "words": "items, item, things, selection items, stuff, list, carry, variety items",
+            "n": 21500
+          },
+          "50": {
+            "loading": 0.2,
+            "words": "location, nc, area, north, carolina, charlotte, live, town",
+            "n": 59698
+          },
+          "65": {
+            "loading": 0.17,
+            "words": "prices, stores, price, higher, store, shop, expensive, high",
+            "n": 16007
+          }
+        },
+        "negative_topics": {
+          "32": "food, prices, price, food prices, expensive, good, quality, ",
+          "75": "order, pick, pickup, online, delivery, ordered, orders, minu"
+        },
+        "cosine_to_definitions": {
+          "Availability": 0.6159999966621399,
+          "Accessibility": 0.4569999873638153,
+          "Accommodation": 0.49300000071525574,
+          "Affordability": 0.6140000224113464,
+          "Acceptability": 0.652999997138977
+        },
+        "best_match": "Acceptability",
+        "best_cosine": 0.652999997138977,
+        "nearest_reviews": [
+          "What a great store! We found everything we needed for a family trip to the area.",
+          "What a great store! Everything I needed was there and easy to find period even hard to find items they had. I will be going back.",
+          "This is a great store.  The staff is kind and the store has what I always need!",
+          "First time visiting the store. I really liked it. They have a huge variety of items. Love it! Not many of this type of stores left in area."
+        ]
+      },
+      {
+        "stability": 0.95,
+        "top_topics": {
+          "69": {
+            "loading": 0.65,
+            "words": "people, friendly, helpful, friendly people, nice, nice people, friendly helpful, people fr",
+            "n": 34810
+          },
+          "71": {
+            "loading": 0.47,
+            "words": "help, helpful, helped, smile, ask, assistance, people, greeted",
+            "n": 25361
+          },
+          "73": {
+            "loading": 0.47,
+            "words": "employees, helpful, employees friendly, friendly, workers, friendly employees, employees h",
+            "n": 27493
+          },
+          "47": {
+            "loading": 0.45,
+            "words": "staff, friendly staff, friendly, prices, prices friendly, great, staff great, great staff",
+            "n": 17002
+          },
+          "55": {
+            "loading": 0.44,
+            "words": "service, great service, great customer, good service, customer service, customer, friendly",
+            "n": 41743
+          },
+          "46": {
+            "loading": 0.35,
+            "words": "staff, helpful, staff friendly, staff helpful, friendly, friendly helpful, helpful staff, ",
+            "n": 38967
+          }
+        },
+        "negative_topics": {
+          "24": "chicken, fried, fried chicken, wings, rotisserie, rotisserie",
+          "27": "bakery, bread, baked, cookies, baked goods, goods, great bak"
+        },
+        "cosine_to_definitions": {
+          "Availability": 0.47600001096725464,
+          "Accessibility": 0.4399999976158142,
+          "Accommodation": 0.42100000381469727,
+          "Affordability": 0.503000020980835,
+          "Acceptability": 0.6899999976158142
+        },
+        "best_match": "Acceptability",
+        "best_cosine": 0.6899999976158142,
+        "nearest_reviews": [
+          "Great store . Good service. Friendly staff.",
+          "Super nice grocery and friendly staff",
+          "Great store and friendly, helpful staff!",
+          "Good store and always friendly staff"
+        ]
+      },
+      {
+        "stability": 0.71,
+        "top_topics": {
+          "50": {
+            "loading": 0.65,
+            "words": "location, nc, area, north, carolina, charlotte, live, town",
+            "n": 59698
+          },
+          "54": {
+            "loading": 0.49,
+            "words": "visit, going, definitely, coming, time, come, wont, trip",
+            "n": 53002
+          },
+          "70": {
+            "loading": 0.28,
+            "words": "parking, parking lot, lot, park, plenty parking, easy, plenty, traffic",
+            "n": 24316
+          },
+          "25": {
+            "loading": 0.21,
+            "words": "sandwich, sandwiches, cheese, lunch, bread, salad, pizza, sub",
+            "n": 20755
+          },
+          "40": {
+            "loading": 0.17,
+            "words": "christmas, clothes, clothing, gifts, candy, shoes, seasonal, items",
+            "n": 18082
+          },
+          "3": {
+            "loading": 0.16,
+            "words": "love, thank, loved, job, good work, great job, nice, favorite",
+            "n": 22326
+          }
+        },
+        "negative_topics": {
+          "20": "asian, japanese, international, chinese, korean, asian food,",
+          "74": "card, receipt, money, refund, pay, cash, return, credit"
+        },
+        "cosine_to_definitions": {
+          "Availability": 0.5600000023841858,
+          "Accessibility": 0.578000009059906,
+          "Accommodation": 0.46700000762939453,
+          "Affordability": 0.5540000200271606,
+          "Acceptability": 0.6949999928474426
+        },
+        "best_match": "Acceptability",
+        "best_cosine": 0.6949999928474426,
+        "nearest_reviews": [
+          "Fantastic location... always friendly and quick to help! Came in late one night and they DIDN'T run me off. Love that it's a minute down the road; even if it wa",
+          "I've just recently started shopping here due to the multiple horrible trips to a different Food Lion near me.  What a breath of fresh air!  This location is alw",
+          "A great place to shop and eat. Easily accessed with ample parking and fantastic customer service staff.",
+          "This food lion location is fantastic! I will go out of my way to shop here. Great people who are always friendly and the manager is extremely nice. Well stocked"
+        ]
+      },
+      {
+        "stability": 0.76,
+        "top_topics": {
+          "26": {
+            "loading": 0.44,
+            "words": "deli, great deli, love deli, deli department, deli counter, food deli, deli staff, deli se",
+            "n": 12779
+          },
+          "25": {
+            "loading": 0.36,
+            "words": "sandwich, sandwiches, cheese, lunch, bread, salad, pizza, sub",
+            "n": 20755
+          },
+          "18": {
+            "loading": 0.28,
+            "words": "bar, hot, salad bar, hot bar, salad, food bar, bars, hot food",
+            "n": 10118
+          },
+          "28": {
+            "loading": 0.25,
+            "words": "cake, cakes, birthday, cupcakes, birthday cake, ordered, bakery, chocolate",
+            "n": 12143
+          },
+          "19": {
+            "loading": 0.18,
+            "words": "beer, wine, beer selection, selection, wine selection, beer wine, beers, beer den",
+            "n": 14678
+          },
+          "27": {
+            "loading": 0.18,
+            "words": "bakery, bread, baked, cookies, baked goods, goods, great bakery, breads",
+            "n": 15461
+          }
+        },
+        "negative_topics": {
+          "60": "products, brand, brands, product, quality, variety, variety ",
+          "20": "asian, japanese, international, chinese, korean, asian food,"
+        },
+        "cosine_to_definitions": {
+          "Availability": 0.5370000004768372,
+          "Accessibility": 0.4410000145435333,
+          "Accommodation": 0.42800000309944153,
+          "Affordability": 0.5080000162124634,
+          "Acceptability": 0.6949999928474426
+        },
+        "best_match": "Acceptability",
+        "best_cosine": 0.6949999928474426,
+        "nearest_reviews": [
+          "Got great prices on my groceries while on vacation.  They also have quality publix brand products, lunch meat and the freshest premium butter crust bread I've e",
+          "Nice store but my review is for the deli. I moved to the area little over 2yrs ago and then the deli was good. Now no matter what time you go the food is nasty ",
+          "Great selection of fresh meats and seafood. Fresh produce is well stocked and the bakery has great desserts. Awesome subs in the deli. Warm greetings and smiles",
+          "This Publix\u2019s is amazing they have a deli, you can get sandwiches, you can also grab some bakery item. They also have mini recipe cards and nice staff. Would re"
+        ]
+      },
+      {
+        "stability": 0.78,
+        "top_topics": {
+          "70": {
+            "loading": 0.54,
+            "words": "parking, parking lot, lot, park, plenty parking, easy, plenty, traffic",
+            "n": 24316
+          },
+          "75": {
+            "loading": 0.49,
+            "words": "order, pick, pickup, online, delivery, ordered, orders, minutes",
+            "n": 29934
+          },
+          "42": {
+            "loading": 0.4,
+            "words": "busy, crowded, day, time, early, weekends, people, sunday",
+            "n": 22619
+          },
+          "41": {
+            "loading": 0.32,
+            "words": "open, closed, hours, close, closing, pm, door, doors",
+            "n": 20973
+          },
+          "11": {
+            "loading": 0.31,
+            "words": "gas, tire, tires, oil, gas station, station, oil change, car",
+            "n": 13387
+          },
+          "63": {
+            "loading": 0.28,
+            "words": "phone, called, answer, manager, answer phone, told, said, help",
+            "n": 26566
+          }
+        },
+        "negative_topics": {
+          "20": "asian, japanese, international, chinese, korean, asian food,",
+          "60": "products, brand, brands, product, quality, variety, variety "
+        },
+        "cosine_to_definitions": {
+          "Availability": 0.5080000162124634,
+          "Accessibility": 0.5529999732971191,
+          "Accommodation": 0.5170000195503235,
+          "Affordability": 0.4880000054836273,
+          "Acceptability": 0.640999972820282
+        },
+        "best_match": "Acceptability",
+        "best_cosine": 0.640999972820282,
+        "nearest_reviews": [
+          "This location is absolutely terrible!!!! Staff is horrible!!! Last straw tonight 3 hours till close I need to check out with a cashier and they refused to open ",
+          "Online grocery pick up at this location is the worst. On a Friday afternoon, all pick up parking is full and they have 1 person pushing groceries out. If I stor",
+          "This store is always busy the parking lot and store itself are too small to accommodate the amount of people that work and shop there daily. The staff is rude a",
+          "The checkout service is terrible... they only have a few registers open and don't care that there are lines of people waiting... if you need to do your grocery "
+        ]
+      },
+      {
+        "stability": 0.92,
+        "top_topics": {
+          "57": {
+            "loading": 0.59,
+            "words": "customer service, customer, service, good customer, poor, terrible, poor customer, horribl",
+            "n": 28153
+          },
+          "56": {
+            "loading": 0.56,
+            "words": "customers, customer, business, customer service, care, treat, service, employees",
+            "n": 23662
+          },
+          "74": {
+            "loading": 0.53,
+            "words": "card, receipt, money, refund, pay, cash, return, credit",
+            "n": 33485
+          },
+          "81": {
+            "loading": 0.51,
+            "words": "said, asked, told, lady, didnt, rude, walked, attitude",
+            "n": 31559
+          },
+          "63": {
+            "loading": 0.48,
+            "words": "phone, called, answer, manager, answer phone, told, said, help",
+            "n": 26566
+          },
+          "80": {
+            "loading": 0.4,
+            "words": "manager, management, managers, store manager, rude, assistant, assistant manager, manager ",
+            "n": 18005
+          }
+        },
+        "negative_topics": {
+          "67": "selection, highly, recommend, highly recommend, prices, grea",
+          "52": "selection, great selection, variety, good selection, selecti"
+        },
+        "cosine_to_definitions": {
+          "Availability": 0.45399999618530273,
+          "Accessibility": 0.4320000112056732,
+          "Accommodation": 0.46399998664855957,
+          "Affordability": 0.5,
+          "Acceptability": 0.6660000085830688
+        },
+        "best_match": "Acceptability",
+        "best_cosine": 0.6660000085830688,
+        "nearest_reviews": [
+          "Poor poor customer service. Rude cashier's, done with this store and will definitely talk to cooperate about my 4th bad experience with this store. Been a shopp",
+          "This store is horrible!! I waited in line at the Customer Service for almost 40 minutes while Erica, the Team Leader, was helping others in front of me. When it",
+          "customer service is horrible\u2026not to mention the grocery pick up is absolutely even worse they never answer the phone and the lady that brought them out looked l",
+          "I've been here twice before the first time I came the lady throw my items, and was more worried about getting me out the line instead of giving me good customer"
+        ]
+      },
+      {
+        "stability": 0.7,
+        "top_topics": {
+          "37": {
+            "loading": 0.35,
+            "words": "shelves, stocked, shelves stocked, shelf, stocked shelves, bare, stock shelves, stocking s",
+            "n": 14571
+          },
+          "36": {
+            "loading": 0.32,
+            "words": "aisles, aisle, boxes, wide aisles, floor, wide, crowded, blocking",
+            "n": 10928
+          },
+          "39": {
+            "loading": 0.27,
+            "words": "stock, stocked, items stock, inventory, items, stocking, stock items, low stock",
+            "n": 16870
+          },
+          "51": {
+            "loading": 0.2,
+            "words": "items, item, things, selection items, stuff, list, carry, variety items",
+            "n": 21500
+          },
+          "22": {
+            "loading": 0.19,
+            "words": "expired, date, milk, expiration, dates, bought, expiration date, expiration dates",
+            "n": 16871
+          },
+          "80": {
+            "loading": 0.14,
+            "words": "manager, management, managers, store manager, rude, assistant, assistant manager, manager ",
+            "n": 18005
+          }
+        },
+        "negative_topics": {
+          "15": "mexican, tacos, hispanic, latin, mexican food, authentic, to",
+          "55": "service, great service, great customer, good service, custom"
+        },
+        "cosine_to_definitions": {
+          "Availability": 0.6399999856948853,
+          "Accessibility": 0.49799999594688416,
+          "Accommodation": 0.5149999856948853,
+          "Affordability": 0.5929999947547913,
+          "Acceptability": 0.7020000219345093
+        },
+        "best_match": "Acceptability",
+        "best_cosine": 0.7020000219345093,
+        "nearest_reviews": [
+          "A disaster. Every time I come in it's worse. Boxes on the floor, empty shelves, merchandise strewn everywhere, and you can barely get down aisles without having",
+          "This is my go-to grocery store that's closest to the house and for the majority of the time they tend to have everything in stock. The store is always clean. Th",
+          "This place is usually clean and well staffed.  I just wish they would not stock shelves during shopping hours.  It's hard to move carts around in the isles and ",
+          "Usual DG busy store and not enough staff to get stock out of aisles for customers to pass by"
+        ]
+      },
+      {
+        "stability": 0.62,
+        "top_topics": {
+          "7": {
+            "loading": 0.39,
+            "words": "target, love target, targets, shopping target, target store, like target, love, super targ",
+            "n": 7055
+          },
+          "82": {
+            "loading": 0.21,
+            "words": "lady, thank, shes, helped, sweet, kind, helpful, amazing",
+            "n": 24615
+          },
+          "46": {
+            "loading": 0.2,
+            "words": "staff, helpful, staff friendly, staff helpful, friendly, friendly helpful, helpful staff, ",
+            "n": 38967
+          },
+          "60": {
+            "loading": 0.2,
+            "words": "products, brand, brands, product, quality, variety, variety products, quality products",
+            "n": 19273
+          },
+          "67": {
+            "loading": 0.17,
+            "words": "selection, highly, recommend, highly recommend, prices, great selection, good selection, s",
+            "n": 12803
+          },
+          "66": {
+            "loading": 0.17,
+            "words": "bags, bag, bring, groceries, bagging, bag groceries, bring bags, cart",
+            "n": 12463
+          }
+        },
+        "negative_topics": {
+          "45": "need, needed, looking, want, things, got, im looking, easy",
+          "48": "ok, better, good, say, just, like, disappointed, im"
+        },
+        "cosine_to_definitions": {
+          "Availability": 0.4090000092983246,
+          "Accessibility": 0.375,
+          "Accommodation": 0.3630000054836273,
+          "Affordability": 0.4690000116825104,
+          "Acceptability": 0.49300000071525574
+        },
+        "best_match": "Acceptability",
+        "best_cosine": 0.49300000071525574,
+        "nearest_reviews": [
+          "I'm not a huge fan of Target in general. This location is particularly awful. We stopped in here for a few things and I couldn't believe the mess the store was ",
+          "I love Target\u2026 The customer service,  friendly staff and cleanliness of the store keeps me coming back. Even when we travel we look for the closest Target.",
+          "Target is my happy place. I love it so much. The staff is always awesome. The store is always clean, bright and colorful. Love the dollar spot. I appreciate bei",
+          "Great place to shop. Target has the best customer service hands down."
+        ]
+      }
+    ]
+  },
+  "performance": {
+    "stores": 456,
+    "items": 17,
+    "n_factors_parallel_analysis": 2,
+    "eigenvalues": [
+      4.59,
+      1.35,
+      1.11,
+      1.02,
+      0.94,
+      0.89,
+      0.86,
+      0.84,
+      0.75,
+      0.72,
+      0.71,
+      0.67
+    ],
+    "shuffled_95pct": [
+      1.41,
+      1.31,
+      1.25,
+      1.22,
+      1.16,
+      1.13,
+      1.09,
+      1.05,
+      1.02,
+      0.99,
+      0.95,
+      0.92
+    ],
+    "factors": [
+      {
+        "stability": 0.96,
+        "top_topics": {
+          "61": {
+            "loading": 0.68,
+            "words": "clean, clean store, store clean, store, stocked, nice clean, clean stocked, organized",
+            "n": 41403
+          },
+          "59": {
+            "loading": 0.68,
+            "words": "clean, organized, clean organized, nice clean, neat, clean friendly, nice, dirty",
+            "n": 33537
+          },
+          "35": {
+            "loading": 0.62,
+            "words": "grocery, grocery store, groceries, store, favorite grocery, supermarket, grocery stores, b",
+            "n": 56225
+          },
+          "46": {
+            "loading": 0.54,
+            "words": "staff, helpful, staff friendly, staff helpful, friendly, friendly helpful, helpful staff, ",
+            "n": 38967
+          },
+          "62": {
+            "loading": 0.54,
+            "words": "store, staff, friendly, store friendly, clean store, clean, employees, store clean",
+            "n": 31117
+          },
+          "50": {
+            "loading": 0.49,
+            "words": "location, nc, area, north, carolina, charlotte, live, town",
+            "n": 59698
+          }
+        },
+        "negative_topics": {
+          "45": "need, needed, looking, want, things, got, im looking, easy",
+          "68": "prices, price, expensive, high, pricey, reasonable, priced, "
+        },
+        "cosine_to_definitions": {
+          "Availability": 0.5929999947547913,
+          "Accessibility": 0.5059999823570251,
+          "Accommodation": 0.4869999885559082,
+          "Affordability": 0.5830000042915344,
+          "Acceptability": 0.7760000228881836
+        },
+        "best_match": "Acceptability",
+        "best_cosine": 0.7760000228881836,
+        "nearest_reviews": [
+          "Nice clean store. Large variety of foods to choose from and friendly staff.",
+          "this is one of the best food Lion stores. The people work very hard they're very friendly and they keep this store clean",
+          "Great store.  Clean and always fresh food.  Friendly staff.",
+          "Nice clean grocery store and friendly staff."
+        ]
+      },
+      {
+        "stability": 0.82,
+        "top_topics": {
+          "68": {
+            "loading": 0.53,
+            "words": "prices, price, expensive, high, pricey, reasonable, priced, good prices",
+            "n": 53250
+          },
+          "48": {
+            "loading": 0.47,
+            "words": "ok, better, good, say, just, like, disappointed, im",
+            "n": 120778
+          },
+          "54": {
+            "loading": 0.35,
+            "words": "visit, going, definitely, coming, time, come, wont, trip",
+            "n": 53002
+          },
+          "46": {
+            "loading": 0.31,
+            "words": "staff, helpful, staff friendly, staff helpful, friendly, friendly helpful, helpful staff, ",
+            "n": 38967
+          },
+          "55": {
+            "loading": 0.26,
+            "words": "service, great service, great customer, good service, customer service, customer, friendly",
+            "n": 41743
+          },
+          "50": {
+            "loading": 0.24,
+            "words": "location, nc, area, north, carolina, charlotte, live, town",
+            "n": 59698
+          }
+        },
+        "negative_topics": {
+          "59": "clean, organized, clean organized, nice clean, neat, clean f",
+          "61": "clean, clean store, store clean, store, stocked, nice clean,"
+        },
+        "cosine_to_definitions": {
+          "Availability": 0.5109999775886536,
+          "Accessibility": 0.46399998664855957,
+          "Accommodation": 0.47999998927116394,
+          "Affordability": 0.6269999742507935,
+          "Acceptability": 0.699999988079071
+        },
+        "best_match": "Acceptability",
+        "best_cosine": 0.699999988079071,
+        "nearest_reviews": [
+          "I liked this shopping place. It has good options and staff are customer-friendly.",
+          "Great prices, keeping everything as clean as possible, friendly and helpful staff. The only place I shop for groceries generally.",
+          "Great prices and staff is super friendly. ...A+ Store",
+          "Excellent experience every time! Friendly staff and reasonable prices! Our go to retail store when we visit this area!"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+pass 1: 11,660,133 way nodes, 125s
+pass 2: 2,068,895 vertices, 4,648,357 directed edges, 416s
+saved /home/scsapre/aspatial_food_access_research/NC Pipeline Improved/out/b6_graph.npz 431s
+graph 2,068,895 vertices; largest strongly connected part 2,017,411
+64/2,672 tracts, 15s
+704/2,672 tracts, 75s
+1,344/2,672 tracts, 163s
+1,984/2,672 tracts, 230s
+2,624/2,672 tracts, 305s
+{
+  "tracts": 2672,
+  "stores": 4442,
+  "pairs_within_32": 527674,
+  "tracts_with_a_store_16min": 2510,
+  "tracts_with_a_store_32min": 2652,
+  "median_stores_within_16": 31.0,
+  "median_tract_snap_m": 119.80826980950974,
+  "median_store_snap_m": 40.36197744725068,
+  "seconds": 312
+}

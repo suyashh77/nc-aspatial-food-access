@@ -1,0 +1,643 @@
+<title>NC Food Access Labeling</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a working tool. Sticky header with task tabs; one task view at a time; reading card on top, controls below. */
+:root{
+  --bg:#f6f7f4; --surface:#ffffff; --sunk:#eceee8; --line:#d9dcd3; --fg:#1d2420; --muted:#5d665f;
+  --accent:#1f5f8b; --accent-fg:#ffffff; --accent-soft:#e2edf5;
+  --pos:#2e7d4f; --pos-soft:#e1f1e7; --neg:#b3362f; --neg-soft:#f7e3e1; --mix:#9a6a00; --mix-soft:#f6ecd2;
+  --font-ui:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-data:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --r:8px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141816; --surface:#1c211e; --sunk:#232925; --line:#333b36; --fg:#e6ebe7; --muted:#9aa49d;
+  --accent:#6fb0de; --accent-fg:#0d1b26; --accent-soft:#1d3242;
+  --pos:#6cc391; --pos-soft:#1c3226; --neg:#ef8a82; --neg-soft:#3a2120; --mix:#e0b44f; --mix-soft:#3a3020; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141816; --surface:#1c211e; --sunk:#232925; --line:#333b36; --fg:#e6ebe7; --muted:#9aa49d;
+  --accent:#6fb0de; --accent-fg:#0d1b26; --accent-soft:#1d3242;
+  --pos:#6cc391; --pos-soft:#1c3226; --neg:#ef8a82; --neg-soft:#3a2120; --mix:#e0b44f; --mix-soft:#3a3020; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-ui);font-size:15px;line-height:1.5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h1,h2,h3{text-wrap:balance;margin:0;line-height:1.25}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.hrow{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding-block:10px}
+.brand{font-weight:700;font-size:16px;letter-spacing:-.01em}
+.brand small{display:block;font-weight:400;color:var(--muted);font-size:12px}
+nav{display:flex;gap:4px;flex-wrap:wrap}
+nav a{padding:6px 12px;border-radius:999px;text-decoration:none;color:var(--muted);font-weight:500;font-size:14px}
+nav a[aria-current="page"]{background:var(--accent-soft);color:var(--fg)}
+.who{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);min-width:0}
+.who img{width:26px;height:26px;border-radius:50%}
+.who input{width:84px;padding:4px 8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);font-family:var(--font-data);text-transform:uppercase}
+main{padding-block:20px 60px}
+.notice{padding:10px 14px;border-radius:var(--r);background:var(--mix-soft);border:1px solid var(--line);margin-bottom:16px;font-size:14px}
+.notice.info{background:var(--accent-soft)}
+.muted{color:var(--muted)}
+.mono{font-family:var(--font-data);font-variant-numeric:tabular-nums}
+.btn{border:1px solid var(--line);background:var(--surface);padding:7px 14px;border-radius:6px;cursor:pointer;font-weight:500}
+.btn:hover{background:var(--sunk)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
+.btn.primary:hover{filter:brightness(1.06)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.spacer{flex:1}
+.bar{height:6px;background:var(--sunk);border-radius:3px;overflow:hidden;flex:1;min-width:120px}
+.bar i{display:block;height:100%;background:var(--accent);transition:width .2s}
+/* overview */
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;min-width:0}
+.panel h2{font-size:18px;margin-bottom:6px}
+.panel h3{font-size:15px;margin:14px 0 4px}
+.panel p,.panel li{max-width:68ch}
+.panel ul,.panel ol{padding-left:20px;margin:6px 0}
+.dimtable{width:100%;border-collapse:collapse;font-size:14px}
+.dimtable td{padding:7px 8px;border-top:1px solid var(--line);vertical-align:top}
+.dimtable td:first-child{font-weight:600;white-space:nowrap}
+.stat{font-size:13px;color:var(--muted)}
+.stat b{font-size:22px;color:var(--fg);display:block;font-weight:600}
+/* review labeling */
+.review{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px 22px;font-size:17px;line-height:1.65;max-width:75ch;white-space:pre-wrap;overflow-wrap:anywhere}
+.lab{margin-top:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:6px 0}
+.dimrow{display:grid;grid-template-columns:minmax(150px,200px) 1fr;gap:12px;align-items:center;padding:8px 16px;border-top:1px solid var(--line)}
+.dimrow:first-child{border-top:0}
+.dimrow .name{font-weight:600}
+.dimrow .name span{display:block;font-weight:400;font-size:12px;color:var(--muted);line-height:1.35}
+.seg{display:flex;flex-wrap:wrap;gap:4px}
+.seg button{border:1px solid var(--line);background:var(--bg);padding:6px 11px;border-radius:6px;cursor:pointer;font-size:13.5px}
+.seg button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
+.seg button.p[aria-pressed="true"]{background:var(--pos-soft);border-color:var(--pos);color:var(--fg)}
+.seg button.n[aria-pressed="true"]{background:var(--neg-soft);border-color:var(--neg);color:var(--fg)}
+.seg button.m[aria-pressed="true"]{background:var(--mix-soft);border-color:var(--mix);color:var(--fg)}
+.seg button.z[aria-pressed="true"]{background:var(--sunk);border-color:var(--muted);color:var(--fg)}
+.extra{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;padding:12px 16px;border-top:1px solid var(--line)}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted);min-width:0}
+label.f input,label.f select,label.f textarea{padding:7px 9px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--fg);font-size:14px;width:100%}
+.check{display:flex;gap:8px;align-items:center;font-weight:500;cursor:pointer}
+.err{color:var(--neg);font-size:14px;min-height:1.4em}
+.saved-tag{font-size:12px;padding:2px 8px;border-radius:999px;background:var(--pos-soft);color:var(--fg);border:1px solid var(--pos)}
+.grid260{display:grid;grid-template-columns:repeat(auto-fill,minmax(22px,1fr));gap:3px;margin-top:10px}
+.grid260 button{height:22px;border:1px solid var(--line);background:var(--bg);border-radius:3px;cursor:pointer;padding:0;font-size:9px;color:var(--muted)}
+.grid260 button.done{background:var(--accent-soft);border-color:var(--accent)}
+.grid260 button.cur{outline:2px solid var(--fg)}
+.grid260 button.full{background:var(--sunk);color:var(--line);border-style:dashed}
+details summary{cursor:pointer}
+/* topic check */
+.tc{display:grid;grid-template-columns:280px 1fr;gap:16px;align-items:start}
+.glist{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;position:sticky;top:calc(env(safe-area-inset-top,0px) + 70px);max-height:calc(100vh - 90px);overflow-y:auto}
+.glist button{display:grid;grid-template-columns:14px 1fr auto;gap:8px;align-items:center;width:100%;text-align:left;border:0;border-top:1px solid var(--line);background:none;padding:9px 12px;cursor:pointer;font-size:13.5px}
+.glist button:first-child{border-top:0}
+.glist button[aria-current="true"]{background:var(--accent-soft)}
+.glist .dot{width:10px;height:10px;border-radius:50%;border:1.5px solid var(--muted)}
+.glist .dot.done{background:var(--pos);border-color:var(--pos)}
+.glist .dot.changed{background:var(--mix);border-color:var(--mix)}
+.glist .dot.inv{background:var(--muted);border-color:var(--muted)}
+.glist small{color:var(--muted);font-family:var(--font-data);font-size:11.5px}
+.gpanel{min-width:0;display:flex;flex-direction:column;gap:14px}
+.gpanel>.head{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+.gpanel>.head h2{font-size:20px}
+.topic{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;min-width:0}
+.topic.invalid{opacity:.82;border-style:dashed}
+.topic .meta{display:flex;gap:10px;flex-wrap:wrap;align-items:baseline;font-size:13px;color:var(--muted)}
+.topic .meta b{color:var(--fg);font-size:15px}
+.kw{font-family:var(--font-data);font-size:13px;margin:6px 0;overflow-wrap:anywhere}
+.samples{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+.samples h4{margin:0 0 4px;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:600}
+.samples blockquote{margin:0 0 6px;padding:7px 10px;background:var(--sunk);border-radius:6px;font-size:13.5px;line-height:1.45;overflow-wrap:anywhere}
+.tctl{display:flex;flex-wrap:wrap;gap:12px;align-items:end;margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
+.tctl label.f{min-width:170px}
+.score{background:var(--surface);border:2px solid var(--accent);border-radius:var(--r);padding:6px 0 12px}
+.score .title{padding:10px 16px 4px;font-weight:600}
+.score .dimrow .seg button{min-width:44px}
+/* results */
+table.data{border-collapse:collapse;width:100%;font-size:13.5px}
+table.data th,table.data td{padding:6px 10px;border-top:1px solid var(--line);text-align:left;white-space:nowrap}
+table.data th{font-weight:600;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.04em;border-top:0}
+table.data td.num{text-align:right;font-family:var(--font-data);font-variant-numeric:tabular-nums}
+.scroll{overflow-x:auto}
+.dis{border-top:1px solid var(--line);padding:8px 0;font-size:13.5px}
+@media (max-width:760px){
+  .tc{grid-template-columns:1fr}
+  .glist{position:static;max-height:260px}
+  .samples{grid-template-columns:1fr}
+  .dimrow{grid-template-columns:1fr;gap:6px}
+  .who{margin-left:0;width:100%}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<header>
+  <div class="wrap hrow">
+    <div class="brand">NC Food Access Labeling<small>Google reviews of NC grocery stores · five dimensions of access</small></div>
+    <nav id="nav">
+      <a href="#start">Start here</a>
+      <a href="#reviews">Label reviews</a>
+      <a href="#topics">Check topics</a>
+      <a href="#results" id="navResults" hidden>Results</a>
+    </nav>
+    <div class="who" id="who">
+      <img id="avatar" alt="" hidden>
+      <label for="code">Your initials</label>
+      <input id="code" maxlength="6" autocomplete="off" placeholder="e.g. SS">
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div id="status" class="notice info">Connecting to saved labels…</div>
+
+  <!-- START -->
+  <section id="v-start">
+    <div class="cols">
+      <div class="panel">
+        <h2>What this is</h2>
+        <p>We're turning Google reviews into food-access scores for every grocery store in North Carolina. A model sorts each review into the <b>five dimensions of access</b> below. Your labels check whether it does that correctly. There are two tasks. You can do them in either order, stop at any time and come back. <b>Every answer saves to your account as you go.</b></p>
+        <p class="muted">You won't see other raters' labels, and they won't see yours. Comparing independent labels is how we measure agreement.</p>
+        <h3>Task 1 · Label reviews <span class="muted">(260 reviews, each labeled by 5 people)</span></h3>
+        <p>Read one review at a time. For each dimension, say whether the review talks about it, and whether positively or negatively. These labels are the answer key every method gets graded against.</p>
+        <p>The reviews are shared out among everyone. The page gives you the next review that still needs raters. Label as many as you can (about 30 seconds each). When every review has 5 raters, the page tells you you're done.</p>
+        <h3>Task 2 · Check topics <span class="muted">(83 topics in about 25 groups, about 1.5–2 hours)</span></h3>
+        <p>The model grouped all 975,000 reviews into 83 topics. For each group of similar topics, read the keywords and example reviews. Mark topics that are too vague to use, move any that are in the wrong group, then score the group 0–3 on each dimension. This decides which reviews count toward store scores.</p>
+        <h3>Task 3 · Check sentence topics <span class="muted">(optional; 83 topics in 30 groups, about 1.5 hours)</span></h3>
+        <p>The improved pipeline splits reviews into sentences and groups those into their own 83 topics. Checking them works exactly like Task 2. Switch to "Sentence topics" at the top of the Check topics page.</p>
+        <div class="row" style="margin-top:14px">
+          <a class="btn primary" href="#reviews">Start labeling reviews</a>
+          <a class="btn" href="#topics">Start checking topics</a>
+        </div>
+      </div>
+      <div class="panel">
+        <h2>The five dimensions</h2>
+        <table class="dimtable" id="dimtable"></table>
+        <h3>Judgement calls (so raters agree)</h3>
+        <ul>
+          <li>Selection, variety, "has everything" → <b>Availability</b></li>
+          <li>Checkout lines, registers, pickup, delivery, layout, finding items → <b>Accommodation</b></li>
+          <li>Rude, friendly or helpful staff; clean or dirty; fresh or rotten → <b>Acceptability</b></li>
+          <li>"Close to home", parking, getting in → <b>Accessibility</b>. "Wish there was one near me" → <b>Availability</b></li>
+          <li>"Great store!" talks about no dimension at all.</li>
+        </ul>
+        <div class="row" style="margin-top:14px;gap:28px" id="myprogress"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section id="v-reviews" hidden>
+    <div class="row" style="margin-bottom:12px">
+      <h2 style="font-size:18px">Label reviews</h2>
+      <span class="muted mono" id="rpos"></span>
+      <span id="rsaved"></span>
+      <div class="spacer"></div>
+      <div class="bar" style="max-width:260px"><i id="rbar" style="width:0"></i></div>
+      <span class="muted mono" id="rcount"></span>
+    </div>
+    <div class="notice info" id="rdone" hidden>Every review now has 5 raters, so you're done. Thank you! You can still revisit your own labels below.</div>
+    <div class="review" id="rtext"></div>
+    <div class="lab" id="rlab"></div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn" id="rprev">← Previous</button>
+      <button class="btn" id="rnext">Skip →</button>
+      <button class="btn" id="rnextun">Next unlabeled</button>
+      <div class="spacer"></div>
+      <span class="err" id="rerr"></span>
+      <button class="btn primary" id="rsave">Save and next</button>
+    </div>
+    <p class="muted" style="font-size:13px;margin-top:6px">Shortcut: Ctrl + Enter (⌘ + Enter on a Mac) saves.</p>
+    <details style="margin-top:14px">
+      <summary class="muted">Jump to a review (blue = you labeled it; dashed = already has 5 raters)</summary>
+      <div class="grid260" id="rgrid"></div>
+    </details>
+  </section>
+
+  <!-- TOPICS -->
+  <section id="v-topics" hidden>
+    <div class="row" style="margin-bottom:12px">
+      <h2 style="font-size:18px">Check topics</h2>
+      <div class="seg" id="tset" role="group" aria-label="Topic set"></div>
+      <div class="spacer"></div>
+      <div class="bar" style="max-width:260px"><i id="tbar" style="width:0"></i></div>
+      <span class="muted mono" id="tcount"></span>
+    </div>
+    <details class="panel" style="margin-bottom:14px;padding:12px 16px">
+      <summary><b>How to check a group</b> <span class="muted">(open for the steps)</span></summary>
+      <ol>
+        <li>Pick a group on the left. Groups put near-duplicate topics together, so you score them once.</li>
+        <li>For each topic, read the keywords and the example reviews. "Most typical" reviews sit at the topic's centre. "Random" reviews show its range.</li>
+        <li>Mark a topic <b>invalid</b> if it has no clear subject (pure praise, place names, brand names) and give a reason. Groups called "General praise" or "No clear subject" start as invalid. Change one to valid only if its examples show a real subject. <b>Look hardest at Topic 0</b> (58,000 reviews about "the grocery store"): its label is generic, but many of its reviews talk about selection, which is Availability.</li>
+        <li>If a topic belongs in another group, move it there. Its new group will need checking again.</li>
+        <li>Score the group <b>0–3 on each dimension separately</b>. These are not ranks, and two dimensions can both score 3. Judge what the reviews are <i>about</i>, not whether they're positive: "prices are crazy" and "great deals" both score 3 on Affordability.</li>
+        <li>Save. The next unchecked group opens.</li>
+      </ol>
+    </details>
+    <div class="tc">
+      <div class="glist" id="glist" role="list"></div>
+      <div class="gpanel" id="gpanel"></div>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="v-results" hidden>
+    <div class="panel" style="margin-bottom:16px">
+      <h2>Raters</h2>
+      <p class="muted">Only you, the owner, see this tab. Raters see only their own work. Each label is stored under the account of the person who saved it, so every row in the exports names its rater.</p>
+      <div class="scroll"><table class="data" id="raters"></table></div>
+      <p class="muted" id="coverage" style="margin-top:10px"></p>
+    </div>
+    <div class="panel" style="margin-bottom:16px">
+      <h2>Agreement</h2>
+      <div class="row" style="margin:8px 0 12px">
+        <label class="f" for="ra">Rater A<select id="ra"></select></label>
+        <label class="f" for="rb">Rater B<select id="rb"></select></label>
+      </div>
+      <h3>All raters together: reviews with 5 raters</h3>
+      <div class="scroll"><table class="data" id="afleiss"></table></div>
+      <p class="muted" style="font-size:13px">Fleiss' kappa extends Cohen's kappa to more than two raters. Below, compare any two raters.</p>
+      <h3>Two raters: does each say the dimension is discussed?</h3>
+      <div class="scroll"><table class="data" id="agold"></table></div>
+      <p class="muted" style="font-size:13px">Cohen's kappa: 1 = perfect agreement, 0 = no better than chance. Above 0.6 is usually called substantial.</p>
+      <h3>Topics: per-topic scores (each topic takes its group's scores) <span class="muted" id="tsetname"></span></h3>
+      <div class="scroll"><table class="data" id="atop"></table></div>
+      <details style="margin-top:12px"><summary><b>Reviews the two raters disagree on</b> <span class="muted" id="discount"></span></summary><div id="dislist"></div></details>
+    </div>
+    <div class="panel" style="margin-bottom:16px">
+      <h2>"Other subject" write-ins</h2>
+      <p class="muted">Subjects raters said fit none of the five. These are candidates for a sixth dimension.</p>
+      <div class="scroll"><table class="data" id="others"></table></div>
+    </div>
+    <div class="panel">
+      <h2>Export</h2>
+      <p class="muted">Review labels go to <span class="mono">decisions/labels/</span>. Topic scores go to <span class="mono">data/step5_manual_scores.csv</span>, which stage 6 reads.</p>
+      <div class="row" style="margin-top:8px">
+        <button class="btn" id="xgold">Download review labels (all raters, CSV)</button>
+        <button class="btn" id="xcons">Download consensus labels (majority vote, CSV)</button>
+        <label class="f" for="xr" style="min-width:160px">Topic scores for<select id="xr"></select></label>
+        <button class="btn" id="xtop" style="align-self:end">Download topic scores (Teresa's format, CSV)</button>
+        <button class="btn" id="xtopall" style="align-self:end">Download topic scores (all raters, CSV)</button>
+      </div>
+      <p class="err" id="xerr"></p>
+    </div>
+  </section>
+</main>
+
+<script src="data.js"></script>
+<script src="data_b2.js"></script>
+<script>
+const DIMS=["Availability","Accessibility","Accommodation","Affordability","Acceptability"];
+const DEF={
+  Availability:"Is the food there? Stock, empty or full shelves, selection and variety, items the store doesn't carry, wanting a store in the area.",
+  Accessibility:"Can people get there and in? Location, distance, parking, traffic, bus, physical access.",
+  Accommodation:"Does the store fit people's lives? Hours, payment (EBT, SNAP, WIC), pickup and delivery, checkout lines, layout, dietary options, policies.",
+  Affordability:"Prices, value for money, deals, coupons, sales, being overcharged.",
+  Acceptability:"Does it meet people's standards? Freshness and quality, cleanliness, how staff treat customers, safety, cultural fit."
+};
+const POL=[["","Not discussed","z"],["+","Positive","p"],["-","Negative","n"],["~","Mixed / neutral","m"]];
+const RUBRIC=["not represented","weak or ambiguous","clearly represented","strongly represented"];
+const REASONS=[["too_generic","Too generic"],["too_short_or_low_information","Too short / low information"],["not_food_access_related","Not about food access"],["mixed_or_incoherent","Mixed or incoherent"],["duplicate_or_redundant","Duplicate"],["other","Other"]];
+const STAT=[["valid","Valid"],["invalid","Invalid"],["needs_review","Needs review"]];
+const GENERIC=["General praise","No clear subject"];
+const QUOTA=5; /* raters per review */
+const SETS={a:{key:"a",coll:"topics",topics:TOPICS,label:"Whole-review topics",file:"step5_manual_scores"},
+  b2:{key:"b2",coll:"topics_b2",topics:(typeof TOPICS_B2!=="undefined"?TOPICS_B2:[]),label:"Sentence topics (optional)",file:"b2_manual_scores"}};
+let TS=SETS.a,TIX={};
+function useSet(k){TS=SETS[k]||SETS.a;TIX=Object.fromEntries(TS.topics.map(t=>[t.t,t]));S.top=S.tops[TS.key];S.all.top=S.all.tops[TS.key];
+  S.gsel=store.get("gsel_"+TS.key);S.tdrawn=null;store.set("tset",TS.key)}
+/* group names are free text; storage keys must be plain */
+function gkey(name){let x=0;for(const c of name)x=(x*31+c.codePointAt(0))>>>0;return "g_"+name.toLowerCase().replace(/[^a-z0-9]+/g,"_").slice(0,40)+"_"+x.toString(36)}
+const $=id=>document.getElementById(id);
+const h=(tag,attrs={},...kids)=>{const e=document.createElement(tag);for(const[k,v]of Object.entries(attrs)){if(k==="class")e.className=v;else if(k.startsWith("on"))e.addEventListener(k.slice(2),v);else if(v===true)e.setAttribute(k,"");else if(v!==false&&v!=null)e.setAttribute(k,v)}for(const c of kids.flat()){if(c==null||c===false)continue;e.append(c.nodeType?c:document.createTextNode(String(c)))}return e};
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+
+const S={db:null,user:null,uid:null,writable:true,admin:false,
+  gold:{exists:false,code:"",labels:{}}, top:null,
+  tops:{a:{exists:false,code:"",topics:{},groups:{}},b2:{exists:false,code:"",topics:{},groups:{}}},
+  ri:+(store.get("ri")||0), rdraft:null, shownAt:Date.now(),
+  gsel:store.get("gsel")||null, tdraft:null,
+  all:{gold:{},top:{},tops:{a:{},b2:{}}}, cov:{}, myClaims:[], covLoaded:false, goldLoaded:false, claimSynced:false};
+
+/* ---------- per-document write queue (one write at a time) ---------- */
+const queues={};
+useSet(store.get("tset")||"a");
+function enqueue(path,fn){const p=(queues[path]||Promise.resolve()).catch(()=>{}).then(fn);queues[path]=p;return p}
+
+/* ---------- static bits ---------- */
+$("dimtable").append(...DIMS.map(d=>h("tr",{},h("td",{},d),h("td",{class:"muted"},DEF[d]))));
+
+/* ---------- routing ---------- */
+const VIEWS=["start","reviews","topics","results"];
+function route(){let v=(location.hash||"#start").slice(1);if(!VIEWS.includes(v)||(v==="results"&&!S.admin))v="start";
+  for(const x of VIEWS)$("v-"+x).hidden=x!==v;
+  for(const a of $("nav").querySelectorAll("a"))a.setAttribute("aria-current",a.getAttribute("href")==="#"+v?"page":"false");
+  if(v==="reviews"){S.shownAt=Date.now()}
+}
+addEventListener("hashchange",route);
+
+/* ---------- status ---------- */
+function setStatus(msg,kind){const s=$("status");if(!msg){s.hidden=true;return}s.hidden=false;s.className="notice"+(kind==="info"?" info":"");s.textContent=msg}
+
+/* ---------- rater code ---------- */
+function myCode(){return (S.gold.code||S.tops.a.code||S.tops.b2.code||"").trim()}
+$("code").addEventListener("change",async e=>{
+  const code=e.target.value.trim().toUpperCase().replace(/[^A-Z0-9_-]/g,"");e.target.value=code;
+  if(!code||!S.db||!S.uid)return;
+  S.gold.code=code;S.tops.a.code=code;S.tops.b2.code=code;
+  try{
+    await writeGold({code});
+    await writeTop({code});
+    if(S.writable)setStatus("");
+    renderAll();
+  }catch(err){writeFailed(err)}
+});
+function needCode(){if(myCode())return false;$("code").focus();return true}
+
+/* ---------- db writes ---------- */
+function goldRef(){return S.db.doc("gold/"+S.uid)}
+function topRef(){return S.db.doc(TS.coll+"/"+S.uid)}
+function writeGold(patch){return enqueue("gold",async()=>{
+  if(S.gold.exists){await goldRef().update(patch)}
+  else{await goldRef().set({code:myCode(),labels:{},...patch});S.gold.exists=true}})}
+function writeTop(patch){const ref=topRef(),T=S.top;return enqueue("top_"+TS.key,async()=>{
+  if(T.exists){await ref.update(patch)}
+  else{await ref.set({code:myCode(),topics:{},groups:{},...patch});T.exists=true}})}
+function writeClaims(){if(!S.db||!S.uid)return Promise.resolve();const gids=Object.keys(S.gold.labels).map(Number).sort((a,b)=>a-b);
+  return enqueue("claims",()=>S.db.doc("claims/"+S.uid).set({gids})).catch(()=>{})}
+function syncClaims(){ /* once per visit, after both loads: repair the count doc and open the right review */
+  if(S.claimSynced||!S.goldLoaded||!S.covLoaded)return;S.claimSynced=true;
+  const a=Object.keys(S.gold.labels).map(Number).sort((x,y)=>x-y).join(),b=[...S.myClaims].sort((x,y)=>x-y).join();
+  if(a!==b&&S.writable)writeClaims();
+  const cur=rReview();if(S.gold.labels[cur.gid]||(S.cov[cur.gid]||0)>=QUOTA){const i=rNextUnlabeled();if(i>=0)rGo(i)}}
+function writeFailed(err){
+  if(err&&err.code==="invalid_argument"){S.writable=false;setStatus("Your access to this page is view-only, so labels can't be saved. Ask the owner to add you by email as an Editor.")}
+  else if(err&&err.code==="quota_exceeded"){setStatus("The label store is full. Tell the page owner.")}
+  else setStatus("Couldn't save just now ("+(err&&err.code||"error")+"). Try again in a moment.");
+}
+
+/* ================= REVIEWS ================= */
+function rReview(){return REVIEWS[Math.max(0,Math.min(REVIEWS.length-1,S.ri))]}
+function rLoadDraft(){const r=rReview();const p=S.gold.labels[r.gid];
+  S.rdraft={v:Object.fromEntries(DIMS.map(d=>[d,p?.[d]||""])),none:!!p?.none,other:p?.other||"",conf:p?.conf||"high",notes:p?.notes||""};
+  S.shownAt=Date.now();S.rdrawn=r.gid;$("rerr").textContent=""}
+function renderReviews(){
+  const r=rReview();if(S.rdrawn!==r.gid)rLoadDraft();
+  const n=Object.keys(S.gold.labels).length,full=REVIEWS.filter(x=>(S.cov[x.gid]||0)>=QUOTA).length;
+  $("rbar").style.width=(100*full/REVIEWS.length)+"%";$("rcount").textContent=full+" / "+REVIEWS.length+" reviews have "+QUOTA+" raters · you've labeled "+n;
+  $("rdone").hidden=!(S.covLoaded&&rNextUnlabeled()<0);
+  $("rpos").textContent="Review "+(S.ri+1)+" of "+REVIEWS.length;
+  $("rsaved").replaceChildren(S.gold.labels[r.gid]?h("span",{class:"saved-tag"},"Saved · saving again replaces it"):(S.cov[r.gid]||0)>=QUOTA?h("span",{class:"saved-tag",style:"background:var(--sunk);border-color:var(--muted)"},"Already has "+QUOTA+" raters · use Next unlabeled"):"");
+  $("rtext").textContent=r.text;
+  const D=S.rdraft,lab=$("rlab");lab.replaceChildren();
+  for(const d of DIMS){
+    lab.append(h("div",{class:"dimrow"},h("div",{class:"name"},d,h("span",{},DEF[d])),
+      h("div",{class:"seg",role:"group","aria-label":d},POL.map(([k,txt,c])=>h("button",{type:"button",class:c,"aria-pressed":String(D.v[d]===k),
+        onclick:()=>{D.v[d]=k;if(k)D.none=false;renderReviews()}},txt)))))
+  }
+  lab.append(h("div",{class:"extra"},
+    h("label",{class:"check"},h("input",{type:"checkbox",id:"rnone",checked:D.none,onchange:e=>{D.none=e.target.checked;if(D.none)DIMS.forEach(d=>D.v[d]="");renderReviews()}}),"No access content (says nothing about any dimension)"),
+    h("label",{class:"f",for:"rother"},"Other subject: important, but fits none of the five (2–3 words)",h("input",{id:"rother",value:D.other,placeholder:"e.g. crowding, pharmacy",oninput:e=>D.other=e.target.value})),
+    h("div",{class:"f"},h("span",{class:"muted",style:"font-size:13px"},"How sure are you?"),h("div",{class:"seg"},["low","medium","high"].map(c=>h("button",{type:"button","aria-pressed":String(D.conf===c),onclick:()=>{D.conf=c;renderReviews()}},c)))),
+    h("label",{class:"f",for:"rnotes"},"Notes (optional)",h("input",{id:"rnotes",value:D.notes,oninput:e=>D.notes=e.target.value}))
+  ));
+  const g=$("rgrid");if(g.childElementCount!==REVIEWS.length){g.replaceChildren(...REVIEWS.map((x,i)=>h("button",{type:"button",title:"Review "+(i+1),"aria-label":"Review "+(i+1),onclick:()=>rGo(i)},i+1)))}
+  [...g.children].forEach((b,i)=>{const gid=REVIEWS[i].gid,mine=!!S.gold.labels[gid];b.classList.toggle("done",mine);b.classList.toggle("full",!mine&&(S.cov[gid]||0)>=QUOTA);b.classList.toggle("cur",i===S.ri)});
+  $("rsave").disabled=!S.writable||!S.db||!S.uid;
+}
+function rGo(i){S.ri=Math.max(0,Math.min(REVIEWS.length-1,i));store.set("ri",S.ri);rLoadDraft();renderReviews();scrollTo({top:0})}
+function rNextUnlabeled(){for(let i=0;i<REVIEWS.length;i++){const g=REVIEWS[i].gid;if(!S.gold.labels[g]&&(S.cov[g]||0)<QUOTA)return i}return -1}
+$("rprev").onclick=()=>rGo(S.ri-1);
+$("rnext").onclick=()=>rGo(S.ri+1);
+$("rnextun").onclick=()=>{const i=rNextUnlabeled();if(i>=0)rGo(i);else renderReviews()};
+async function rSave(){
+  if(needCode()){$("rerr").textContent="Type your initials at the top right first.";return}
+  const D=S.rdraft,any=DIMS.some(d=>D.v[d]);
+  if(D.none&&any){$("rerr").textContent="You ticked 'No access content' and also marked a dimension. Untick one.";return}
+  if(!D.none&&!any&&!D.other.trim()){$("rerr").textContent="Mark at least one dimension, write an Other subject, or tick 'No access content'.";return}
+  const r=rReview();
+  const row={id:r.id,...D.v,none:D.none,other:D.other.trim(),conf:D.conf,notes:D.notes.trim(),sec:Math.round((Date.now()-S.shownAt)/100)/10,at:new Date().toISOString()};
+  const wasMine=!!S.gold.labels[r.gid];
+  S.gold.labels={...S.gold.labels,[r.gid]:row};
+  $("rsave").disabled=true;
+  try{await writeGold({labels:{[r.gid]:row}});writeClaims();if(!wasMine)S.cov={...S.cov,[r.gid]:(S.cov[r.gid]||0)+1};const i=rNextUnlabeled();rGo(i>=0?i:S.ri)}
+  catch(err){const l={...S.gold.labels};delete l[r.gid];S.gold.labels=l;writeFailed(err);renderReviews()}
+}
+$("rsave").onclick=rSave;
+addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&e.key==="Enter"&&!$("v-reviews").hidden){e.preventDefault();rSave()}});
+
+/* ================= TOPICS ================= */
+function defaultTopic(t){const T=TIX[t];const gen=!!T.inv||GENERIC.some(p=>T.group.startsWith(p));return{group:T.group,status:gen?"invalid":"valid",reason:gen?"too_generic":"",note:""}}
+function eff(t){return{...defaultTopic(t),...(S.top.topics[t]||{})}}
+function groupsNow(){const m={};for(const T of TS.topics){const e=eff(T.t);(m[e.group]??=[]).push(T.t)}
+  return Object.entries(m).map(([g,ts])=>({g,ts:ts.sort((a,b)=>TIX[b].n-TIX[a].n),n:ts.reduce((s,t)=>s+TIX[t].n,0)})).sort((a,b)=>b.n-a.n)}
+function gState(G){const s=S.top.groups[gkey(G.g)];if(!s)return"todo";const same=JSON.stringify([...(s.members||[])].sort((a,b)=>a-b))===JSON.stringify([...G.ts].sort((a,b)=>a-b));return same?(G.ts.every(t=>eff(t).status==="invalid")?"inv":"done"):"changed"}
+function tLoadDraft(G){const s=S.top.groups[gkey(G.g)]||{};
+  S.tdraft={g:G.g,topics:Object.fromEntries(G.ts.map(t=>{const e=eff(t);return[t,{...e,newGroup:""}]})),
+    status:s.status||"valid",reason:s.reason||"",scores:Object.fromEntries(DIMS.map(d=>[d,s.scores?.[d]??null])),notes:s.notes||""};
+  S.tdrawn=G.g+"|"+G.ts.join(",");$("terr")&&($("terr").textContent="")}
+function renderTopics(){
+  $("tset").replaceChildren(...Object.values(SETS).filter(x=>x.topics.length).map(x=>h("button",{type:"button","aria-pressed":String(x===TS),onclick:()=>{useSet(x.key);renderAll()}},x.label)));
+  const GS=groupsNow();
+  if(!S.gsel||!GS.find(x=>x.g===S.gsel))S.gsel=(GS.find(x=>gState(x)==="todo")||GS[0]).g;
+  const done=GS.filter(x=>["done","inv"].includes(gState(x))).length;
+  $("tbar").style.width=(100*done/GS.length)+"%";$("tcount").textContent=done+" / "+GS.length+" groups checked";
+  $("glist").replaceChildren(...GS.map(G=>{const st=gState(G);return h("button",{type:"button","aria-current":String(G.g===S.gsel),onclick:()=>{S.gsel=G.g;store.set("gsel_"+TS.key,G.g);renderTopics();$("gpanel").scrollIntoView({block:"start"})}},
+    h("span",{class:"dot "+st,title:{todo:"Not checked",done:"Checked",changed:"Topics changed since you checked it",inv:"Checked, all invalid"}[st]}),
+    h("span",{},G.g),h("small",{},G.ts.length+" · "+(G.n/1000).toFixed(0)+"k"))}));
+  const G=GS.find(x=>x.g===S.gsel);const key=G.g+"|"+G.ts.join(",");if(S.tdrawn!==key)tLoadDraft(G);
+  const D=S.tdraft,P=$("gpanel"),groupNames=GS.map(x=>x.g);
+  const stars=(G.ts.reduce((s,t)=>s+TIX[t].stars*TIX[t].n,0)/G.n).toFixed(2);
+  const st=gState(G);
+  P.replaceChildren(h("div",{class:"head"},h("h2",{},G.g),h("span",{class:"muted mono"},G.ts.length+" topic"+(G.ts.length>1?"s":"")+" · "+G.n.toLocaleString()+" reviews · ★ "+stars),
+    st==="done"?h("span",{class:"saved-tag"},"Checked"):st==="changed"?h("span",{class:"saved-tag",style:"background:var(--mix-soft);border-color:var(--mix)"},"Topics changed since you checked it"):""));
+  G.ts.forEach((t,i)=>{const T=TIX[t],d=D.topics[t];
+    P.append(h("div",{class:"topic"+(d.status==="invalid"?" invalid":"")},
+      h("div",{class:"meta"},h("b",{},"Topic "+t),h("span",{class:"mono"},T.n.toLocaleString()+" reviews · ★ "+T.stars.toFixed(2)),T.note?h("span",{},"Note: "+T.note):""),
+      h("div",{class:"kw"},T.kw),
+      h("details",{open:i<2||G.ts.length<=3},h("summary",{class:"muted"},"Example reviews"),
+        h("div",{class:"samples"},h("div",{},h("h4",{},"Most typical"),T.top.map(x=>h("blockquote",{},x))),h("div",{},h("h4",{},"Random"),T.rand.map(x=>h("blockquote",{},x))))),
+      h("div",{class:"tctl"},
+        h("div",{class:"f"},h("span",{class:"muted",style:"font-size:13px"},"Topic status"),h("div",{class:"seg"},STAT.map(([k,txt])=>h("button",{type:"button",class:k==="invalid"?"n":k==="valid"?"p":"m","aria-pressed":String(d.status===k),onclick:()=>{d.status=k;if(k!=="invalid")d.reason="";else if(!d.reason)d.reason="";renderTopics()}},txt)))),
+        d.status==="invalid"?h("label",{class:"f",for:"rs"+t},"Reason",h("select",{id:"rs"+t,onchange:e=>d.reason=e.target.value},h("option",{value:""},"Choose…"),REASONS.map(([k,txt])=>h("option",{value:k,selected:d.reason===k},txt)))):"",
+        h("label",{class:"f",for:"mv"+t},"Belongs in group",h("select",{id:"mv"+t,onchange:e=>{d.group=e.target.value;renderTopics()}},
+          groupNames.map(g=>h("option",{value:g,selected:d.group===g},g)),h("option",{value:"__new",selected:d.group==="__new"},"New group…"))),
+        d.group==="__new"?h("label",{class:"f",for:"ng"+t},"New group name",h("input",{id:"ng"+t,value:d.newGroup,oninput:e=>d.newGroup=e.target.value})):"",
+        d.group!==G.g?h("span",{class:"muted",style:"font-size:13px"},"Moves when you save"):""
+      )))});
+  const staying=G.ts.filter(t=>D.topics[t].group===G.g&&D.topics[t].status!=="invalid");
+  if(staying.length){
+    const box=h("div",{class:"score"},h("div",{class:"title"},"Score this group: how strongly is each dimension represented? ",h("span",{class:"muted",style:"font-weight:400"},"(topics "+staying.join(", ")+")")));
+    box.append(h("div",{class:"dimrow"},h("div",{class:"name"},"Group status"),h("div",{class:"row"},
+      h("div",{class:"seg"},STAT.map(([k,txt])=>h("button",{type:"button",class:k==="invalid"?"n":k==="valid"?"p":"m","aria-pressed":String(D.status===k),onclick:()=>{D.status=k;renderTopics()}},txt))),
+      D.status==="invalid"?h("select",{id:"grs","aria-label":"Reason",onchange:e=>D.reason=e.target.value,style:"padding:6px;border:1px solid var(--line);border-radius:6px;background:var(--bg)"},h("option",{value:""},"Reason…"),REASONS.map(([k,txt])=>h("option",{value:k,selected:D.reason===k},txt))):"")));
+    for(const dm of DIMS)box.append(h("div",{class:"dimrow"},h("div",{class:"name"},dm,h("span",{},DEF[dm])),
+      h("div",{class:"seg",role:"group","aria-label":dm},[0,1,2,3].map(n=>h("button",{type:"button",title:RUBRIC[n],"aria-pressed":String(D.scores[dm]===n),onclick:()=>{D.scores[dm]=n;renderTopics()}},n+" · "+RUBRIC[n])))));
+    box.append(h("div",{class:"extra"},h("label",{class:"f",for:"gnotes"},"Notes (optional)",h("input",{id:"gnotes",value:D.notes,oninput:e=>D.notes=e.target.value}))));
+    P.append(box);
+  } else P.append(h("p",{class:"muted"},"Every topic here is invalid or moving out, so there's nothing to score. Save to confirm."));
+  P.append(h("div",{class:"row"},h("span",{class:"err",id:"terr"}),h("div",{class:"spacer"}),h("button",{class:"btn primary",id:"tsave",disabled:!S.writable||!S.db||!S.uid,onclick:tSave},"Save group and go to next")));
+}
+async function tSave(){
+  const err=m=>{$("terr").textContent=m};
+  if(needCode())return err("Type your initials at the top right first.");
+  const D=S.tdraft,G=D.g;
+  for(const[t,d]of Object.entries(D.topics)){
+    if(d.status==="invalid"&&!d.reason)return err("Topic "+t+" is invalid. Pick a reason.");
+    if(d.group==="__new"&&!d.newGroup.trim())return err("Topic "+t+": type a name for the new group.");
+  }
+  const staying=Object.entries(D.topics).filter(([t,d])=>d.group===G&&d.status!=="invalid").map(([t])=>+t);
+  if(staying.length){
+    if(D.status==="invalid"&&!D.reason)return err("The group is invalid. Pick a reason.");
+    const miss=DIMS.filter(d=>D.scores[d]==null);if(D.status!=="invalid"&&miss.length)return err("Score every dimension (0 is fine). Missing: "+miss.join(", ")+".");
+  }
+  const topics={};
+  for(const[t,d]of Object.entries(D.topics)){topics[t]={group:d.group==="__new"?d.newGroup.trim():d.group,status:d.status,reason:d.status==="invalid"?d.reason:"",note:""}}
+  const members=Object.entries(topics).filter(([,v])=>v.group===G).map(([t])=>+t);
+  const grec={name:G,members,status:staying.length?D.status:"invalid",reason:staying.length?(D.status==="invalid"?D.reason:""):"all_topics_invalid",
+    scores:Object.fromEntries(DIMS.map(d=>[d,staying.length&&D.status!=="invalid"?D.scores[d]:0])),notes:D.notes.trim(),at:new Date().toISOString()};
+  const prev={topics:S.top.topics,groups:S.top.groups};
+  S.top.topics={...S.top.topics,...topics};S.top.groups={...S.top.groups,[gkey(G)]:grec};
+  $("tsave").disabled=true;
+  try{
+    await writeTop({topics,groups:{[gkey(G)]:grec}});
+    const GS=groupsNow();const nx=GS.find(x=>x.g!==G&&gState(x)==="todo")||GS.find(x=>x.g!==G&&gState(x)==="changed");
+    if(nx){S.gsel=nx.g;store.set("gsel_"+TS.key,nx.g)}
+    S.tdrawn=null;renderTopics();$("gpanel").scrollIntoView({block:"start"});
+  }catch(e){S.top.topics=prev.topics;S.top.groups=prev.groups;writeFailed(e);renderTopics()}
+}
+
+/* Teresa's per-topic format, for one rater's topic doc */
+function topicRows(doc){
+  const rows=[];const get=t=>({...defaultTopic(t),...((doc.topics||{})[t]||{})});
+  for(const T of TS.topics){const e=get(T.t);const g=(doc.groups||{})[gkey(e.group)];
+    if(e.status==="invalid")rows.push({Topic:T.t,manual_topic_status:"invalid",manual_invalid_reason:e.reason,...Object.fromEntries(DIMS.map(d=>["manual_"+d,0])),manual_notes:e.note||"",group:e.group,last_updated:g?.at||""});
+    else if(g&&(g.members||[]).includes(T.t))rows.push({Topic:T.t,manual_topic_status:g.status,manual_invalid_reason:g.reason||"",...Object.fromEntries(DIMS.map(d=>["manual_"+d,g.scores?.[d]??0])),manual_notes:g.notes||"",group:e.group,last_updated:g.at||""});
+  }
+  return rows.sort((a,b)=>a.Topic-b.Topic);
+}
+
+/* ================= START page progress ================= */
+function renderStart(){
+  const n=Object.keys(S.gold.labels).length,GS=groupsNow(),g=GS.filter(x=>["done","inv"].includes(gState(x))).length;
+  $("myprogress").replaceChildren(h("div",{class:"stat"},h("b",{class:"mono"},n+" / "+REVIEWS.length),"reviews you've labeled"),h("div",{class:"stat"},h("b",{class:"mono"},g+" / "+GS.length),"topic groups you've checked"));
+}
+
+/* ================= RESULTS (owner / editors) ================= */
+function kappa(a,b){const cats=[...new Set([...a,...b])];if(cats.length<2||!a.length)return null;const n=a.length;let po=0;for(let i=0;i<n;i++)if(a[i]===b[i])po++;po/=n;let pe=0;for(const c of cats)pe+=(a.filter(x=>x===c).length/n)*(b.filter(x=>x===c).length/n);return pe<1?(po-pe)/(1-pe):null}
+const f2=x=>x==null||isNaN(x)?"–":x.toFixed(2);
+function fleiss(items){const N=items.length;if(N<2)return null;const n=items[0].length;if(n<2)return null;let P=0;const pj={};
+  for(const it of items){const cnt={};for(const c of it)cnt[c]=(cnt[c]||0)+1;let s2=0;for(const c in cnt){s2+=cnt[c]*(cnt[c]-1);pj[c]=(pj[c]||0)+cnt[c]}P+=s2/(n*(n-1))}
+  P/=N;let Pe=0;for(const c in pj){const p=pj[c]/(N*n);Pe+=p*p}return Pe<1?(P-Pe)/(1-Pe):null}
+function labelsByReview(){const m={};for(const[id,doc]of Object.entries(S.all.gold).sort())for(const[g,l]of Object.entries(doc.labels||{}))(m[g]??=[]).push(l);return m}
+function renderFleiss(){const m=labelsByReview();const full=Object.values(m).filter(ls=>ls.length>=QUOTA).map(ls=>ls.slice(0,QUOTA));
+  const t=$("afleiss");t.replaceChildren(h("tr",{},["Dimension","Reviews with "+QUOTA+" raters","Fleiss' kappa (discussed?)","All "+QUOTA+" agree"].map(x=>h("th",{},x))));
+  for(const d of DIMS){const items=full.map(ls=>ls.map(l=>l[d]?1:0));
+    t.append(h("tr",{},h("td",{},d),h("td",{class:"num"},full.length),h("td",{class:"num"},f2(full.length>=10?fleiss(items):null)),h("td",{class:"num"},full.length?f2(items.filter(it=>it.every(x=>x===it[0])).length/full.length):"–")))}}
+async function renderResults(){
+  if(!S.admin)return;
+  const ids=[...new Set([...Object.keys(S.all.gold),...Object.keys(S.all.top)])];
+  const ps=S.user&&ids.length?await S.user.profiles(ids):{};
+  S.names=Object.fromEntries(ids.map(id=>[id,ps[id]?.name||""]));
+  const codeOf=id=>(S.all.gold[id]?.code||S.all.top[id]?.code||"");
+  const codeCount={};for(const id of ids){const c=codeOf(id);if(c)codeCount[c]=(codeCount[c]||0)+1}
+  const label=id=>{const c=codeOf(id),nm=S.names[id];return (nm||"Unnamed rater")+(c?" ("+c+")":"")};
+  const fmtT=x=>x?x.slice(0,16).replace("T"," "):"–";
+  const tbl=$("raters");tbl.replaceChildren(h("tr",{},["Name","Initials","Reviews labeled","Topic groups checked","First saved","Last saved"].map(x=>h("th",{},x))));
+  for(const id of ids){const gd=S.all.gold[id]||{},tp=S.all.top[id]||{};const labs=Object.values(gd.labels||{});
+    const times=[...labs.map(x=>x.at),...Object.values(tp.groups||{}).map(g=>g.at)].filter(Boolean).sort();const c=codeOf(id);
+    tbl.append(h("tr",{},h("td",{},S.names[id]||h("span",{class:"muted"},"Name hidden (outside your organization?)")),
+      h("td",{class:"mono"},c||"–",codeCount[c]>1?h("span",{style:"color:var(--neg)"}," · shared by "+codeCount[c]+" people"):""),
+      h("td",{class:"num"},labs.length+" / "+REVIEWS.length),h("td",{class:"num"},Object.keys(tp.groups||{}).length),
+      h("td",{class:"mono"},fmtT(times[0])),h("td",{class:"mono"},fmtT(times[times.length-1]))))}
+  if(!ids.length)tbl.append(h("tr",{},h("td",{colspan:6,class:"muted"},"No one has saved labels yet. Add raters by email from the Share menu.")));
+  const cov=REVIEWS.map(r=>ids.filter(id=>(S.all.gold[id]?.labels||{})[r.gid]).length);
+  const bucket=k=>cov.filter(n=>k===3?n>=3:n===k).length;
+  $("coverage").textContent=ids.length?"Raters per review: "+bucket(0)+" reviews have none, "+bucket(1)+" have one, "+bucket(2)+" have two, "+bucket(3)+" have three or more.":"";
+  for(const sel of ["ra","rb","xr"]){const s=$(sel),cur=s.value;s.replaceChildren(...ids.map(id=>h("option",{value:id},label(id))));if(ids.includes(cur))s.value=cur}
+  if(ids.length>1&&$("ra").value===$("rb").value)$("rb").value=ids[1];
+  $("tsetname").textContent="· "+TS.label+" (switch on the Check topics page)";
+  renderFleiss();renderAgreement(label);
+  const counts={};for(const id of ids)for(const l of Object.values(S.all.gold[id]?.labels||{})){const o=(l.other||"").trim().toLowerCase();if(o)counts[o]=(counts[o]||0)+1}
+  const oe=Object.entries(counts).sort((a,b)=>b[1]-a[1]);
+  $("others").replaceChildren(h("tr",{},h("th",{},"Subject"),h("th",{},"Reviews")),...(oe.length?oe.map(([k,v])=>h("tr",{},h("td",{},k),h("td",{class:"num"},v))):[h("tr",{},h("td",{colspan:2,class:"muted"},"None yet."))]));
+}
+function renderAgreement(label){
+  const A=$("ra").value,B=$("rb").value;const ag=$("agold"),at=$("atop"),dl=$("dislist");
+  if(!A||!B||A===B){ag.replaceChildren(h("tr",{},h("td",{class:"muted"},"Agreement needs two different raters.")));at.replaceChildren();dl.replaceChildren();$("discount").textContent="";return}
+  const la=S.all.gold[A]?.labels||{},lb=S.all.gold[B]?.labels||{};const common=Object.keys(la).filter(g=>lb[g]);
+  ag.replaceChildren(h("tr",{},["Dimension","Reviews both labeled","A says discussed","B says discussed","Kappa (discussed?)","Same polarity when both say discussed"].map(x=>h("th",{},x))));
+  for(const d of DIMS){const a=common.map(g=>!!la[g][d]),b=common.map(g=>!!lb[g][d]);const both=common.filter(g=>la[g][d]&&lb[g][d]);
+    ag.append(h("tr",{},h("td",{},d),h("td",{class:"num"},common.length),h("td",{class:"num"},a.filter(Boolean).length),h("td",{class:"num"},b.filter(Boolean).length),h("td",{class:"num"},f2(common.length>=10?kappa(a,b):null)),h("td",{class:"num"},both.length?f2(both.filter(g=>la[g][d]===lb[g][d]).length/both.length):"–")))}
+  const dis=common.filter(g=>DIMS.some(d=>!!la[g][d]!==!!lb[g][d]));$("discount").textContent="("+dis.length+")";
+  const txt=Object.fromEntries(REVIEWS.map(r=>[r.gid,r.text]));const fmt=l=>DIMS.filter(d=>l[d]).map(d=>d+" "+l[d]).join(", ")||(l.none?"no access content":"none");
+  dl.replaceChildren(...dis.slice(0,40).map(g=>h("div",{class:"dis"},h("div",{},txt[g]),h("div",{class:"muted"},"A: "+fmt(la[g])+" · B: "+fmt(lb[g])))));
+  const ta=Object.fromEntries(topicRows(S.all.top[A]||{}).map(r=>[r.Topic,r])),tb=Object.fromEntries(topicRows(S.all.top[B]||{}).map(r=>[r.Topic,r]));
+  const ct=Object.keys(ta).filter(t=>tb[t]);
+  const va=ct.map(t=>ta[t].manual_topic_status==="invalid"),vb=ct.map(t=>tb[t].manual_topic_status==="invalid");
+  at.replaceChildren(h("tr",{},["Measure","Topics both scored","Exact agreement","Within 1 point","Kappa"].map(x=>h("th",{},x))),
+    h("tr",{},h("td",{},"Invalid or not"),h("td",{class:"num"},ct.length),h("td",{class:"num"},ct.length?f2(va.filter((x,i)=>x===vb[i]).length/ct.length):"–"),h("td",{class:"num"},"–"),h("td",{class:"num"},f2(ct.length>=10?kappa(va,vb):null))));
+  for(const d of DIMS){const a=ct.map(t=>ta[t]["manual_"+d]),b=ct.map(t=>tb[t]["manual_"+d]);
+    at.append(h("tr",{},h("td",{},d+" (0–3)"),h("td",{class:"num"},ct.length),h("td",{class:"num"},ct.length?f2(a.filter((x,i)=>x===b[i]).length/ct.length):"–"),h("td",{class:"num"},ct.length?f2(a.filter((x,i)=>Math.abs(x-b[i])<=1).length/ct.length):"–"),h("td",{class:"num"},f2(ct.length>=10?kappa(a,b):null))))}
+}
+$("ra").onchange=$("rb").onchange=()=>renderResults();
+$("xcons").onclick=()=>{const m=labelsByReview(),ids=Object.fromEntries(REVIEWS.map(r=>[r.gid,r.id])),rows=[];
+  for(const r of REVIEWS){const ls=m[r.gid]||[];const n=ls.length;if(n<3)continue;const row={gid:r.gid,id:r.id,n_raters:n,no_access_content:ls.filter(l=>l.none).length*2>n?"True":"False"};
+    for(const d of DIMS){const marks=ls.map(l=>l[d]).filter(Boolean);const disc=marks.length*2>n;const cnt={};for(const x of marks)cnt[x]=(cnt[x]||0)+1;
+      row[d]=disc?Object.entries(cnt).sort((a,b)=>b[1]-a[1])[0][0]:"";row[d+"_votes"]=marks.length+"/"+n}
+    rows.push(row)}
+  save("gold_labels_consensus.csv",csv(rows,["gid","id","n_raters","no_access_content",...DIMS,...DIMS.map(d=>d+"_votes")]))};
+function csv(rows,cols){const esc=v=>{v=v==null?"":String(v);return /[",\n\r]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v};return[cols.join(","),...rows.map(r=>cols.map(c=>esc(r[c])).join(","))].join("\n")}
+async function save(filename,text){$("xerr").textContent="";const dl=S.downloads;if(!dl){$("xerr").textContent="Downloads aren't available in this view. Ask Claude to pull the labels instead.";return}
+  try{await dl.save({filename,data:new Blob([text],{type:"text/csv"})})}catch(e){if(e?.code!=="declined")$("xerr").textContent="Couldn't save the file ("+(e?.code||"error")+")."}}
+$("xgold").onclick=()=>{const rows=[];for(const[id,doc]of Object.entries(S.all.gold))for(const[gid,l]of Object.entries(doc.labels||{}))rows.push({gid,id:l.id,rater:doc.code||"",rater_name:S.names?.[id]||"",rater_id:id,no_access_content:l.none?"True":"False",...Object.fromEntries(DIMS.map(d=>[d,l[d]||""])),other_subject:l.other||"",confidence:l.conf||"",notes:l.notes||"",seconds:l.sec??"",saved_at:l.at||""});
+  save("gold_labels_all_raters.csv",csv(rows,["gid","id","rater","rater_name","rater_id","no_access_content",...DIMS,"other_subject","confidence","notes","seconds","saved_at"]))};
+$("xtop").onclick=()=>{const id=$("xr").value;if(!id)return;const doc=S.all.top[id]||{};const rows=topicRows(doc);
+  save(TS.file+"_"+(doc.code||"rater")+".csv",csv(rows,["Topic","manual_topic_status","manual_invalid_reason",...DIMS.map(d=>"manual_"+d),"manual_notes","group","last_updated"]))};
+$("xtopall").onclick=()=>{const rows=[];for(const[id,doc]of Object.entries(S.all.top))for(const r of topicRows(doc))rows.push({rater:doc.code||"",rater_name:S.names?.[id]||"",rater_id:id,...r});
+  save(TS.file+"_all_raters.csv",csv(rows,["rater","rater_name","rater_id","Topic","manual_topic_status","manual_invalid_reason",...DIMS.map(d=>"manual_"+d),"manual_notes","group","last_updated"]))};
+
+/* ================= render + boot ================= */
+function renderAll(){
+  $("code").value=myCode();
+  renderStart();renderReviews();renderTopics();
+  if(S.admin&&!$("v-results").hidden)renderResults();
+}
+route();renderAll();
+
+(async()=>{
+  const cl=window.claude;
+  const [db,user]=await Promise.all([cl?.use?cl.use("db"):null,cl?.use?cl.use("user"):null]);
+  S.db=db;S.user=user;
+  if(!db||!user){setStatus("This view can't save labels. Open the page in claude.ai while signed in.");S.writable=false;renderAll();return}
+  const me=await user.me();S.uid=me.id;
+  if(!S.uid){setStatus("Sign in to claude.ai to save labels.");S.writable=false;renderAll();return}
+  if(me.avatarUrl){$("avatar").src=me.avatarUrl;$("avatar").hidden=false}
+  const cw=await user.can("data.write");
+  S.admin=await user.isOwner();
+  if(S.admin){$("navResults").hidden=false;cl.use("downloads").then(d=>S.downloads=d)}
+  if(cw===false){S.writable=false;setStatus("Your access to this page is view-only, so labels can't be saved. Ask the owner to add you by email as an Editor.")}
+  let pending=2;const timer=setTimeout(()=>{if(pending>0)setStatus("Can't reach your saved labels yet. You can keep reading, but wait for this message to clear before saving.")},10000);
+  const loaded=()=>{if(--pending===0){clearTimeout(timer);if(S.writable)setStatus(myCode()?"":"Type your initials at the top right to start. They label your work in the exports.","info")}};
+  let gl=false,tl=false;
+  db.doc("gold/"+S.uid).onSnapshot(snap=>{const d=snap.data();S.gold={exists:snap.exists,code:d?.code||S.gold.code||"",labels:{...(d?.labels||{})}};
+      if(!gl&&!snap.metadata.fromCache){gl=true;S.goldLoaded=true;loaded();syncClaims()}renderAll()},
+    e=>{if(!gl){gl=true;loaded()}setStatus("Saved labels stopped updating ("+e.code+"). Reload the page.")});
+  db.doc("topics_b2/"+S.uid).onSnapshot(snap=>{const d=snap.data();S.tops.b2={exists:snap.exists,code:d?.code||"",topics:{...(d?.topics||{})},groups:{...(d?.groups||{})}};
+      if(TS.key==="b2")S.top=S.tops.b2;renderAll()},()=>{});
+  db.doc("topics/"+S.uid).onSnapshot(snap=>{const d=snap.data();S.tops.a={exists:snap.exists,code:d?.code||S.tops.a.code||"",topics:{...(d?.topics||{})},groups:{...(d?.groups||{})}};if(TS.key==="a")S.top=S.tops.a;
+      if(!tl&&!snap.metadata.fromCache){tl=true;loaded()}renderAll()},
+    e=>{if(!tl){tl=true;loaded()}setStatus("Saved topic checks stopped updating ("+e.code+"). Reload the page.")});
+  db.collection("claims").onSnapshot(q=>{const c={};let mine=null;for(const d of q.docs){const gs=d.data()?.gids||[];if(d.id===S.uid)mine=gs;for(const g of gs)c[g]=(c[g]||0)+1}
+      S.cov=c;S.myClaims=mine||[];if(!q.metadata.fromCache){S.covLoaded=true;syncClaims()}renderAll()},
+    ()=>{S.covLoaded=true;renderAll()});
+  if(S.admin){
+    db.collection("gold").onSnapshot(q=>{S.all.gold=Object.fromEntries(q.docs.map(d=>[d.id,d.data()]));if(!$("v-results").hidden)renderResults()},()=>{});
+    for(const k of ["a","b2"])db.collection(SETS[k].coll).onSnapshot(q=>{S.all.tops[k]=Object.fromEntries(q.docs.map(d=>[d.id,d.data()]));if(TS.key===k)S.all.top=S.all.tops[k];if(!$("v-results").hidden)renderResults()},()=>{});
+    addEventListener("hashchange",()=>{if(location.hash==="#results")renderResults()});
+  }
+  route();renderAll();
+})();
+</script>

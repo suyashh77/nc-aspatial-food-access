@@ -1,0 +1,61 @@
+{
+  "stores_filter": "raleigh",
+  "validity": "provisional (parents_draft.csv: general praise / no clear subject = invalid)",
+  "valid_topics": 65,
+  "reviews_in_valid_topics": 14904,
+  "stores": 42,
+  "review_dims_file": "step4_review_dims.parquet",
+  "seconds": 16,
+  "pooling": [
+    {
+      "dim": "Availability",
+      "n_stores": 42,
+      "mu_mean": 0.4509805205482064,
+      "tau_mean": 0.0459924801045653,
+      "rhat_max_mu_tau": 1.0168196023406009,
+      "rhat_max_theta": 1.0112931337424498,
+      "ess_min_theta": 230.6278982005085,
+      "divergences": 0
+    },
+    {
+      "dim": "Accessibility",
+      "n_stores": 42,
+      "mu_mean": 0.44229542675971595,
+      "tau_mean": 0.1396365121958422,
+      "rhat_max_mu_tau": 1.0014187091235458,
+      "rhat_max_theta": 1.001756446653974,
+      "ess_min_theta": 7578.648845035,
+      "divergences": 0
+    },
+    {
+      "dim": "Accommodation",
+      "n_stores": 42,
+      "mu_mean": -0.012720207399004466,
+      "tau_mean": 0.19955316607023704,
+      "rhat_max_mu_tau": 1.0002776622929723,
+      "rhat_max_theta": 1.0018128560465216,
+      "ess_min_theta": 9485.508870739526,
+      "divergences": 0
+    },
+    {
+      "dim": "Affordability",
+      "n_stores": 42,
+      "mu_mean": 0.5201684480937789,
+      "tau_mean": 0.049677332846901893,
+      "rhat_max_mu_tau": 1.001831589374912,
+      "rhat_max_theta": 1.002565426582923,
+      "ess_min_theta": 2882.1922034165946,
+      "divergences": 0
+    },
+    {
+      "dim": "Acceptability",
+      "n_stores": 42,
+      "mu_mean": 0.4638496791746247,
+      "tau_mean": 0.08469135531104074,
+      "rhat_max_mu_tau": 1.000411209294147,
+      "rhat_max_theta": 1.0034789063993157,
+      "ess_min_theta": 12754.723349479806,
+      "divergences": 0
+    }
+  ]
+}

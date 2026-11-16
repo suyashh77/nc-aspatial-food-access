@@ -1,0 +1,46 @@
+                 outcome  n_tracts  b_pct_black_c  p_pct_black_c  b_income_c  p_income_c  b_black_x_income    r2
+     drive_min_nearest_z      2613         -1.333          0.000      -0.042       0.000             0.052 0.071
+       E_Availability_16      2453         -0.806          0.000      -0.001       0.911            -0.067 0.021
+       E_Availability_32      2612          0.105          0.419       0.024       0.001            -0.012 0.006
+ E_Availability_fallback      2612         -0.788          0.000      -0.005       0.571            -0.104 0.013
+      E_Accessibility_16      2449         -1.187          0.000      -0.009       0.228            -0.079 0.042
+      E_Accessibility_32      2607         -0.346          0.008      -0.003       0.657            -0.066 0.003
+E_Accessibility_fallback      2607         -1.132          0.000      -0.012       0.137            -0.109 0.028
+      E_Accommodation_16      2423         -0.781          0.000      -0.019       0.009            -0.075 0.015
+      E_Accommodation_32      2607         -0.718          0.000      -0.057       0.000            -0.145 0.025
+E_Accommodation_fallback      2607         -0.797          0.000      -0.024       0.003            -0.114 0.011
+      E_Affordability_16      2463         -0.236          0.080      -0.001       0.912             0.015 0.002
+      E_Affordability_32      2612          0.976          0.000       0.039       0.000            -0.039 0.041
+E_Affordability_fallback      2612         -0.199          0.185      -0.005       0.572            -0.023 0.001
+      E_Acceptability_16      2475         -1.180          0.000      -0.032       0.000            -0.068 0.037
+      E_Acceptability_32      2613         -0.350          0.007      -0.031       0.000            -0.119 0.008
+E_Acceptability_fallback      2613         -1.192          0.000      -0.040       0.000            -0.109 0.027
+    best_Availability_16      2453          0.758          0.000       0.045       0.000             0.019 0.025
+   best_Accessibility_16      2449          0.834          0.000       0.047       0.000             0.032 0.028
+   best_Accommodation_16      2423          1.133          0.000       0.053       0.000             0.034 0.045
+   best_Affordability_16      2463          0.956          0.000       0.045       0.000             0.040 0.032
+   best_Acceptability_16      2475          0.944          0.000       0.046       0.000            -0.007 0.037
+        outcome  n_tracts  b_pct_black_c  p_pct_black_c  b_income_c  p_income_c  b_black_x_income    r2
+ dist_nearest_z      2624         -1.028            0.0      -0.030       0.000             0.026 0.050
+ E_Availability      2624         -0.360            0.0       0.000       0.904            -0.046 0.022
+E_Accessibility      2624         -0.607            0.0      -0.008       0.006            -0.034 0.058
+E_Accommodation      2624         -0.367            0.0      -0.002       0.638            -0.048 0.018
+E_Affordability      2624         -0.236            0.0      -0.017       0.000            -0.033 0.012
+E_Acceptability      2624         -0.706            0.0      -0.023       0.000            -0.081 0.068
+{
+ "scores": "a",
+ "store_weights": "visits",
+ "tracts": 2672,
+ "tracts_no_store_16min": 162,
+ "people_no_store_16min": 489418,
+ "tracts_no_store_32min": 20,
+ "people_no_store_32min": 34787,
+ "store_local_vs_state_z_spearman": {
+  "Availability": 0.942,
+  "Accessibility": 0.949,
+  "Accommodation": 0.959,
+  "Affordability": 0.934,
+  "Acceptability": 0.932
+ },
+ "stores_with_local_z": 4216
+}

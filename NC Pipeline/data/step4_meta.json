@@ -1,0 +1,24 @@
+{
+  "definitions": "first_person",
+  "mode": "paragraph",
+  "tau": 0.11,
+  "delta": 0.17,
+  "outlier_share_fit": 0.5697168716449249,
+  "outlier_share_after_transform": 0.017470996157426585,
+  "topics": 83,
+  "pred_dim_topics": {
+    "Acceptability": 59,
+    "Affordability": 13,
+    "Accessibility": 4,
+    "Accommodation": 4,
+    "Availability": 3
+  },
+  "pred_dim_reviews": {
+    "Acceptability": 691221,
+    "Affordability": 151357,
+    "Accessibility": 41982,
+    "Availability": 38615,
+    "Accommodation": 35172
+  },
+  "multi_label_topics": 28
+}

@@ -1,0 +1,31 @@
+{
+  "reviews_db": "/home/scsapre/aspatial_food_access_research/Reviews Data/Step_5_master_reviews.db",
+  "reviews_db_sha256": "fc89ad899e89af4a4c9d4129d4642b2837b890038e36c40abf70157958f75c6e",
+  "reviews_with_text": 977398,
+  "cleaned_out": 2010,
+  "embedded": 975388,
+  "stores": 4383,
+  "model": "sentence-transformers/all-MiniLM-L12-v2",
+  "max_seq_length": 128,
+  "dim": 384,
+  "norm_mean": 1.0,
+  "stopwords_teresa": 41,
+  "stopwords_nc": [
+    "ingles",
+    "iga",
+    "gnc",
+    "costco",
+    "costcos",
+    "sams",
+    "dg",
+    "carlies",
+    "shoppe",
+    "walmarts",
+    "krogers",
+    "publixs",
+    "lidls",
+    "wegman"
+  ],
+  "embed_seconds": 536,
+  "total_seconds": 617
+}

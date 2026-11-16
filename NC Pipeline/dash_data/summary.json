@@ -1,0 +1,1 @@
+[{"reviews_with_text":977398,"reviews_clustered":975388,"stores":4383,"topics":83,"outlier_share":0.5697,"coherence_cv":0.5291,"topic_diversity":0.7639,"min_cluster_size":2000,"teresa_topics":59,"teresa_coherence":0.528,"teresa_diversity":0.709,"model":"sentence-transformers\/all-MiniLM-L12-v2"}]

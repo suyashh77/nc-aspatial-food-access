@@ -1,0 +1,67 @@
+{
+  "stores": 400,
+  "reviews": 151550,
+  "sentences": 322541,
+  "dims_review": {
+    "share_reviews_with_any_dim": 0.688,
+    "mean_dims_per_review": 0.97,
+    "share_reviews_by_dim": {
+      "Availability": 0.105,
+      "Accessibility": 0.048,
+      "Accommodation": 0.056,
+      "Affordability": 0.179,
+      "Acceptability": 0.583
+    }
+  },
+  "dims_sent": {
+    "share_reviews_with_any_dim": 0.779,
+    "mean_dims_per_review": 1.42,
+    "share_reviews_by_dim": {
+      "Availability": 0.215,
+      "Accessibility": 0.115,
+      "Accommodation": 0.105,
+      "Affordability": 0.307,
+      "Acceptability": 0.682
+    }
+  },
+  "store_score_agreement_review_vs_sentence": {
+    "Availability": {
+      "spearman": 0.866,
+      "stores": 267
+    },
+    "Accessibility": {
+      "spearman": 0.872,
+      "stores": 92
+    },
+    "Accommodation": {
+      "spearman": 0.925,
+      "stores": 94
+    },
+    "Affordability": {
+      "spearman": 0.845,
+      "stores": 356
+    },
+    "Acceptability": {
+      "spearman": 0.988,
+      "stores": 400
+    }
+  },
+  "gold": {
+    "review_route": {
+      "precision": 0.698,
+      "recall": 0.445,
+      "f1": 0.543,
+      "reviews": 234,
+      "labels_per_review_pred": 1.19,
+      "labels_per_review_gold": 1.86
+    },
+    "sentence_route": {
+      "precision": 0.628,
+      "recall": 0.665,
+      "f1": 0.646,
+      "reviews": 234,
+      "labels_per_review_pred": 1.97,
+      "labels_per_review_gold": 1.86
+    }
+  }
+}

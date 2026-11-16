@@ -1,0 +1,432 @@
+<title>Is One Topic Per Review Enough?</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a single reading column for argument, widening to a two-column ledger for the options. Grocery-receipt cues: mono figures, star counts, line items. */
+:root {
+  --bg: #f4f7f6;
+  --surface: #ffffff;
+  --tint: #e6efec;
+  --fg: #16302b;
+  --muted: #566b66;
+  --line: #c9d6d2;
+  --accent: #0b6b5c;
+  --use-bg: #d7efe6; --use-fg: #0a5546;
+  --pilot-bg: #dfe6fb; --pilot-fg: #2b3f96;
+  --keep-bg: #f6ead0; --keep-fg: #6f4e05;
+  --no-bg: #f5dfdc; --no-fg: #8a2c20;
+  --later-bg: #e4e8e7; --later-fg: #47524f;
+  --display: "Bricolage Grotesque", "Trebuchet MS", sans-serif;
+  --body: "Source Sans 3", "Segoe UI", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1c19; --surface: #162622; --tint: #1c322d; --fg: #e4efec; --muted: #a0b4af; --line: #2f4641; --accent: #5fd0ba;
+    --use-bg: #123f35; --use-fg: #8fe6d0;
+    --pilot-bg: #232e5e; --pilot-fg: #b9c6fb;
+    --keep-bg: #41330f; --keep-fg: #edcd85;
+    --no-bg: #4b211b; --no-fg: #f3b4aa;
+    --later-bg: #2a3633; --later-fg: #bdc9c6;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1c19; --surface: #162622; --tint: #1c322d; --fg: #e4efec; --muted: #a0b4af; --line: #2f4641; --accent: #5fd0ba;
+  --use-bg: #123f35; --use-fg: #8fe6d0;
+  --pilot-bg: #232e5e; --pilot-fg: #b9c6fb;
+  --keep-bg: #41330f; --keep-fg: #edcd85;
+  --no-bg: #4b211b; --no-fg: #f3b4aa;
+  --later-bg: #2a3633; --later-fg: #bdc9c6;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font: 400 17px/1.55 var(--body); }
+.page {
+  max-width: 1000px; margin: 0 auto;
+  padding-block: 40px 72px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; gap: 52px;
+}
+.read { max-width: 690px; display: grid; gap: 14px; min-width: 0; }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; line-height: 1.12; }
+h1 { font-size: clamp(2.2rem, 6vw, 3.5rem); font-weight: 700; letter-spacing: -0.02em; }
+h2 { font-size: 1.65rem; font-weight: 700; letter-spacing: -0.01em; }
+h3 { font-size: 1.14rem; font-weight: 700; }
+p { margin: 0; }
+.eyebrow { font: 500 0.78rem/1.4 var(--mono); letter-spacing: 0.04em; color: var(--muted); }
+.lede { font-size: 1.2rem; line-height: 1.45; }
+.num { font-family: var(--mono); font-size: 0.92em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.small { font-size: 0.92rem; color: var(--muted); }
+header { display: grid; gap: 16px; }
+
+.ask { background: var(--accent); color: var(--bg); border-radius: 6px; padding: 26px 28px; display: grid; gap: 10px; }
+.ask .eyebrow { color: inherit; opacity: 0.85; }
+.ask p.q { font: 500 1.42rem/1.28 var(--display); text-wrap: balance; }
+
+.flow { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; list-style: none; margin: 0; padding: 0; }
+.flow li { background: var(--tint); padding: 12px; border-radius: 4px; display: grid; gap: 4px; align-content: start; min-width: 0; }
+.flow b { font-family: var(--display); font-size: 1rem; line-height: 1.2; }
+.flow span { font-size: 0.86rem; line-height: 1.35; color: var(--muted); }
+.flow .pin { background: var(--no-bg); }
+.flow .pin b { color: var(--no-fg); }
+.flow .pin span { color: var(--no-fg); }
+
+.example { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 22px; display: grid; gap: 18px; min-width: 0; }
+.quote { font-size: 1.14rem; line-height: 1.5; margin: 0; }
+.a { background: var(--use-bg); color: var(--use-fg); padding: 1px 3px; border-radius: 3px; }
+.b { background: var(--pilot-bg); color: var(--pilot-fg); padding: 1px 3px; border-radius: 3px; }
+.c { background: var(--keep-bg); color: var(--keep-fg); padding: 1px 3px; border-radius: 3px; }
+.stars { font-family: var(--mono); font-size: 0.86rem; color: var(--muted); display: block; margin-top: 6px; }
+.routes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.route { display: grid; gap: 6px; align-content: start; min-width: 0; }
+.route ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; }
+.route li { font-size: 0.97rem; }
+.label { font: 500 0.76rem/1.3 var(--mono); letter-spacing: 0.04em; color: var(--muted); }
+
+.shapes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 36px; }
+.shape { display: grid; gap: 6px; align-content: start; min-width: 0; }
+.shape blockquote { margin: 2px 0 0; font-style: italic; color: var(--muted); }
+
+.ledger { display: grid; }
+.row { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 12px 32px; padding-block: 26px; border-top: 1px solid var(--line); }
+.row:last-child { border-bottom: 1px solid var(--line); }
+.side { display: grid; gap: 10px; align-content: start; justify-items: start; min-width: 0; }
+.pill { font: 500 0.74rem/1 var(--mono); letter-spacing: 0.02em; padding: 6px 9px; border-radius: 3px; }
+.use { background: var(--use-bg); color: var(--use-fg); }
+.pilot { background: var(--pilot-bg); color: var(--pilot-fg); }
+.keep { background: var(--keep-bg); color: var(--keep-fg); }
+.no { background: var(--no-bg); color: var(--no-fg); }
+.later { background: var(--later-bg); color: var(--later-fg); }
+dl { margin: 0; display: grid; gap: 10px; min-width: 0; }
+dl > div { display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 12px; }
+dt { font: 500 0.76rem/1.9 var(--mono); letter-spacing: 0.03em; color: var(--muted); }
+dd { margin: 0; min-width: 0; }
+
+.scroll { overflow-x: auto; margin-top: 8px; }
+table { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
+th { font: 500 0.76rem/1.3 var(--mono); color: var(--muted); text-align: left; padding: 5px 14px 5px 0; border-bottom: 1px solid var(--line); vertical-align: bottom; }
+td { padding: 6px 14px 6px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+td.n, th.n { text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.tracks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.track { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 20px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.track ol { margin: 0; padding-left: 20px; display: grid; gap: 5px; }
+
+.questions { display: grid; gap: 20px; }
+.question { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 2px 12px; max-width: 760px; }
+.question .n { font: 700 1.4rem/1.2 var(--display); color: var(--accent); }
+.question h3 { font-size: 1.22rem; line-height: 1.25; }
+.question p { grid-column: 2; margin-top: 5px; }
+
+.limits { margin: 0; padding-left: 20px; display: grid; gap: 7px; max-width: 690px; }
+section { display: grid; gap: 22px; min-width: 0; }
+
+@media (max-width: 800px) {
+  body { font-size: 16px; }
+  .flow { grid-template-columns: 1fr; }
+  .routes, .shapes, .tracks { grid-template-columns: 1fr; }
+  .row { grid-template-columns: 1fr; }
+  .side { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+  dl > div { grid-template-columns: 1fr; gap: 0; }
+  dt { line-height: 1.5; }
+  .ask { padding: 20px; }
+}
+</style>
+
+<main class="page">
+
+<header>
+  <p class="eyebrow">NC GROCERY ACCESS · REVIEW PIPELINE · QUESTION FOR ADVISORS · NOV 4, 2026</p>
+  <h1>Is one topic per review enough?</h1>
+  <p class="small">From Suyash Sapre, to Dr. Ben Rachunok and Caroline</p>
+</header>
+
+<div class="ask">
+  <p class="eyebrow">THE DECISION I NEED FROM YOU</p>
+  <p class="q">Should the end-of-November deliverable be only the replication of Teresa's method, or should I also run a small sentence-level pilot to test whether her one-topic-per-review design changes store scores?</p>
+  <p>My recommendation: finish the replication first, and run the pilot as a clearly separate extension. No option I tested fixes the problem without leaving review-level labels.</p>
+</div>
+
+<section>
+  <div class="read">
+    <h2>How a review becomes a score</h2>
+    <p>Teresa's method gives each review one topic. The topic decides which of the five access dimensions the review counts toward, and the star rating decides whether it counts as good or bad.</p>
+  </div>
+  <ol class="flow">
+    <li><b>Review</b><span>975,388 NC reviews with text, from 4,383 stores</span></li>
+    <li class="pin"><b>One topic</b><span>BERTopic gives each review a single topic. This is the step in question.</span></li>
+    <li><b>Dimension</b><span>Matched per topic, then checked by hand. Not run yet for NC.</span></li>
+    <li><b>Good or bad</b><span>1 star = −1, 2–4 stars = 0, 5 stars = +1</span></li>
+    <li><b>Store score</b><span>Partial pooling, then z-scores, then tract analysis</span></li>
+  </ol>
+  <div class="read">
+    <p>The scale-up itself looks sound. At 83 topics, coherence matches Raleigh (<span class="num">0.529</span> vs <span class="num">0.528</span>) and the first-pass outlier share is close (<span class="num">57%</span> vs <span class="num">52%</span>). The concern is what any model of this design can represent.</p>
+  </div>
+</section>
+
+<section>
+  <div class="read">
+    <h2>The problem</h2>
+    <p class="lede">BERTopic groups reviews by how they are written, which doesn't always line up with what the reviewer is evaluating. Our scores need the second.</p>
+  </div>
+
+  <div class="example">
+    <p class="label">A REAL NC REVIEW</p>
+    <p class="quote">
+      <span class="a">Clean and not crowded.</span>
+      <span class="b">Staff are always friendly and helpful.</span>
+      <span class="c">Prices are a little high on most things but you can find some deals.</span>
+      <span class="stars">★★★★☆ · scores 0</span>
+    </p>
+    <div class="routes">
+      <div class="route">
+        <p class="label">TODAY: WHOLE REVIEW</p>
+        <ul><li>One topic: <b>staff, clean</b></li></ul>
+        <p class="small">The comment on prices has no route to Affordability unless that topic is labelled with it. Four stars scores 0 on whatever it counts toward.</p>
+      </div>
+      <div class="route">
+        <p class="label">EACH SENTENCE ON ITS OWN</p>
+        <ul>
+          <li><span class="a">Sentence 1</span> → <b>clean</b></li>
+          <li><span class="b">Sentence 2</span> → <b>staff, helpful</b></li>
+          <li><span class="c">Sentence 3</span> → <b>prices, deals</b></li>
+        </ul>
+        <p class="small">Each subject is now visible. The single star rating still can't say which one was good or bad.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="shapes">
+    <div class="shape">
+      <h3>Several subjects, one topic</h3>
+      <p><span class="num">45%</span> of reviews have two or more sentences. In a sample of 20,000 of them, <span class="num">79%</span> had sentences closest to two or more different non-generic topics.</p>
+      <blockquote>"Good prices. Clean. Friendly service." went to a topic labelled service, clean.</blockquote>
+    </div>
+    <div class="shape">
+      <h3>Passing mentions get lost</h3>
+      <p>Of <span class="num">16,671</span> reviews that mention parking, <span class="num">47%</span> land in the parking topic at first pass and <span class="num">37%</span> are outliers. Mentioning parking doesn't always mean the review is about it, so this is an upper limit on the loss.</p>
+    </div>
+    <div class="shape">
+      <h3>Mixed opinions flatten to zero</h3>
+      <p><span class="num">13%</span> of reviews contain contrast words such as "but". <span class="num">51%</span> of those give 2–4 stars and score 0, against <span class="num">31%</span> of all reviews.</p>
+      <blockquote>"Good selection but prices are high" gave 3 stars, so it scores 0 for both.</blockquote>
+    </div>
+    <div class="shape">
+      <h3>One subject, split by writing style</h3>
+      <p>Rude and friendly cashiers are separate topics (<span class="num">1.5</span> vs <span class="num">4.6</span> stars). Their median lengths are <span class="num">45</span> and <span class="num">11</span> words, so long complaints and short praise may be separating as much as the opinion is. I haven't isolated that effect.</p>
+    </div>
+  </div>
+
+  <div class="read">
+    <h3>What the problem is not</h3>
+    <p>The usual explanation is that adjectives fragment a subject into "great parking", "easy parking" and "terrible parking". That doesn't happen here. There is one parking topic, it holds <span class="num">94%</span> of the 1,578 short parking reviews, and its ratings run from <span class="num">18%</span> 1-star to <span class="num">33%</span> 5-star. The model also places "the parking lot is great" much closer to "...is terrible" (<span class="num">0.81</span>) than to "the produce is great" (<span class="num">0.33</span>). So I have focused on reviews that cover several subjects.</p>
+  </div>
+</section>
+
+<section>
+  <div class="read">
+    <h2>Options and the pushback I tested</h2>
+    <p>For each option I took the strongest objection and tried to test it on the data. Where I couldn't, the row says so.</p>
+  </div>
+
+  <div class="ledger">
+
+    <article class="row">
+      <div class="side"><h3>Hand-approved parent groups</h3><span class="pill use">IN THE PLAN</span></div>
+      <dl>
+        <div><dt>PUSHBACK</dt><dd>Does grouping topics change scores, or only tidy them?</dd></div>
+        <div><dt>TESTED</dt><dd>A rough word list on the topic labels. I can't test score effects until matching runs.</dd></div>
+        <div><dt>RESULT</dt><dd>It mostly tidies. About 25 of 83 topics, holding <span class="num">30%</span> of clustered reviews, use only Acceptability-type words, so merging those wouldn't move a score. Combination topics like "prices, clean" stay mixed. It's still worth doing because it makes the hand check manageable.</dd></div>
+      </dl>
+    </article>
+
+    <article class="row">
+      <div class="side"><h3>Sentence-level assignment</h3><span class="pill pilot">PILOT</span></div>
+      <dl>
+        <div><dt>PUSHBACK</dt><dd>Does splitting recover buried subjects, or just add noise?</dd></div>
+        <div><dt>TESTED</dt><dd>I took 8,000 reviews per subject that mention it but sit in another topic, then assigned each to its nearest topic, first as a whole review and then using only the sentence with the mention.</dd></div>
+        <div>
+          <dt>RESULT</dt>
+          <dd>
+            Recovery improves substantially, but this isn't proof of accuracy. Sentences were picked by keyword, which favours the result, and nothing has been hand-checked. "Found everything that we needed for a cheap price." went to a "need, looking" topic, and a single sentence with "but" doesn't split at all.
+            <div class="scroll">
+              <table>
+                <thead><tr><th>Subject</th><th class="n">Whole review</th><th class="n">Sentence</th></tr></thead>
+                <tbody>
+                  <tr><td>Parking</td><td class="n">22.5%</td><td class="n">77.5%</td></tr>
+                  <tr><td>Prices</td><td class="n">34.8%</td><td class="n">62.6%</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </dd>
+        </div>
+      </dl>
+    </article>
+
+    <article class="row">
+      <div class="side"><h3>Good or bad from the text, per dimension</h3><span class="pill pilot">PILOT</span></div>
+      <dl>
+        <div><dt>PUSHBACK</dt><dd>Are star ratings good enough?</dd></div>
+        <div><dt>TESTED</dt><dd>Only the size of the problem (the contrast-word figures above). I haven't tried any text-based scoring model or LLM.</dd></div>
+        <div><dt>RESULT</dt><dd>Stars can't separate two opinions in one review, so sentence labels alone leave this unsolved. Whether it changes store rankings is the question the pilot would answer.</dd></div>
+      </dl>
+    </article>
+
+    <article class="row">
+      <div class="side"><h3>Teresa's fixed Raleigh topics</h3><span class="pill keep">REPLICATION ARM ONLY</span></div>
+      <dl>
+        <div><dt>PUSHBACK</dt><dd>Why fit new topics at all, when hers already exist?</dd></div>
+        <div><dt>TESTED</dt><dd>Applied her 59 topics and validity labels to all NC reviews, then looked at subjects I'd expect her 49 major-chain stores to cover less.</dd></div>
+        <div>
+          <dt>RESULT</dt>
+          <dd>
+            They're needed for the comparison, but they fit some NC stores poorly. Most Asian and Indian market reviews don't reach a valid dimension, which could matter for an equity analysis. Most tire and furniture reviews do, often through her staff and service topics.
+            <div class="scroll">
+              <table>
+                <thead><tr><th>NC topic</th><th class="n">Reviews</th><th class="n">Reach a valid dimension</th></tr></thead>
+                <tbody>
+                  <tr><td>All NC reviews</td><td class="n">975,388</td><td class="n">65%</td></tr>
+                  <tr><td>Mexican / Latin markets</td><td class="n">7,641</td><td class="n">53%</td></tr>
+                  <tr><td>Asian markets</td><td class="n">5,658</td><td class="n">37%</td></tr>
+                  <tr><td>Indian groceries</td><td class="n">4,381</td><td class="n">34%</td></tr>
+                  <tr><td>Furniture</td><td class="n">5,213</td><td class="n">80%</td></tr>
+                  <tr><td>Tires and auto</td><td class="n">2,728</td><td class="n">94%</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </dd>
+        </div>
+      </dl>
+    </article>
+
+    <article class="row">
+      <div class="side"><h3>A stronger embedding model</h3><span class="pill later">NOT TESTED</span></div>
+      <dl>
+        <div><dt>PUSHBACK</dt><dd>Could a better model fix this without changing the design?</dd></div>
+        <div><dt>TESTED</dt><dd>Nothing yet. Comparing models fairly needs hand labels, which don't exist.</dd></div>
+        <div><dt>RESULT</dt><dd>My reasoning only: it would still give one topic per review, and the Raleigh comparison needs her MiniLM model. The pilot's labels would make a fair comparison possible later.</dd></div>
+      </dl>
+    </article>
+
+    <article class="row">
+      <div class="side"><h3>Remove reviews with no specific words</h3><span class="pill no">NOT NEEDED</span></div>
+      <dl>
+        <div><dt>PUSHBACK</dt><dd>Does this discard data and depart from Teresa? Does it fix overlap?</dd></div>
+        <div><dt>TESTED</dt><dd>Removed 78,424 reviews (<span class="num">8.0%</span>) using a hand-made word list and refit, giving 78 topics. Applied the same rule to her labelled Raleigh reviews.</dd></div>
+        <div><dt>RESULT</dt><dd>Her hand check had already marked <span class="num">97%</span> of the Raleigh reviews it catches as invalid, and <span class="num">94.6%</span> of the NC ones land in her invalid topics. Overall star rankings barely move (Spearman <span class="num">0.996</span>, stores with 30+ reviews). Generic topics fall from 12 to 5, but overlap doesn't improve: topics with "clean" in their top three go from 7 to 8, and "staff" from 4 to 6. Her existing hand check gets the same result with no new departure.</dd></div>
+      </dl>
+    </article>
+
+    <article class="row">
+      <div class="side"><h3>Fewer topics</h3><span class="pill no">REJECTED</span></div>
+      <dl>
+        <div><dt>PUSHBACK</dt><dd>Would a larger minimum cluster size remove the overlap?</dd></div>
+        <div><dt>TESTED</dt><dd>Counted topics with "clean" in their top three words across three fits with the 8.0% removed.</dd></div>
+        <div>
+          <dt>RESULT</dt>
+          <dd>
+            The count falls only because there are fewer topics, and the share doesn't improve. At 23 topics, on the original fit, distinct complaints were already merging.
+            <div class="scroll">
+              <table>
+                <thead><tr><th>Topics</th><th class="n">With "clean"</th><th class="n">Share</th></tr></thead>
+                <tbody>
+                  <tr><td>147</td><td class="n">13</td><td class="n">9%</td></tr>
+                  <tr><td>78</td><td class="n">8</td><td class="n">10%</td></tr>
+                  <tr><td>40</td><td class="n">5</td><td class="n">13%</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </dd>
+        </div>
+      </dl>
+    </article>
+
+    <article class="row">
+      <div class="side"><h3>Automatic topic merging</h3><span class="pill no">REJECTED</span></div>
+      <dl>
+        <div><dt>PUSHBACK</dt><dd>Why group by hand when BERTopic has a hierarchy built in?</dd></div>
+        <div><dt>TESTED</dt><dd>Cut BERTopic's method (Ward linkage on topic word weights) to 25 groups.</dd></div>
+        <div><dt>RESULT</dt><dd>Parking landed in one group with deli, order pickup, rude staff, closed, pharmacy, furniture, Target, star ratings, expired items and tires. That group crosses dimensions, so the hierarchy can only suggest groups for a person to approve.</dd></div>
+      </dl>
+    </article>
+
+    <article class="row">
+      <div class="side"><h3>Strip sentiment words before embedding</h3><span class="pill no">REJECTED</span></div>
+      <dl>
+        <div><dt>PUSHBACK</dt><dd>Would removing opinion words stop subjects splitting by sentiment?</dd></div>
+        <div><dt>TESTED</dt><dd>Removed generic and opinion words from 3,000 reviews each in the rude and friendly cashier topics, re-embedded them and compared the topic centres.</dd></div>
+        <div><dt>RESULT</dt><dd>Similarity barely moves (<span class="num">0.70</span> to <span class="num">0.74</span>). It would add another departure for little gain, and a broader word list could remove meaning such as "rotten" or "fresh".</dd></div>
+      </dl>
+    </article>
+
+  </div>
+</section>
+
+<section>
+  <div class="read">
+    <h2>What I propose</h2>
+    <p>Two separate tracks, so the extension can't blur the replication.</p>
+  </div>
+  <div class="tracks">
+    <div class="track">
+      <span class="pill use" style="justify-self:start">TRACK A · REPLICATION</span>
+      <h3>Teresa's method at NC scale</h3>
+      <ol>
+        <li>Keep the 83-topic model, with praise words hidden from labels only.</li>
+        <li>Hand-approve parent groups, keeping the original topics.</li>
+        <li>Map to dimensions by hand and with her automatic matching, then compare.</li>
+        <li>Score stores with stars, then tract scores and regressions.</li>
+        <li>Check against Raleigh on the 42 shared stores.</li>
+      </ol>
+    </div>
+    <div class="track">
+      <span class="pill pilot" style="justify-self:start">TRACK B · EXTENSION</span>
+      <h3>Sentence-level pilot</h3>
+      <ol>
+        <li>Split reviews into sentences and assign each to a parent group.</li>
+        <li>Hand-label about 300 for dimension and for good or bad.</li>
+        <li>Compare review-level and sentence-level accuracy on those labels.</li>
+        <li>Rescore stores and compare rankings with Track A, per dimension.</li>
+      </ol>
+      <p class="small">My rough estimate is about a week. It starts only once Track A is safe.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="read"><h2>Questions for you</h2></div>
+  <div class="questions">
+    <div class="question">
+      <span class="n">1</span>
+      <h3>Is the replication enough for this deliverable, or should the pilot be in scope?</h3>
+      <p>I recommend including it as a separate extension. If the deadline tightens, it is the first thing to drop.</p>
+    </div>
+    <div class="question">
+      <span class="n">2</span>
+      <h3>How much would rankings need to change for you to adopt sentence-level scores?</h3>
+      <p>The pilot can't settle anything without a rule set in advance. As a starting point, I'd use the plan's replication bar: consider adopting if sentence labels are more accurate and the Spearman correlation with Track A falls below <span class="num">0.8</span> on any dimension.</p>
+    </div>
+    <div class="question">
+      <span class="n">3</span>
+      <h3>Are hand-approved parent groups acceptable as a method step?</h3>
+      <p>They add human judgment that Teresa's topic-level check didn't have at this level. I would report them as a departure and keep both levels so the results can be compared.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="read"><h2>What these tests can't show</h2></div>
+  <ul class="limits">
+    <li><b>No hand labels yet.</b> The tests show where reviews land. They don't show that the placement is correct.</li>
+    <li><b>No dimension scores yet.</b> Matching hasn't been run for NC, so I can't yet measure the effect of any option on final store scores. The <span class="num">0.996</span> figure covers overall star signal only.</li>
+    <li><b>Word lists are rough.</b> The parking, price, contrast and Acceptability-type figures rely on simple keyword matches. Treat them as sizes, not precise rates.</li>
+    <li><b>A known issue I'd leave in place.</b> Her cleaning removes "lion" from "Food Lion", leaving "food". Two "food" topics are <span class="num">29%</span> and <span class="num">21%</span> Food Lion reviews, against <span class="num">3.1%</span> overall. Fixing it means refitting everything, and the same thing happens in her method, so I'd report it unless you want it fixed.</li>
+    <li><b>Who reviews.</b> Reviewers are self-selected, so all of this measures perceived access as reported online. Her thesis states this limit too.</li>
+  </ul>
+</section>
+
+</main>
