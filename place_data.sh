@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Puts the data from Google Drive into a fresh clone of this repo, where the code expects it.
 #
-#   ./place_data.sh <path to the 3_Datasets folder downloaded from Drive>
+#   ./place_data.sh <path to the data folder downloaded from Drive (called 3_Datasets in copies before Nov 16, 2026)>
 #
 # It unzips pipeline_working_files.zip over the repo (results, working files, Teresa's files, the handoff documents),
 # then copies in the five databases, the cleaned reviews and the review-level export. Needs about 2.5 GB of disk.
@@ -21,7 +21,7 @@ done
 [[ -n "$SRC" ]] || { sed -n 2,11p "$0"; exit 2; }
 SRC="$(realpath "$SRC")"
 for need in pipeline_working_files.zip database/SHA256SUMS.txt review_level; do
-  [[ -e "$SRC/$need" ]] || { echo "Not a 3_Datasets folder: $SRC/$need is missing."; exit 2; }
+  [[ -e "$SRC/$need" ]] || { echo "Not the Drive data folder: $SRC/$need is missing."; exit 2; }
 done
 if [[ -e "$ROOT/NC Pipeline/data/step2_umap5.npy" && $FORCE -eq 0 ]]; then
   echo "This folder already has pipeline outputs. Running this would overwrite them with the Drive copy."
@@ -44,4 +44,4 @@ cp -f "$SRC/database/step1_reviews.parquet" "$ROOT/NC Pipeline/data/"; echo "  N
 export_file="$(ls "$SRC"/review_level/NC_reviews_with_dimensions*.parquet | head -1)"
 cp -f "$export_file" "$ROOT/NC Pipeline/data/exports/NC_reviews_with_dimensions.parquet"
 echo "  NC Pipeline/data/exports/NC_reviews_with_dimensions.parquet"
-echo "Done. Next: read handoff/FOR_CLAUDE.md (code) or handoff/FOR_CAROLINE.md (labeling and using the data)."
+echo "Done. Next: read handoff/FOR_CLAUDE.md (code) or handoff/HANDOVER.md, LABELING.md, USING_THE_DATA.md (people)."
