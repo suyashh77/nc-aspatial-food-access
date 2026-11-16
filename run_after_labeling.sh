@@ -45,7 +45,7 @@ case "$MODE" in
 esac
 if [[ ! -f "$A/data/step5_manual_scores.csv" ]]; then
   echo "No data/step5_manual_scores.csv: the topic check isn't imported, so stage 6 would still use the provisional list."
-  echo "Import the topic check first (see handoff/FOR_CAROLINE.md)."; exit 1
+  echo "Import the topic check first (see handoff/LABELING.md)."; exit 1
 fi
 
 # 2. Pipeline A: store scores (both arms, statewide and Raleigh), then tract scores

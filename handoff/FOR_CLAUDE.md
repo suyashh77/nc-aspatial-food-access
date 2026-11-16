@@ -2,11 +2,13 @@
 
 For a Claude session (or a person) picking up the code. Written 2026-11-15 at handoff, when the project's owner, Suyash Sapre, left the project. Read this whole file before running anything.
 
-People-facing docs: `FOR_DR_RACHUNOK.md` (project, methods, data limits) and `FOR_CAROLINE.md` (hand labeling, using the data). The full method, every decision test and every number: `../PIPELINE_GUIDE.md`.
+People-facing docs (in this folder, as Markdown; Word copies in Drive `docs/`): `HANDOVER.md` (project, pipeline, results, data limits, open work), `LABELING.md` (the labeling session and what follows), `USING_THE_DATA.md` (which file, traps, Raleigh talk numbers), `DATA_DICTIONARY.md`. `README.md` here is the Drive folder's front page. The full method, every decision test and every number: `../PIPELINE_GUIDE.md`. These replaced `FOR_DR_RACHUNOK.md` and `FOR_CAROLINE.md` on 2026-11-16.
 
-**Where things live.** The code is in the private GitHub repo `suyashh77/nc-aspatial-food-access` (the owner may change if it's transferred to the lab). Everything else is in the Google Drive folder `NC_Aspatial_Food_Access` (https://drive.google.com/drive/folders/1VH4wPZjRUApfQtznYghnRkXsL14XJbm9): `1_Docs_and_Reports`, `2_Presentation` and `3_Datasets`. To get a working copy, clone the repo, download `3_Datasets`, and run `./place_data.sh <path to 3_Datasets>`. After that the layout below matches. On the lab VM everything is already in place, so don't run `place_data.sh` there. Package versions: `requirements_lab_vm.txt`.
+**Where things live.** The code is in the private GitHub repo `suyashh77/nc-aspatial-food-access` (the owner may change if it's transferred to the lab). Everything else is in the Google Drive folder `NC_Aspatial_Food_Access` (https://drive.google.com/drive/folders/1VH4wPZjRUApfQtznYghnRkXsL14XJbm9): `README.docx`, `LABEL_STATUS.txt`, `docs/`, `presentation/`, `labeling/`, `data/`, `results/`, `code/`. To get a working copy, clone the repo, download `data/` (`3_Datasets` in copies before 2026-11-16), and run `./place_data.sh <path to data>`. After that the layout below matches. On the lab VM everything is already in place, so don't run `place_data.sh` there. Package versions: `requirements_lab_vm.txt`.
 
-**What git tracks.** Scripts, tests, the labeling page, `README.md`, `CLAUDE.md`, `PIPELINE_GUIDE.md`, this file and `NC Pipeline/data/parents_draft.csv`. The `.gitignore` is an allowlist, so outputs in `data/`, `out/` and `decisions/out/` and the other handoff documents are never committed. They reach other people through the Drive folder. After changing any of them, rebuild the Drive folder (below) and upload it again.
+**What git tracks.** Scripts, tests, the labeling page, `README.md`, `CLAUDE.md`, `PIPELINE_GUIDE.md`, the docs in `handoff/` (this file, the people-facing docs, `FILE_MANIFEST.md`, `md2docx.py`) and `NC Pipeline/data/parents_draft.csv`. The `.gitignore` is an allowlist, so outputs in `data/`, `out/` and `decisions/out/` are never committed. They reach other people through the Drive folder. After changing any of them, rebuild the Drive folder (below) and upload it again.
+
+**First pull on the VM after 2026-11-16.** The VM's `handoff/` still has untracked copies of `README.md`, `DATA_DICTIONARY.md` and `FILE_MANIFEST.md`, so `git pull` refuses to overwrite them. Move the old `handoff/*.md` (except `FOR_CLAUDE.md`) to `_superseded/handoff_2026-11-15/`, then pull. `FOR_DR_RACHUNOK.md` and `FOR_CAROLINE.md` are no longer used.
 
 ## State at handoff
 
@@ -32,7 +34,7 @@ All paths are relative to `/home/scsapre/aspatial_food_access_research/` on the 
 | `run_after_labeling.sh` | Everything to rerun after labeling, in order |
 | `build_drive_package.py` | Builds `google_drive_upload/` (the Drive folder) from current outputs; `--zips` also writes `drive_zips/` |
 | `place_data.sh` | Puts the Drive data into a fresh clone. Not for the VM |
-| `handoff/` | These docs, the data dictionary, the file manifest, the final presentation. Only this file and the presentation scripts are in git |
+| `handoff/` | The docs (in git), the presentation scripts (in git) and the built deck (not in git) |
 | `PIPELINE_GUIDE.md` | The living method document. Update it, with a changelog line, after any pipeline change |
 
 The scraping code (store frame, scraper, repair scripts r00–r18) is **not on this VM**. It lives on the owner's PC as the "Gmaps Scraper" repo, and its docs are copied into `Reviews Data/`. Don't scrape again without reading `Reviews Data/STATUS.md` §6.
@@ -144,7 +146,7 @@ Then:
 1. Check `google_drive_upload/LABEL_STATUS.txt` says HUMAN.
 2. Read `step5_import_meta.json`. A Fleiss' kappa under 0.4 on a dimension means the raters disagree, and the result for that dimension needs a caveat.
 3. Update `PIPELINE_GUIDE.md`. Every table there was computed on provisional labels. Replace the numbers from the json files in `NC Pipeline/decisions/out/` and `NC Pipeline Improved/out/`, mark them as human-labeled, and add a changelog line. B4's caveat (stand-in gold coded with the same rules as B4's text) goes away once the gold is human.
-4. Update the people-facing docs in `handoff/` where they quote numbers, rebuild the deck if its numbers changed, commit the code and guide changes, then rerun `build_drive_package.py --zips` and have someone upload the result to Drive in place of the old folder.
+4. Update the people-facing docs in `handoff/` where they quote numbers (`HANDOVER.md` results tables, `USING_THE_DATA.md` Raleigh section, and the "provisional" status lines in `README.md`, `HANDOVER.md`, `LABELING.md`), rebuild the deck if its numbers changed, commit the code and guide changes, then rerun `build_drive_package.py --zips` and have someone upload the result to Drive in place of the old folder.
 
 ## Rebuilding the Drive folder
 
@@ -152,15 +154,21 @@ Then:
 "NC Pipeline/.venv/bin/python" build_drive_package.py
 ```
 
-It builds a fresh `google_drive_upload/` and keeps the previous one as `google_drive_upload.prev/`. The folder has three parts:
+It builds a fresh `google_drive_upload/` and keeps the previous one as `google_drive_upload.prev/`. Layout:
 
-- `1_Docs_and_Reports/`: the `handoff/*.md` docs and the pipeline guide (Markdown, plus Word made with pandoc), the Raleigh workbook rebuilt from `b_raleigh*.json`, the scraping record, decision-test results, Teresa's thesis.
-- `2_Presentation/`: the deck.
-- `3_Datasets/`: store list, scores, review-level export, labeling files, Raleigh result files, the databases (an unchanged copy is reused by checksum), and `pipeline_working_files.zip`.
+- Top: `README.docx` (from `handoff/README.md`) and `LABEL_STATUS.txt`.
+- `docs/`: the people-facing docs and the pipeline guide as Word, the scraping record (Word), Teresa's thesis. `docs/markdown/` has the Markdown sources plus `FOR_CLAUDE.md` and `FILE_MANIFEST.md`.
+- `presentation/`: the deck.
+- `labeling/`: the labeling page files, its inputs, imported labels.
+- `data/`: store list, scores, review-level export, Raleigh result files, the databases (an unchanged copy is reused by checksum), `pipeline_working_files.zip`, `PACKAGE_CONTENTS.csv`. `place_data.sh` reads this folder, so keep its inner layout.
+- `results/`: decision-test and Pipeline B test JSON, the Raleigh workbook rebuilt from `b_raleigh*.json`.
+- `code/`: a `git archive` zip of HEAD, so commit before building.
 
-`pipeline_working_files.zip` holds every result and working file the code reads that isn't in git, at its repo path. The lists `WORK_INCLUDE` and `WORK_EXCLUDE` at the top of the script decide what goes in. A new output folder only needs adding there. A small `Code_snapshot/` zip (`git archive` of HEAD) is a backup of the code, so commit before building.
+Word files are made by `handoff/md2docx.py` (needs `python-docx`); if that isn't installed the script falls back to pandoc, which gives plainer formatting.
 
-The script writes `PACKAGE_CONTENTS.csv` with checksums. Score files are named `*_PROVISIONAL` until stage 6 reports human validity. With `--zips` it also writes one zip per Drive folder to `drive_zips/`, each unzipping into `NC_Aspatial_Food_Access/`, for uploading by hand (the VM has no Google login). `handoff/FILE_MANIFEST.md` says what goes where and why.
+`pipeline_working_files.zip` holds every result and working file the code reads that isn't in git, at its repo path. The lists `WORK_INCLUDE` and `WORK_EXCLUDE` at the top of the script decide what goes in. A new output folder only needs adding there.
+
+`PACKAGE_CONTENTS.csv` lists every file with its checksum. Score files are named `*_PROVISIONAL` until stage 6 reports human validity. With `--zips` it also writes `drive_zips/docs.zip` (everything but `data/`) and `drive_zips/data.zip`, each unzipping into `NC_Aspatial_Food_Access/`, for uploading by hand (the VM has no Google login). `handoff/FILE_MANIFEST.md` says what goes where and why.
 
 ## Known traps
 

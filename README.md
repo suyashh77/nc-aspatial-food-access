@@ -7,22 +7,22 @@ The project lives in two places:
 | Where | What |
 |---|---|
 | This repository | The code: both pipelines, the tests, the labeling page, the scripts that build the Drive folder and the slides |
-| The Google Drive folder [`NC_Aspatial_Food_Access`](https://drive.google.com/drive/folders/1VH4wPZjRUApfQtznYghnRkXsL14XJbm9) | `1_Docs_and_Reports` (the guides, the method, the data's weak spots), `2_Presentation` (the slides), `3_Datasets` (store list, scores, reviews, databases) |
+| The Google Drive folder [`NC_Aspatial_Food_Access`](https://drive.google.com/drive/folders/1VH4wPZjRUApfQtznYghnRkXsL14XJbm9) | `README.docx`, `docs/` (handover, labeling, using the data, data dictionary, method), `presentation/`, `labeling/`, `data/` (store list, scores, reviews, databases), `results/`, `code/` |
 
-If you only want to read about the project or use the data, you don't need this repository. Open the Drive folder and start with its `README`.
+If you only want to read about the project or use the data, you don't need this repository. Open the Drive folder and start with its `README.docx`.
 
 ## Get started with the code
 
 1. Clone this repo.
-2. Download `3_Datasets` from the Drive folder.
-3. Run `./place_data.sh <path to 3_Datasets>`. It checks the databases, then puts every result file, working file and document where the code expects it (about 2.5 GB).
+2. Download `data/` from the Drive folder (called `3_Datasets` in copies made before Nov 16, 2026).
+3. Run `./place_data.sh <path to data>`. It checks the databases, then puts every result file and working file where the code expects it (about 2.5 GB).
 4. Read `handoff/FOR_CLAUDE.md`. Claude reads `CLAUDE.md` on its own, which points there.
 
-After step 3 the `handoff/` folder also holds the guides for people (`FOR_DR_RACHUNOK.md`, `FOR_CAROLINE.md`), the data dictionary and the file manifest.
+The docs for people are in `handoff/` as Markdown (`HANDOVER.md`, `LABELING.md`, `USING_THE_DATA.md`, `DATA_DICTIONARY.md`). `build_drive_package.py` turns them into the Word files in Drive.
 
 ## Status
 
-All scores are **provisional** until the hand labeling is done (planned for the week of November 16, 2026). Suyash runs the labeling session. After it, `./run_after_labeling.sh` produces the final numbers and rebuilds the Drive folder. The steps are in `FOR_CAROLINE` (Drive, `1_Docs_and_Reports`).
+All scores are **provisional** until the hand labeling is done (Wednesday, Nov 18, 2026). Suyash runs the labeling session on his page. After it, `./run_after_labeling.sh` produces the final numbers and rebuilds the Drive folder, and the project goes to Caroline. The steps are in `handoff/LABELING.md`.
 
 ## What's here
 
@@ -32,6 +32,7 @@ All scores are **provisional** until the hand labeling is done (planned for the 
 | `NC Pipeline Improved/` | Pipeline B, the tested improvements |
 | `PIPELINE_GUIDE.md` | The full method, every decision test and every number |
 | `handoff/FOR_CLAUDE.md` | The technical handoff: layout, rules, what to run after labeling |
+| `handoff/*.md` | The docs for people (built into Word for Drive by `handoff/md2docx.py`) |
 | `run_after_labeling.sh` | Reruns everything once the hand labels are in |
 | `build_drive_package.py` | Builds the Drive folder (`google_drive_upload/`) from the current outputs |
 | `place_data.sh` | Puts the Drive data into a fresh clone |

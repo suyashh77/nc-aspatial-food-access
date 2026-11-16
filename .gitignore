@@ -11,10 +11,17 @@
 !/place_data.sh
 !/requirements_lab_vm.txt
 
-# The guide for whoever picks up the code, and the scripts that build the presentation
+# The docs (technical and for people; build_drive_package.py turns them into Word), and the scripts that build the presentation
 !/handoff/
 /handoff/*
 !/handoff/FOR_CLAUDE.md
+!/handoff/README.md
+!/handoff/HANDOVER.md
+!/handoff/LABELING.md
+!/handoff/USING_THE_DATA.md
+!/handoff/DATA_DICTIONARY.md
+!/handoff/FILE_MANIFEST.md
+!/handoff/md2docx.py
 !/handoff/presentation/
 /handoff/presentation/*
 !/handoff/presentation/build_deck.py

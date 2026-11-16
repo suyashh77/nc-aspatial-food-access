@@ -31,7 +31,7 @@ Every open decision has a test here. Each test gives the question, why it matter
 - An answer to "how many dimensions do reviews contain": two for how stores perform (quality, price). What people talk about has more, with checkout and the trip itself as sixth-dimension candidates.
 
 **What we're doing to get there.**
-1. **People:** label on the page (https://claude.ai/artifact/7cCD2HedpJ97FgEmnLo2uH; raters' instructions are in `handoff/FOR_CAROLINE.md`, section 3). Add raters by email as Editors; a public link only lets outsiders view.
+1. **People:** label on the page (https://claude.ai/artifact/7cCD2HedpJ97FgEmnLo2uH; raters' instructions are in `handoff/LABELING.md`). Add raters by email as Editors; a public link only lets outsiders view.
 2. Then `./run_after_labeling.sh --csv <folder of Results-tab downloads>`. It imports the labels and reruns stages 6–7 (both arms), D1–D10, B4, `b_pipeline.py`, B6, `b_raleigh.py`, the review export and the Drive folder.
 3. **Outside answers:** Teresa's tract list and store set. Optional: a renewed Dewey key for per-store shopper origins (section 9).
 
@@ -707,3 +707,6 @@ underlying traits there are. Here a store plays the person and a topic group pla
   - GitHub now holds the code only. Result files, working files, documents and the slides moved to the Google Drive folder (`1_Docs_and_Reports`, `2_Presentation`, `3_Datasets`), built by `build_drive_package.py`. `place_data.sh` puts the Drive data into a fresh clone; it replaces `fetch_data.sh`. No pipeline code or number changed.
 - **2026-11-16 (labeling plan, no method change)**:
   - Suyash runs the labeling on his own page (https://claude.ai/artifact/7cCD2HedpJ97FgEmnLo2uH) instead of Caroline republishing it, then runs `run_after_labeling.sh` and hands the final Drive folder to Caroline. `handoff/FOR_CLAUDE.md` has the steps for when labeling is done.
+- **2026-11-16 (Drive layout and docs, no method change)**:
+  - The Drive folder is now `README.docx`, `docs/`, `presentation/`, `labeling/`, `data/` (was `3_Datasets`), `results/`, `code/`. `build_drive_package.py` builds that layout; `place_data.sh` takes the `data/` folder.
+  - The people-facing docs (`handoff/HANDOVER.md`, `LABELING.md`, `USING_THE_DATA.md`, `DATA_DICTIONARY.md`) replace `FOR_DR_RACHUNOK.md` and `FOR_CAROLINE.md`, are tracked in git, and are built into Word by `handoff/md2docx.py`.
