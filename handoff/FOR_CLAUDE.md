@@ -150,7 +150,7 @@ It builds a fresh `google_drive_upload/` and keeps the previous one as `google_d
 - `2_Presentation/`: the deck.
 - `3_Datasets/`: store list, scores, review-level export, labeling files, Raleigh result files, the databases (an unchanged copy is reused by checksum), and `pipeline_working_files.zip`.
 
-`pipeline_working_files.zip` holds every result and working file the code reads that isn't in git, at its repo path. The lists `WORK_INCLUDE` and `WORK_EXCLUDE` at the top of the script decide what goes in. If you add a new output folder, add it there and to nothing else. A small `Code_snapshot/` zip (`git archive` of HEAD) is a backup of the code, so commit before building.
+`pipeline_working_files.zip` holds every result and working file the code reads that isn't in git, at its repo path. The lists `WORK_INCLUDE` and `WORK_EXCLUDE` at the top of the script decide what goes in. A new output folder only needs adding there. A small `Code_snapshot/` zip (`git archive` of HEAD) is a backup of the code, so commit before building.
 
 The script writes `PACKAGE_CONTENTS.csv` with checksums. Score files are named `*_PROVISIONAL` until stage 6 reports human validity. With `--zips` it also writes one zip per Drive folder to `drive_zips/`, each unzipping into `NC_Aspatial_Food_Access/`, for uploading by hand (the VM has no Google login). `handoff/FILE_MANIFEST.md` says what goes where and why.
 

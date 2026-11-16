@@ -6,8 +6,8 @@ The project lives in two places:
 
 | Where | What |
 |---|---|
-| **This repository** | The code: both pipelines, the tests, the labeling page, the scripts that build the Drive folder and the slides |
-| **The Google Drive folder** `NC_Aspatial_Food_Access` _(add the link here)_ | `1_Docs_and_Reports` (the guides, the method, the data's weak spots), `2_Presentation` (the slides), `3_Datasets` (store list, scores, reviews, databases) |
+| This repository | The code: both pipelines, the tests, the labeling page, the scripts that build the Drive folder and the slides |
+| The Google Drive folder `NC_Aspatial_Food_Access` _(add the link here)_ | `1_Docs_and_Reports` (the guides, the method, the data's weak spots), `2_Presentation` (the slides), `3_Datasets` (store list, scores, reviews, databases) |
 
 If you only want to read about the project or use the data, you don't need this repository. Open the Drive folder and start with its `README`.
 
@@ -39,6 +39,6 @@ All scores are **provisional** until the hand labeling is done (planned for the 
 
 Not here and not in Drive: the Python environment (exact versions in `requirements_lab_vm.txt`; steps 1–3 also need RAPIDS cuML and a CUDA GPU), about 4.6 GB of embeddings that the pipeline scripts rebuild, and licensed foot-traffic data (Advan, SafeGraph), which stays on the lab server. The scraping code lives in a separate repository on Suyash's machine. Its documentation arrives with the data, in `Reviews Data/`.
 
-Commits before November 16, 2026 also contain the result files. They were moved to Drive; the old copies in the history are out of date after labeling.
+Commits before November 16, 2026 also contain the result files. They were moved to Drive. Once labeling is done, the copies in the history are out of date.
 
 Private research data. Don't share outside the research group.
