@@ -71,4 +71,5 @@
 !/grocery-foot-traffic/map/data/
 /grocery-foot-traffic/map/data/*
 !/grocery-foot-traffic/map/data/nc.geojson
+!/grocery-foot-traffic/NC_Grocery_POIs.xlsx
 /NC Pipeline/data_external/census/gaz_tracts_2022.zip

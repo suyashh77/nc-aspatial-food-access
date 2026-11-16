@@ -9,8 +9,8 @@ REPO="suyashh77/nc-aspatial-food-access"
 TAG="handoff-2026-11-15"
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 TMP="$ROOT/.release_download"
-mkdir -p "$TMP"
-gh release download "$TAG" -R "$REPO" -D "$TMP" --clobber
+rm -rf "$TMP" && mkdir -p "$TMP"       # start empty, so no overwrite flag is needed (older gh versions lack one)
+gh release download "$TAG" -R "$REPO" -D "$TMP"
 (cd "$TMP" && sha256sum -c SHA256SUMS.txt)
 
 place() { mkdir -p "$(dirname "$ROOT/$2")"; mv -f "$TMP/$1" "$ROOT/$2"; echo "  $2"; }
