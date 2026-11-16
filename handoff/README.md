@@ -25,7 +25,7 @@ The slides covering the whole project are `1_Read_Me_First/Final_Presentation.ht
 | `5_Human_Labeling` | The labeling page, the reviews and topics to label, and imported labels |
 | `6_Raleigh_Case_Study` | Raleigh compared with Teresa's thesis |
 | `7_Methods_and_Reference` | The full pipeline guide, the scraping record, decision-test results, Teresa's thesis |
-| `8_Code` | The code for both pipelines (no data) |
+| `8_Code` | The whole GitHub repo as one zip: code, docs, results, Teresa's files. Unzip it, then copy the large files from `9_Database` and `4_Review_Level` in (see the zip's README) |
 | `9_Database` | The review database (SQLite) and the side databases of stores ruled out |
 
 `PACKAGE_CONTENTS.csv` lists every file with its size and checksum. Column meanings are in `1_Read_Me_First/DATA_DICTIONARY`.

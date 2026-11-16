@@ -6,11 +6,16 @@ This repository is the starting point: code, handoff documents, results and data
 
 ## Get started
 
-```bash
-git clone https://github.com/suyashh77/nc-aspatial-food-access.git
-cd nc-aspatial-food-access
-./fetch_data.sh          # downloads the review database and the large review files (~1 GB) from the release
-```
+1. Clone this repo.
+2. Get the large files (too big for git) from the Google Drive folder and copy them in:
+
+| From Drive | Put it in the repo at |
+|---|---|
+| `9_Database/` — all five `.db` files | `Reviews Data/` |
+| `9_Database/step1_reviews.parquet` | `NC Pipeline/data/` |
+| `4_Review_Level/NC_reviews_with_dimensions_PROVISIONAL.parquet` | `NC Pipeline/data/exports/NC_reviews_with_dimensions.parquet` (drop `_PROVISIONAL` from the name) |
+
+   Shortcut if you use the GitHub CLI: `./fetch_data.sh` downloads the same files from this repo's release and puts them in place.
 
 Then read the guide written for you:
 

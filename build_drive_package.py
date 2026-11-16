@@ -137,8 +137,14 @@ def main() -> None:
     for f in sorted(BO.glob("b[1-7]*.json")):
         put(f, f"{M}/pipeline_B_tests/{f.name}")
 
-    # 8. Code (no data): both pipelines, the labeler, the run scripts, pinned package versions
-    code_zip(TMP / "8_Code/aspatial_code.zip")
+    # 8. The whole GitHub repo as one zip (code, docs, results, Teresa's files), so Drive alone is a full copy.
+    #    Falls back to a code-only zip when this folder isn't a git repo.
+    (TMP / "8_Code").mkdir(parents=True, exist_ok=True)
+    if (ROOT / ".git").exists():
+        subprocess.run(["git", "-C", str(ROOT), "archive", "--format=zip", "--prefix=nc-aspatial-food-access/",
+                        "-o", str(TMP / "8_Code/nc-aspatial-food-access_repo.zip"), "HEAD"], check=True)
+    else:
+        code_zip(TMP / "8_Code/aspatial_code.zip")
 
     # 9. The database: the master reviews DB (content = freeze v2) and the side databases
     archive_databases()
@@ -228,6 +234,9 @@ def archive_databases() -> None:
         else:
             shutil.copy2(src, TMP / D / f)
         sums.append(f"{h}  {f}")
+    big = AD / "step1_reviews.parquet"                        # cleaned review text, a pipeline input (also a release asset)
+    shutil.copy2(big, TMP / D / big.name)
+    sums.append(f"{sha256(big)}  {big.name}")
     (TMP / D / "SHA256SUMS.txt").write_text("\n".join(sums) + "\n")
 
 

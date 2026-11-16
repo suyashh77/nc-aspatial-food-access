@@ -157,6 +157,7 @@ Reviewer names are left out on purpose. They are in the database.
 | `Step_5_closed_stores.db` | 67 stores verified closed, with 7,836 reviews |
 | `Step_5_excluded_stores.db` | 221 duplicates and unfixable pages |
 | `Step_1_NC_Food_Retail_Frame.db` | The 36,820-store frame the list was cut from |
+| `step1_reviews.parquet` | Cleaned text of the 975,388 written reviews, an input to the pipelines (goes in `NC Pipeline/data/` of the repo) |
 | `SHA256SUMS.txt` | Checksums |
 
 The `reviews` table also has `reviewer_name` (a display name, not an ID), `helpful_count`, `photo_count` and `service_type`. The last three are empty or unreliable: Google doesn't show them on the page any more.

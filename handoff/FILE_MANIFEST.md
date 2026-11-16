@@ -20,8 +20,8 @@ The private repo `suyashh77/nc-aspatial-food-access` holds the code, the handoff
 | `5_Human_Labeling/` (the labeling page, its inputs, imported labels) | `NC Pipeline/apps/web_labeler/`, `decisions/` | 1 MB |
 | `6_Raleigh_Case_Study/` | `NC Pipeline Improved/out/b_raleigh*` | 1 MB |
 | `7_Methods_and_Reference/` (pipeline guide, scraping record, decision tests, Teresa's thesis) | various | 10 MB |
-| `8_Code/aspatial_code.zip` (both pipelines, no data, pinned package versions) | `NC Pipeline/`, `NC Pipeline Improved/` | under 1 MB |
-| `9_Database/` (the review database and side databases) | `Reviews Data/` | 0.8 GB |
+| `8_Code/nc-aspatial-food-access_repo.zip` (a full copy of the GitHub repo: code, docs, results, Teresa's files, pinned package versions) | the repo | about 0.3 GB |
+| `9_Database/` (the review database, side databases, and the cleaned reviews the pipelines read) | `Reviews Data/`, `NC Pipeline/data/` | 1 GB |
 
 ## Upload separately from your PC
 
